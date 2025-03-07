@@ -1,41 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   verify_syntax.c                                    :+:      :+:    :+:   */
+/*   process_prompt.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/01 13:43:40 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/01 18:17:53 by aalahyan         ###   ########.fr       */
+/*   Created: 2025/03/06 20:01:27 by aalahyan          #+#    #+#             */
+/*   Updated: 2025/03/07 02:32:15 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "parser.h"
 
-bool	verify_syntax_quotes(char *str)
+void	process_prompt(char *prompt)
 {
-	int	i;
+	t_list	*tok_list;
+	t_ast	*ast;
 
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\'')
-		{
-			i++;
-			while (str[i] && str[i] != '\'')
-				i++;
-			if (!str[i])
-				return (false);
-		}
-		if (str[i] == '\"')
-		{
-			i++;
-			while(str[i] && str[i] != '\"')
-				i++;
-			if (!str[i])
-				return (false);
-		}
-		i++;
-	}
-	return (true);
+	tok_list = tokenizer(prompt);
+	if (!tok_list)
+		return ;
+	ft_printf("\n");
+	ast = create_ast(tok_list);
+	debug_ast_centered(ast);
 }
