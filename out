@@ -1,0 +1,10 @@
+Licence
+Makefile
+a.out
+bin
+libft
+minishell
+minishell.c
+minishell.h
+out
+parsing_prompt
