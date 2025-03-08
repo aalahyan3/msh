@@ -6,7 +6,7 @@
 #    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/08 06:52:53 by aaitabde         ###   ########.fr        #
+#    Updated: 2025/03/08 07:20:26 by aaitabde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,13 +42,13 @@ $(BIN):
 libft:
 	make -C libft
 $(BIN)/%.o: ft_func/%.c ft_func/ft_func.h
-	$(CC) $(CFLAGS) $(READLINE_COMPILE) -c $< -o $@
+	$(CC) $(CFLAGS)  -c $< -o $@
 $(BIN)/%.o: %.c minishell.h
-	$(CC) $(CFLAGS) $(READLINE_COMPILE) -c $< -o $@
+	$(CC) $(CFLAGS)  -c $< -o $@
 $(BIN)/%.o: parser/%.c parser/parser.h
-	$(CC) $(CFLAGS) $(READLINE_COMPILE) -c $< -o $@
+	$(CC) $(CFLAGS)  -c $< -o $@
 $(BIN)/%.o: executor/%.c
-	$(CC) $(CFLAGS) $(READLINE_COMPILE) -c $< -o $@
+	$(CC) $(CFLAGS)  -c $< -o $@
 
 clean:
 	make clean -C libft
