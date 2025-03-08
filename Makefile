@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
+#    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/08 11:36:31 by aaitabde         ###   ########.fr        #
+#    Updated: 2025/03/08 17:45:27 by aalahyan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS = #-Wall -Wextra -Werror -fsanitize=address -g
 NAME = minishell
 
 SRCS = 	minishell.c \
@@ -26,7 +26,7 @@ SRCS = 	minishell.c \
 		executor/command_path_utils.c\
 		executor/builtins_echo.c\
 
-READLINE_COMPILE = -I$(shell brew --prefix readline)/include
+# READLINE_COMPILE = -I$(shell brew --prefix readline)/include
 READLINE_LINK = -lreadline -L$(shell brew --prefix readline)/lib
 
 BIN = bin
@@ -44,13 +44,13 @@ $(BIN):
 libft:
 	make -C libft
 $(BIN)/%.o: ft_func/%.c ft_func/ft_func.h
-	$(CC) $(CFLAGS)  -c $< -o $@
+	$(CC) $(READLINE_COMPILE) $(CFLAGS)  -c $< -o $@
 $(BIN)/%.o: %.c minishell.h
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(READLINE_COMPILE) $(CFLAGS) -c $< -o $@
 $(BIN)/%.o: parser/%.c parser/parser.h
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(READLINE_COMPILE) $(CFLAGS) -c $< -o $@
 $(BIN)/%.o: executor/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(READLINE_COMPILE) $(CFLAGS) -c $< -o $@
 clean:
 	make clean -C libft
 	rm -rf $(BIN)

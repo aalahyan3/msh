@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:27:32 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/08 10:56:57 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:43:53 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,17 @@ typedef struct s_token
 typedef struct s_ast
 {
 	t_token				*token;
+	char				**args;   //ls -la token = ls , args = [ls, -la]
 	struct s_ast		*left;
 	struct s_ast		*right;
 }	t_ast;
 
-int		get_word(t_token *token, char *input, int *i);
+int		get_word(t_token **token, char *input, int *i);
 t_list	*tokenizer(char *input);
 char	*get_block(char *input, int *i);
 t_ast	*process_prompt(char *prompt);
 t_ast	*create_ast(t_list *tok_list);
-void 	debug_ast_centered(t_ast *root);///////testing !!!!!!!
+void 	ast_v(t_ast *root);///////testing !!!!!
 
 
 #endif

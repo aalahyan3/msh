@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 20:55:32 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/07 02:40:29 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:27:26 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ t_list	*get_root_node(t_list *tok_list)
 	t_list	*root;
 	int		lowest;
 	int		precedence;
+	int		order;
 
 	curr = tok_list;
 	root = NULL;
@@ -125,10 +126,11 @@ t_ast *create_ast(t_list *tok_list)
 	if (!ast)
 		return (NULL);
 	root = get_root_node(tok_list);
+	printf("root: %s\n", ((t_token *)root->content)->value);
 	if (!root)
 		return (free(ast), NULL);
-	left = extract_left(&tok_list, root);
-	right = tok_list;
+	right = extract_left(&tok_list, root);
+	left = tok_list;
 	ast->token = root->content;
 	ast->left = create_ast(left);
 	ast->right = create_ast(right);

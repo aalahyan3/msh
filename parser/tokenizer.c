@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:27:19 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/07 02:32:49 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:18:10 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,7 @@ void	get_next_token_4(char *input, t_token **token, int *i)
 		*i += 1;
 	}
 	else
-	{
-		if (!get_word(*token, input, i))
-		{
-			free(*token);
-			*token = NULL;
-		}
-	}
+		get_word(token, input, i);
 }
 
 void	get_next_token_3(char *input, t_token **token, int *i)
