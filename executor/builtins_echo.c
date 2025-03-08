@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 10:34:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/08 12:03:00 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/08 12:23:50 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int ft_echo(char **args, char **env)
 	if (args[1] && ft_strncmp(args[1], "-n\0", 3) == 0)
 		n = 1;
 	i += (n == 1);
-	printf("args[%d] = %s\n", i, args[i]);
 	if (!n)
 		write(1, "\n", 2);
 	return (0);

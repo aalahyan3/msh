@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 17:30:36 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/07 17:31:05 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/08 14:51:36 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ static void ft_free(void *p, int clear)
     head = new_node;
 }
 
-void *ft_malloc(size_t size)
+void *ft_malloc(ssize_t size)
 {
-    void *ptr = malloc(size);
-    if (!ptr)
+    if (size < 0)
     {
         ft_free(NULL, 1);
         exit(1);
     }
+    void *ptr = malloc(size);
     ft_free(ptr, 0);
     return ptr;
 }
