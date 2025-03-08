@@ -6,21 +6,24 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 20:01:27 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/08 01:30:45 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/08 06:56:27 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "../minishell.h"
 
-void	process_prompt(char *prompt)
+t_ast	*process_prompt(char *prompt)
 {
 	t_list	*tok_list;
 	t_ast	*ast;
 
 	tok_list = tokenizer(prompt);
 	if (!tok_list)
-		return ;
+		return (NULL);
 	ft_printf("\n");
 	ast = create_ast(tok_list);
-	debug_ast_centered(ast);
+	if (!ast)
+		return (NULL);//free_tok_list(tok_list);
+	// debug_ast_centered(ast);
+	return (ast);
 }

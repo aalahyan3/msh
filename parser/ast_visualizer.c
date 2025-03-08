@@ -321,7 +321,6 @@ void visualize_ast_centered(t_ast *root)
             // Draw connection to left child
             int connect_row = current->level * 2 + 1;
             int from_pos = current->position;
-            int to_pos = child_pos;
             
             // Draw diagonal line
             for (int i = child_pos; i < from_pos; i++) {

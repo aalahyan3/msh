@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 13:52:40 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/07 17:56:45 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/08 06:50:58 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,7 @@
 // 	enum e_tok_type		type;
 // }	t_token;
 
-int		main(void);
-void	process_prompt(char *prompt);
+t_ast	*process_prompt(char *prompt);
 
 
 /*General Utils*/
@@ -68,5 +67,6 @@ void	ft_exit(int n);
 
 /*Executer*/
 
+void		execute_ast(t_ast *ast, char **env);
 pid_t		execute_simple_cmd(char *path, char **args, char **env);
 #endif

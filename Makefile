@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
+#    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/07 01:06:49 by aalahyan         ###   ########.fr        #
+#    Updated: 2025/03/08 06:52:53 by aaitabde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = #-Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 NAME = minishell
 
 SRCS = 	minishell.c \
@@ -20,7 +20,9 @@ SRCS = 	minishell.c \
 		parser/tokenizer.c\
 		parser/ast.c\
 		parser/ast_visualizer.c\
-		parser/token_generator.c
+		parser/token_generator.c\
+		executor/execute_ast.c\
+		executor/execute_simple_cmd.c\
 
 READLINE_COMPILE = -I$(shell brew --prefix readline)/include
 READLINE_LINK = -lreadline -L$(shell brew --prefix readline)/lib
@@ -44,6 +46,8 @@ $(BIN)/%.o: ft_func/%.c ft_func/ft_func.h
 $(BIN)/%.o: %.c minishell.h
 	$(CC) $(CFLAGS) $(READLINE_COMPILE) -c $< -o $@
 $(BIN)/%.o: parser/%.c parser/parser.h
+	$(CC) $(CFLAGS) $(READLINE_COMPILE) -c $< -o $@
+$(BIN)/%.o: executor/%.c
 	$(CC) $(CFLAGS) $(READLINE_COMPILE) -c $< -o $@
 
 clean:

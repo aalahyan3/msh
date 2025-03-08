@@ -4,6 +4,8 @@
 		"__node_handle": "c",
 		"stdlib.h": "c",
 		"minishell.h": "c",
-		"parser.h": "c"
+		"parser.h": "c",
+		"history.h": "c",
+		"stdio.h": "c"
 	}
 }
