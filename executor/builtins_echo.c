@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process_prompt.c                                   :+:      :+:    :+:   */
+/*   builtins_echo.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/06 20:01:27 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/08 10:28:55 by aaitabde         ###   ########.fr       */
+/*   Created: 2025/03/08 10:34:30 by aaitabde          #+#    #+#             */
+/*   Updated: 2025/03/08 12:03:00 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_ast	*process_prompt(char *prompt)
+int ft_echo(char **args, char **env)
 {
-	t_list	*tok_list;
-	t_ast	*ast;
+	int i;
+	int n;
 
-	tok_list = tokenizer(prompt);
-	if (!tok_list)
-		return (NULL);
-	ast = create_ast(tok_list);
-	if (!ast)
-		return (NULL);//free_tok_list(tok_list);
-	debug_ast_centered(ast);
-	return (ast);
+	i = 1;
+	while (args[i])
+		ft_putstr_fd(args[i++], 1);
+	(void)env;
+	n = 0;
+	if (args[1] && ft_strncmp(args[1], "-n\0", 3) == 0)
+		n = 1;
+	i += (n == 1);
+	printf("args[%d] = %s\n", i, args[i]);
+	if (!n)
+		write(1, "\n", 2);
+	return (0);
 }

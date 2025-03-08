@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 13:52:40 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/08 07:58:52 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/08 11:11:41 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "libft/libft.h"
 # include "ft_func/ft_func.h"
 # include "parser/parser.h"
+# include "executor/executor.h"
 # define BLUE   "\033[1m\033[36m"
 # define RESET  "\033[0m"
 
@@ -65,14 +66,4 @@ t_ast	*process_prompt(char *prompt);
 void	*ft_malloc(size_t size);
 void	ft_exit(int n);
 
-/*Executer*/
-
-void		execute_ast(t_ast *ast, char **env);
-pid_t		execute_simple_cmd(char *path, char **args, char **env);
-// cmd path utils
-char	*get_cmd_path(char *full_cmd, char **env);
-
-// free utils
-
-void	free_arr(char **arr);
 #endif

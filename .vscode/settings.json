@@ -6,6 +6,7 @@
 		"minishell.h": "c",
 		"parser.h": "c",
 		"history.h": "c",
-		"stdio.h": "c"
+		"stdio.h": "c",
+		"ios": "c"
 	}
 }

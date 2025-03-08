@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 15:16:58 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/08 08:45:53 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/08 09:49:33 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	execute_simple_cmd(char *path, char **args, char **env)
 	if (pid == 0)
 	{
 		execve(path, args, env);
-		perror("execve");
+		perror("minishell");
 		exit(EXIT_FAILURE);
 	}
 	else

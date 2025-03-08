@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process_prompt.c                                   :+:      :+:    :+:   */
+/*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/06 20:01:27 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/08 10:28:55 by aaitabde         ###   ########.fr       */
+/*   Created: 2025/03/08 11:09:30 by aaitabde          #+#    #+#             */
+/*   Updated: 2025/03/08 11:22:31 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_ast	*process_prompt(char *prompt)
-{
-	t_list	*tok_list;
-	t_ast	*ast;
+/*Executer*/
 
-	tok_list = tokenizer(prompt);
-	if (!tok_list)
-		return (NULL);
-	ast = create_ast(tok_list);
-	if (!ast)
-		return (NULL);//free_tok_list(tok_list);
-	debug_ast_centered(ast);
-	return (ast);
-}
+void		execute_ast(t_ast *ast, char **env);
+pid_t		execute_simple_cmd(char *path, char **args, char **env);
+// cmd path utils
+char	*get_cmd_path(char *full_cmd, char **env);
+
+// free utils
+
+void	free_arr(char **arr);
+
+// builtins
+int ft_echo(char **args, char **env);
