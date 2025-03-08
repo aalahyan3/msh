@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 13:52:40 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/08 06:50:58 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/08 07:58:52 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,10 @@ void	ft_exit(int n);
 
 void		execute_ast(t_ast *ast, char **env);
 pid_t		execute_simple_cmd(char *path, char **args, char **env);
+// cmd path utils
+char	*get_cmd_path(char *full_cmd, char **env);
+
+// free utils
+
+void	free_arr(char **arr);
 #endif

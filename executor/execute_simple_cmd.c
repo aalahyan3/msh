@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 15:16:58 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/08 01:46:02 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/08 08:45:53 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	execute_simple_cmd(char *path, char **args, char **env)
 {
 	pid_t	pid;
-	int		exit_status;
 	int		status;	
 
 	pid = fork();
@@ -33,8 +32,7 @@ int	execute_simple_cmd(char *path, char **args, char **env)
 	else
 	{
 		waitpid(pid, &status, 0);
-		exit_status = WEXITSTATUS(status);
-		return (exit_status);
+		return (WEXITSTATUS(status));
 	}
 	return 1;
 }

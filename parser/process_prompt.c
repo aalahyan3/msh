@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 20:01:27 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/08 06:56:27 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/08 08:55:17 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,9 @@ t_ast	*process_prompt(char *prompt)
 	tok_list = tokenizer(prompt);
 	if (!tok_list)
 		return (NULL);
-	ft_printf("\n");
 	ast = create_ast(tok_list);
 	if (!ast)
 		return (NULL);//free_tok_list(tok_list);
-	// debug_ast_centered(ast);
+	debug_ast_centered(ast);
 	return (ast);
 }

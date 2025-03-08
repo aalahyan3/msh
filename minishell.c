@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 10:16:23 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/08 07:14:25 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/08 07:45:30 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ static void draw_ascii_art(void)
 int main(int ac, char **av, char **env)
 {
 	char *prompt;
-	// int pid;
 	t_ast *ast;
-	// int status;
+
 	(void)ac;
 	(void)av;
 	draw_ascii_art();
@@ -35,7 +34,11 @@ int main(int ac, char **av, char **env)
 	{
 		prompt = readline(BLUE "msh$ " RESET);
 		if (!prompt || ft_strncmp(prompt, "exit", 4) == 0)
-			write(1, "THELLA!\n", 8),  exit(prompt == NULL);
+		{
+			if(!prompt)
+				write(1, "exit\n", 5);
+			exit(prompt == NULL);
+		}
 		add_history(prompt);
 		ast = process_prompt(prompt);
 		execute_ast(ast, env);
