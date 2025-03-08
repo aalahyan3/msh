@@ -1,26 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process_prompt.c                                   :+:      :+:    :+:   */
+/*   execute_simple_cmd.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/06 20:01:27 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/08 01:30:45 by aaitabde         ###   ########.fr       */
+/*   Created: 2025/03/07 15:16:58 by aaitabde          #+#    #+#             */
+/*   Updated: 2025/03/08 01:46:02 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "../minishell.h"
 
-void	process_prompt(char *prompt)
+int	execute_simple_cmd(char *path, char **args, char **env)
 {
-	t_list	*tok_list;
-	t_ast	*ast;
+	pid_t	pid;
+	int		exit_status;
+	int		status;	
 
-	tok_list = tokenizer(prompt);
-	if (!tok_list)
-		return ;
-	ft_printf("\n");
-	ast = create_ast(tok_list);
-	debug_ast_centered(ast);
+	pid = fork();
+	if (pid < 0)
+	{
+		perror("fork");
+		exit(EXIT_FAILURE);
+	}
+	if (pid == 0)
+	{
+		execve(path, args, env);
+		perror("execve");
+		exit(EXIT_FAILURE);
+	}
+	else
+	{
+		waitpid(pid, &status, 0);
+		exit_status = WEXITSTATUS(status);
+		return (exit_status);
+	}
+	return 1;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 13:52:40 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/06 20:03:51 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/07 17:56:45 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,13 @@
 int		main(void);
 void	process_prompt(char *prompt);
 
+
+/*General Utils*/
+
+void	*ft_malloc(size_t size);
+void	ft_exit(int n);
+
+/*Executer*/
+
+pid_t		execute_simple_cmd(char *path, char **args, char **env);
 #endif
