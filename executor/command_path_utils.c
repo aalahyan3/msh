@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 07:57:43 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/08 08:44:17 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:06:56 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,6 @@ void	free_arr(char **arr)
 	}
 	free(arr);
 	arr = NULL;
-}
-
-
-char	*check_direct_path(char **cmd)
-{
-	char	*tmp;
-
-	if (ft_strchr(cmd[0], '/'))
-	{
-		if (access(cmd[0], X_OK) == 0)
-		{
-			tmp = ft_strdup(cmd[0]);
-			free_arr(cmd);
-			return (tmp);
-		}
-		return (NULL);
-	}
-	return (NULL);
 }
 
 static int	get_path_index(char **env)
@@ -86,24 +68,41 @@ static char	*search_in_path(char **cmd, char **env)
 	return (NULL);
 }
 
-char	*get_cmd_path(char *full_cmd, char **env)
+char	*get_cmd_path(char *full_cmd, char **env, int *i)
 {
 	char	**cmd;
 	char	*tmp;
-
+	struct stat st;
+	
 	cmd = ft_split(full_cmd, ' ');
 	if (!cmd)
 		return (NULL);
 	if (ft_strchr(cmd[0], '/'))
 	{
-		if (access(cmd[0], X_OK) == 0)
+		if (stat(cmd[0], &st) == 0)
 		{
-			tmp = ft_strdup(cmd[0]);
-			free_arr(cmd);
-			return (tmp);
+			if (S_ISDIR(st.st_mode))
+			{
+				printf("minishell: %s: is a directory\n", cmd[0]);
+				*i = 0;
+				return(free_arr(cmd), NULL);
+			}
+			if (access(cmd[0], F_OK) == 0)
+			{
+				printf("minishell: %s: Permission denied\n", cmd[0]);
+				*i = 0;
+				return(free_arr(cmd), NULL);
+			}
+			if (access(cmd[0], X_OK) == 0)
+			{
+				tmp = ft_strdup(cmd[0]);
+				return(free_arr(cmd), tmp);
+			}
 		}
-		free_arr(cmd);
-		return (NULL);
+		printf("minishell: %s: No such file or directory\n", cmd[0]);
+		*i = 0;
+		return(free_arr(cmd), NULL);
 	}
+	*i = 1;
 	return (search_in_path(cmd, env));
 }

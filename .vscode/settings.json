@@ -8,6 +8,8 @@
 		"history.h": "c",
 		"stdio.h": "c",
 		"ios": "c",
-		"executor.h": "c"
+		"executor.h": "c",
+		"ostream": "c",
+		"stat.h": "c"
 	}
 }

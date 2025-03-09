@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 11:00:29 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/09 12:42:22 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/09 12:47:49 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int execute_pipe(t_ast *ast, char **env)
 		close(pipefd[0]);
 		close(pipefd[1]);
 		execute_ast(ast->left, env);
-		exit(0);
+		exit(127);
 	}
 	pid2 = fork();
 	if (pid2 == 0)

@@ -1,28 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process_prompt.c                                   :+:      :+:    :+:   */
+/*   builtins_pwd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/06 20:01:27 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/09 15:16:36 by aaitabde         ###   ########.fr       */
+/*   Created: 2025/03/09 16:43:45 by aaitabde          #+#    #+#             */
+/*   Updated: 2025/03/09 17:32:13 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "executor.h"
 
-t_ast	*process_prompt(char *prompt)
+int ft_pwd(char **env)
 {
-	t_list	*tok_list;
-	t_ast	*ast;
-
-	tok_list = tokenizer(prompt);
-	if (!tok_list)
-		return (NULL);
-	ast = create_ast(tok_list);
-	if (!ast)
-		return (NULL);//free_tok_list(tok_list);
-	// debug_ast_centered(ast);
-	return (ast);
+	int		i;
+	char	*cwd;
+	
+	i = 0;
+	cwd = getcwd(NULL, 0);
+	if (cwd)
+	{
+		write(1, cwd, ft_strlen(cwd));
+		write(1, "\n", 1);
+		return (0);
+	}
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], "PWD=", 4) == 0)
+		{
+			write(1, env[i] + 4, ft_strlen(env[i] + 4));
+			write(1, "\n", 1);
+			return (0);
+		}
+		i++;
+	}
+	return(1);
 }

@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 10:16:23 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/09 12:32:57 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/09 15:15:48 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int main(int ac, char **av, char **env)
 	draw_ascii_art();
 	while (1)
 	{
-		prompt = readline(BLUE "msh$ " RESET);
+		prompt = readline("msh$ ");
 		if (!prompt || ft_strncmp(prompt, "exit", 4) == 0)
 		{
 			if(!prompt)
@@ -42,5 +42,6 @@ int main(int ac, char **av, char **env)
 		add_history(prompt);
 		ast = process_prompt(prompt);
 		execute_ast(ast, env);
+		free(prompt);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 11:05:21 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/09 12:24:04 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/09 15:02:02 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ char	**get_args(t_ast *ast)
 	char **args;
 
 	if (!ast || !ast->token || !ast->token->value)
-		return NULL;
+		return (NULL);
 	if (ast->right && ast->right->token && ast->right->token->value)
 	{
-		concatenated = concatenate_tokens(ast);\
+		concatenated = concatenate_tokens(ast);
 		if (!concatenated)
 			return (NULL);
 		args = ft_split(concatenated, ' ');

@@ -6,19 +6,19 @@
 #    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/09 11:57:51 by aaitabde         ###   ########.fr        #
+#    Updated: 2025/03/09 16:57:13 by aaitabde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 NAME = minishell
 
 SRCS = 	minishell.c \
-		ft_func/ft_fork.c\
-		parser/process_prompt.c\
-		parser/tokenizer.c\
-		parser/ast.c\
+		ft_func/ft_fork.c \
+		parser/process_prompt.c \
+		parser/tokenizer.c \
+		parser/ast.c \
 		parser/ast_visualizer.c\
 		parser/token_generator.c\
 		executor/execute_ast.c\
@@ -27,6 +27,8 @@ SRCS = 	minishell.c \
 		executor/builtins_echo.c\
 		executor/execute_pipe.c\
 		executor/get_cmd_arguments.c\
+		executor/free_utils.c\
+		executor/builtins_pwd.c\
 
 READLINE_COMPILE = -I$(shell brew --prefix readline)/include
 READLINE_LINK = -lreadline -L$(shell brew --prefix readline)/lib
