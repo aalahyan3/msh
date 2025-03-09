@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 20:01:27 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/09 20:54:53 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/09 22:55:54 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ t_ast	*process_prompt(char *prompt)
 		ft_lstclear(&tok_list, clear_token);
 		return (NULL);
 	}
+	printf("root key: %d, value: %s\n", ast->token->key, ast->token->value);
+	
 	ast_vw(ast);
 	return (ast);
 }
