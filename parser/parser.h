@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:27:32 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/08 17:43:53 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/09 08:11:52 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,28 @@ enum e_token
 	WILD_CARD//13
 };
 
+
+struct s_redirect
+{
+	char	*filename;
+	int		fd;
+};
+
+typedef struct s_data_redirect
+{
+	struct s_redirect	*arr;
+}	t_data_redirect;
+
 typedef struct s_token
 {
 	char				*value;
+	void				*data;
 	enum e_token		key;
 }	t_token;
 
 typedef struct s_ast
 {
 	t_token				*token;
-	char				**args;   //ls -la token = ls , args = [ls, -la]
 	struct s_ast		*left;
 	struct s_ast		*right;
 }	t_ast;
@@ -54,7 +66,10 @@ t_list	*tokenizer(char *input);
 char	*get_block(char *input, int *i);
 t_ast	*process_prompt(char *prompt);
 t_ast	*create_ast(t_list *tok_list);
-void 	ast_v(t_ast *root);///////testing !!!!!
+void 	ast_vw(t_ast *root);///////testing !!!!!
+void	clear_token(t_token *token);
+t_token	*get_next_token(char *input, int *i);
+char	*get_all_redirections(char *input, int *i);
 
 
 #endif

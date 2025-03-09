@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 18:12:30 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/08 16:37:38 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/08 20:47:45 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	get_exp(t_token **token, char *input, int *i)
 
 	while (input[*i] && !token_symbol(input[*i]))
 		*i += 1;
-	*i += 1;
 	(*token)->value = ft_substr(input, start, *i - start);
 	(*token)->key = WORD;
 	if (!(*token)->value)

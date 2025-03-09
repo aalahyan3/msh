@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:27:19 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/08 17:18:10 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/09 09:38:26 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,24 @@ void	get_next_token_4(char *input, t_token **token, int *i)
 		get_word(token, input, i);
 }
 
-void	get_next_token_3(char *input, t_token **token, int *i)
+int	get_next_token_3(char *input, t_token **token, int *i)
 {
 	if (input[*i] == '>')
 	{
 		if (input[*i + 1] == '>')
 		{
-			(*token)->value = NULL;
+			(*token)->value = ft_strdup(">>");
 			(*token)->key = APPEND;
+			if (!(*token)->value)
+				return (free(*token), *token = NULL, 1);
 			*i += 1;
 		}
 		else
 		{
-			(*token)->value = NULL;
+			(*token)->value = ft_strdup(">");
 			(*token)->key = REDIRECT_OUT;
+			if (!(*token)->value)
+				return (free(*token), *token = NULL);
 		}
 		*i += 1;
 	}
@@ -55,20 +59,24 @@ void	get_next_token_3(char *input, t_token **token, int *i)
 
 }
 
-void	get_next_token_2(char *input, t_token **token, int *i)
+int	get_next_token_2(char *input, t_token **token, int *i)
 {
 	if (input[*i] == '<')
 	{
 		if (input[*i + 1] == '<')
 		{
-			(*token)->value = NULL;
+			(*token)->value = ft_strdup("<<");
 			(*token)->key = HERE_DOC;
+			if (!(*token)->value)
+				return (free(*token), *token = NULL);
 			*i += 1;
 		}
 		else
 		{
-			(*token)->value = NULL;
+			(*token)->value = ft_strdup("<");
 			(*token)->key = REDIRECT_IN;
+			if (!(*token)->value)
+				return (free(*token), *token = NULL);
 		}
 		*i += 1;
 	}
@@ -120,4 +128,5 @@ t_list	*tokenizer(char *input)
 		token = get_next_token(input, &i);
 	}
 	return (tok_list);
+	// return (optimize_list(&tok_list));
 }

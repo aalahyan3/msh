@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 20:55:32 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/08 17:27:26 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/08 20:24:50 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ t_ast	*resolve_block(t_token *token)
 int get_precedence(enum e_token key)
 {
 	if (key == AND)
-		return 1;
+		return -1;
 	if (key == OR)
-		return 2;
+		return -2;
 	if (key == PIPE)
 		return 3;
 	if (key == REDIRECT_IN || key == REDIRECT_OUT || key == APPEND || key == HERE_DOC)
@@ -60,11 +60,13 @@ t_list	*get_root_node(t_list *tok_list)
 	while (curr)
 	{
 		precedence = get_precedence(((t_token *)curr->content)->key);
-		if (precedence < lowest)
+		if (precedence > 0 && precedence < lowest)
 		{
 			root = curr;
 			lowest = precedence;
 		}
+		else if (((t_token *)curr->content)->key == AND || ((t_token *)curr->content)->key == OR)
+			root = curr;
 		curr = curr->next;
 	}
 	return (root);
@@ -126,11 +128,10 @@ t_ast *create_ast(t_list *tok_list)
 	if (!ast)
 		return (NULL);
 	root = get_root_node(tok_list);
-	printf("root: %s\n", ((t_token *)root->content)->value);
 	if (!root)
 		return (free(ast), NULL);
-	right = extract_left(&tok_list, root);
-	left = tok_list;
+	left = extract_left(&tok_list, root);
+	right = tok_list;
 	ast->token = root->content;
 	ast->left = create_ast(left);
 	ast->right = create_ast(right);

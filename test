@@ -6,7 +6,7 @@
 #    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/09 07:05:17 by aalahyan         ###   ########.fr        #
+#    Updated: 2025/03/08 17:45:27 by aalahyan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,6 @@ SRCS = 	minishell.c \
 		parser/tokenizer.c\
 		parser/ast.c\
 		parser/ast_visualizer.c\
-		parser/lexing_helpers.c\
 		parser/token_generator.c\
 		executor/execute_ast.c\
 		executor/execute_simple_cmd.c\
