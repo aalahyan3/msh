@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 10:16:23 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/08 17:36:37 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/09 12:32:57 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static void draw_ascii_art(void)
 
 int main(int ac, char **av, char **env)
 {
-	char *prompt;
-	t_ast *ast;
+	char	*prompt;
+	t_ast	*ast;
 
 	(void)ac;
 	(void)av;
