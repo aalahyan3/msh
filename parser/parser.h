@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:27:32 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/09 08:11:52 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/09 22:37:53 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,24 @@ typedef struct s_data_redirect
 	struct s_redirect	*arr;
 }	t_data_redirect;
 
+// typedef struct s_cmd
+// {
+// 	char	**args;
+// 	int		nb_args;
+// };
+
+// typedef struct s_red
+// {
+// 	char		*file;
+// 	enum e_token type;
+// };
+
+// typedef struct s_command
+// {
+// 	struct s_cmd	*cmd;
+// 	struct s_red	*red;
+// }	t_command;
+
 typedef struct s_token
 {
 	char				*value;
@@ -70,6 +88,7 @@ void 	ast_vw(t_ast *root);///////testing !!!!!
 void	clear_token(t_token *token);
 t_token	*get_next_token(char *input, int *i);
 char	*get_all_redirections(char *input, int *i);
+t_list	*optimize_list(t_list **list);
 
 
 #endif
