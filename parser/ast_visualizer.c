@@ -47,9 +47,9 @@ char *get_token_type(enum e_token key)
         case WORD_DQ: return "WORD_DQ";
         case REDIRECT_IN: return "REDIRECT_IN";
         case REDIRECT_OUT: return "REDIRECT_OUT";
-        case APPEND: return "APPEND";
-        case HERE_DOC: return "HERE_DOC";
-        case HERE_DOC_END: return "HERE_DOC_END";
+        // case APPEND: return "APPEND";
+        // case HERE_DOC: return "HERE_DOC";
+        // case HERE_DOC_END: return "HERE_DOC_END";
         case AND: return "AND";
         case OR: return "OR";
         case WILD_CARD: return "WILD_CARD";
@@ -65,7 +65,7 @@ char *get_token_symbol(enum e_token key)
         case PIPE: return "|";
         case REDIRECT_IN: return "<";
         case REDIRECT_OUT: return ">";
-        case APPEND: return ">>";
+        // case APPEND: return ">>";
         case HERE_DOC: return "<<";
         case AND: return "&&";
         case OR: return "||";

@@ -3,33 +3,31 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
+#    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/10 11:31:25 by aaitabde         ###   ########.fr        #
+#    Updated: 2025/03/10 17:40:29 by aalahyan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
+CFLAGS = -fsanitize=address -g#-Wall -Wextra -Werror 
 NAME = minishell
 
 SRCS = 	minishell.c \
-		ft_func/ft_fork.c \
-		parser/process_prompt.c \
-		parser/tokenizer.c \
-		parser/ast.c \
+		ft_func/ft_fork.c\
+		parser/process_prompt.c\
+		parser/tokenizer.c\
+		parser/ast.c\
 		parser/ast_visualizer.c\
+		parser/ast_v.c\
+		parser/expand_leafs.c\
 		parser/optimize_list.c\
 		parser/token_generator.c\
 		executor/execute_ast.c\
 		executor/execute_simple_cmd.c\
 		executor/command_path_utils.c\
 		executor/builtins_echo.c\
-		executor/execute_pipe.c\
-		executor/get_cmd_arguments.c\
-		executor/free_utils.c\
-		executor/builtins_pwd.c\
 
 # READLINE_COMPILE = -I$(shell brew --prefix readline)/include
 READLINE_LINK = -lreadline -L$(shell brew --prefix readline)/lib

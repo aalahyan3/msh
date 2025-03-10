@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 20:55:32 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/08 20:24:50 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/10 17:06:38 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,20 @@ t_list	*get_root_node(t_list *tok_list)
 	curr = tok_list;
 	root = NULL;
 	lowest = 999;
+	order  = 0;
 	while (curr)
 	{
 		precedence = get_precedence(((t_token *)curr->content)->key);
-		if (precedence > 0 && precedence < lowest)
+		if (((t_token *)curr->content)->key == AND || ((t_token *)curr->content)->key == OR)
+		{
+			root = curr;
+			order = 1;
+		}
+		else if (precedence > 0 && precedence < lowest && !order)
 		{
 			root = curr;
 			lowest = precedence;
 		}
-		else if (((t_token *)curr->content)->key == AND || ((t_token *)curr->content)->key == OR)
-			root = curr;
 		curr = curr->next;
 	}
 	return (root);
