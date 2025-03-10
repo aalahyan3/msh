@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/10 13:57:37 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/10 17:40:22 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,12 @@ int	execute_word(t_ast *ast, char **env)
 	else
 	{
 		if (i)
-			printf("minishell: %s: command not found\n", ast->token->value);
-		free_arr(args);
-		return (127);
+		{
+			write(2, "minishell: ", 11);
+			write(2, ast->token->value, ft_strlen(ast->token->value));
+			write(2, ": command not found\n", 21);
+		}
+		return (free_arr(args), 127);
 	}
 	return (0);
 }
