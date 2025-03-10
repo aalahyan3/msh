@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 07:57:43 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/09 22:35:27 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:04:26 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ char	*get_cmd_path(char *full_cmd, char **env, int *i)
 		{
 			if (S_ISDIR(st.st_mode))
 			{
-				printf("is dir\n");
 				printf("minishell: %s: is a directory\n", cmd[0]);
 				*i = 0;
 				return(free_arr(cmd), NULL);

@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 11:09:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/09 16:57:41 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/10 13:49:24 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,3 +30,4 @@ void	free_arr(char **arr);
 // builtins
 int		ft_echo(char **args, char **env);
 int		ft_pwd(char **env);
+int	    ft_cd(char *path);

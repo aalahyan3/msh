@@ -1,36 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_echo.c                                    :+:      :+:    :+:   */
+/*   builtins_cd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/08 10:34:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/10 13:48:37 by aaitabde         ###   ########.fr       */
+/*   Created: 2025/03/10 13:43:44 by aaitabde          #+#    #+#             */
+/*   Updated: 2025/03/10 14:04:47 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-int ft_echo(char **args, char **env)
+int	ft_cd(char *path)
 {
-	int i;
-	int n;
+	struct stat st;
 
-	i = 1;
-	(void)env;
-	n = 0;
-	if (args[1] && ft_strncmp(args[1], "-n\0", 3) == 0)
-		n = 1;
-	i += (n == 1);
-	while (args[i])
+	if (stat(path, &st) == 0)
 	{
-		ft_putstr_fd(args[i], 1);
-		if (args[i+1])
-			write(1, " ", 1);
-		i++;
+		if (S_ISDIR(st.st_mode))
+		{
+			printf("minishell: %s: Not a directory\n", path);
+			return(free_arr(cmd), NULL);
+		}
+		if (ft_strncmp(path, "..", 2) == 0)
+			return (chdir(trim_last_dir()));
+		
 	}
-	if (!n)
-		write(1, "\n", 2);
-	return (0);
+	ft_printf("minishell: cd: %s: : No such file or directory", path);
+	return (1);
 }
