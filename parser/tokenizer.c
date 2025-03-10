@@ -6,13 +6,70 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:27:19 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/07 02:32:49 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/09 22:38:40 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-void	get_next_token_4(char *input, t_token **token, int *i)
+void	skip_quotes(char *s, int *i, char c)
+{
+	*i += 1;
+	while (s[*i] && s[*i] != c)
+		*i += 1;
+	if (s[*i])
+		*i += 1;
+}
+
+void skip_block(char *s, int *i)
+{
+	int	expected;
+
+	expected = 1;
+	while (s[*i] && expected)
+	{
+		if (s[*i] == '(')
+			expected++;
+		if (s[*i] == ')')
+			expected--;
+		if (s[*i] == '\'' || s[*i] == '"')
+			skip_quotes(s, i, s[*i]);
+		*i += 1;
+	}
+	if ( s[*i] && s[*i] == ')')
+		*i += 1;
+}
+
+char	*get_full_block(char *s, int *i)
+{
+	int	start;
+
+	start = *i;
+	while (s[*i])
+	{
+		if (s[*i] == '\'' || s[*i] == '"')
+			skip_quotes(s, i, s[*i]);
+		if (s[*i] == '(')
+			skip_block(s, i);
+		if (s[*i] == '|' || s[*i] == '&')
+			break ;
+		*i += 1;
+	}
+	return (ft_substr(s, start, *i - start));
+}
+
+void	get_command(char *input, t_token **token, int *i)
+{
+	(*token)->value = get_full_block(input, i);
+	(*token)->key = WORD;
+	if (!(*token)->value)
+	{
+		free(*token);
+		*token = NULL;
+	}
+}
+
+void	get_next_token_2(char *input, t_token **token, int *i)
 {
 	if (input[*i] == '|')
 	{
@@ -30,56 +87,7 @@ void	get_next_token_4(char *input, t_token **token, int *i)
 		*i += 1;
 	}
 	else
-	{
-		if (!get_word(*token, input, i))
-		{
-			free(*token);
-			*token = NULL;
-		}
-	}
-}
-
-void	get_next_token_3(char *input, t_token **token, int *i)
-{
-	if (input[*i] == '>')
-	{
-		if (input[*i + 1] == '>')
-		{
-			(*token)->value = NULL;
-			(*token)->key = APPEND;
-			*i += 1;
-		}
-		else
-		{
-			(*token)->value = NULL;
-			(*token)->key = REDIRECT_OUT;
-		}
-		*i += 1;
-	}
-	else
-		get_next_token_4(input, token, i);
-
-}
-
-void	get_next_token_2(char *input, t_token **token, int *i)
-{
-	if (input[*i] == '<')
-	{
-		if (input[*i + 1] == '<')
-		{
-			(*token)->value = NULL;
-			(*token)->key = HERE_DOC;
-			*i += 1;
-		}
-		else
-		{
-			(*token)->value = NULL;
-			(*token)->key = REDIRECT_IN;
-		}
-		*i += 1;
-	}
-	else
-		get_next_token_3(input, token, i);
+		get_command(input, token ,i);
 }
 
 t_token	*get_next_token(char *input, int *i)
@@ -126,4 +134,5 @@ t_list	*tokenizer(char *input)
 		token = get_next_token(input, &i);
 	}
 	return (tok_list);
+	// return (optimize_list(&tok_list));
 }
