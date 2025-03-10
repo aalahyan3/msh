@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 20:01:27 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/10 17:59:47 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/10 22:51:40 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_ast	*process_prompt(char *prompt)
 	}
 	if (!expand_ast_leafs(ast))
 	{
+		printf("hello\n");
 		clear_ast(&ast);
 		return (NULL);
 	}

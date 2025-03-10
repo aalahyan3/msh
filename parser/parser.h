@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:27:32 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/10 17:49:09 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/10 21:09:19 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ t_token	*get_next_token(char *input, int *i);
 void	clear_ast(t_ast **ast);
 bool	expand_ast_leafs(t_ast *ast);
 void ast_vis(t_ast *ast, int level); ////testing
+void	skip_quotes(char *s, int *i, char c);
 
 
 
