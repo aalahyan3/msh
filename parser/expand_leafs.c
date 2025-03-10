@@ -6,20 +6,20 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 20:48:09 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/10 19:50:09 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/10 22:37:43 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-static void	skip_quotes(char *s, int *i, char c)
-{
-	(*i)++;
-	while (s[*i] && s[*i] != c)
-		(*i)++;
-	if (s[*i] && s[*i] == c)
-		(*i)++;
-}
+// void	skip_quotes(char *s, int *i, char c)
+// {
+// 	(*i)++;
+// 	while (s[*i] && s[*i] != c)
+// 		(*i)++;
+// 	if (s[*i] && s[*i] == c)
+// 		(*i)++;
+// }
 
 void	free_red_array(t_red **red)
 {
@@ -123,7 +123,7 @@ t_red	**get_red_array(char *s)
 	char	*r;
 	int	j;
 	
-	size = get_size(s);
+	size = get_size(s);	
 	if (!size)
 		return (NULL);
 	red = malloc(sizeof(t_red *) * (size + 1));
@@ -148,11 +148,7 @@ t_ast	*get_red_node(t_token *tok)
 {
 	t_ast	*node;
 	t_red	**red;
-	t_reds	*reds;
 	
-	reds = malloc(sizeof(t_reds));
-	if (!reds)
-		return (NULL);
 	red = get_red_array(tok->value);
 	if (!red)
 		return (NULL);
@@ -165,52 +161,120 @@ t_ast	*get_red_node(t_token *tok)
 	node->token = NULL;
 	return (node);
 }
-bool	is_meta_char(char c)
-{
 
+char *get_next_cmd(char *s, int *i)
+{
+    int start;
+
+    while (s[*i])
+    {
+
+        while (s[*i] && (s[*i] == ' ' || s[*i] == '\t' || s[*i] == '<' || s[*i] == '>'))
+        {
+            if (s[*i] == '<' || s[*i] == '>')
+            {
+                (*i)++;
+                while (s[*i] && (s[*i] == ' ' || s[*i] == '\t'))
+                    (*i)++;
+                if (s[*i] == '\'' || s[*i] == '"')
+                    skip_quotes(s, i, s[*i]);
+                else
+                    while (s[*i] && s[*i] != ' ' && s[*i] != '\t' && s[*i] != '<' && s[*i] != '>')
+                        (*i)++;
+            }
+            else
+                (*i)++;
+        }
+        if (s[*i] && s[*i] != '<' && s[*i] != '>')
+        {
+            start = *i;
+            while (s[*i] && s[*i] != ' ' && s[*i] != '\t' && s[*i] != '<' && s[*i] != '>')
+            {
+                if (s[*i] == '\'' || s[*i] == '"')
+                    skip_quotes(s, i, s[*i]);
+                else
+                    (*i)++;
+            }
+            return (ft_substr(s, start, *i - start));
+        }
+    }
+    return NULL;
 }
 
-char	*get_next_cmd(char *s, int *i)
+int	get_size_2(char *s)
 {
-	int	start;
-
-	while (s[*i])
+	int	i;
+	int	size;
+	char	*w;
+	i = 0;
+	size = 0;
+	w = get_next_cmd(s, &i);
+	while (w)
 	{
-		while (s[*i] && (s[*i] == ' ' || s[*i] == '\t'))
-			*i += 1;
-		if (s[*i] && (s[*i] == '\'' || s[*i] == '"'))
-			skip_quotes(s, i, s[*i]);
-		if (s[*i] && s[*i] != '>' && s[*i] != '<')
-		{
-			
-		}
+		free(w);
+		w = get_next_cmd(s, &i);
+		size++;
 	}
+	return (size);
 }
 
 char	**get_cmd_array(char *s)
 {
+	char	**arr;
+	char	*cmd;
+	int		i;
+	int		j;
 
+	arr = malloc(sizeof(char *) * (get_size_2(s) + 1));
+	if (!arr)
+		return (NULL);
+	i = 0;
+	j = 0;
+	cmd = get_next_cmd(s, &i);
+	while (cmd)
+	{
+		arr[j++] = cmd;
+		cmd = get_next_cmd(s, &i);
+	}
+	arr[j] = NULL;
+	return (arr);
+}
+
+void free_2d_array(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+	}
+	free(arr);
+	arr = NULL;
 }
 
 t_ast	*get_cmd_node(t_token *token)
 {
 	t_ast	*node;
 	char	**cmd_array;
-
 	cmd_array = get_cmd_array(token->value);
 	if (!cmd_array)
 		return (NULL);
+	node = malloc(sizeof(t_ast));
+	if (!node)
+		return (free_2d_array(cmd_array), NULL);
+	node->data = cmd_array;
+	node->left = NULL;
+	node->right = NULL;
+	node->token = NULL;
+	return (node);
 }
 
 bool	expand_node(t_ast **ast)
 {
 	(*ast)->left = get_red_node((*ast)->token);
-	if (!(*ast)->left)
-		return (false);
-	// (*ast)->right = get_cmd_node((*ast)->token);
-	// if (!(*ast)->right)
-		// return (false);
-	return (true);
+	(*ast)->right = get_cmd_node((*ast)->token);
+	return ((*ast)->left || (*ast)->right);
 }
 
 bool	expand_ast_leafs(t_ast *ast)

@@ -6,20 +6,46 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 17:28:56 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/10 18:03:32 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/10 22:48:56 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include <stdio.h>
+
+char	*get_action(enum e_red_type t)
+{
+	if (t == OUTPUT)
+		return "write";
+	if (t == INPUT)
+		return "read";
+	if (t == APPEND)
+		return "append";
+	if (t == HERE_DOC)
+		return "here_doc";
+}
 void print_red_files(t_ast *ast)
 {
+	if (!ast)
+		return ;
+	printf("redirections:\n");
 	t_red **red = (t_red **)ast->data;
-	printf("%s\n", red[0]->name);
 	for (int i = 0; red[i] ; i++)
-		printf("file %s , key = %d\n", red[i]->name, red[i]->type);
+		printf("{%d} action: %s file :%s\n", i, get_action(red[i]->type), red[0]->name);
 }
 
+
+void print_cmd_data(t_ast *ast)
+{
+	if (!ast)
+		return ;
+	char	**arr = (char **)(ast->data);
+	if (!arr)
+		return ;
+			printf("command and args:\n");
+	for (int i = 0; arr[i]; i++)
+		printf("argv[%d] = %s\n", i,arr[i]);
+}
 void ast_vis(t_ast *ast, int level)
 {
 	if (!ast)
@@ -27,8 +53,10 @@ void ast_vis(t_ast *ast, int level)
 	t_token *tok = (t_token *)ast->token;
 	if (tok->key == COMMAND)
 	{
-		printf("command data:\n");
+
 		print_red_files(ast->left);
+
+		print_cmd_data(ast->right);
 	}
 	else
 	{
