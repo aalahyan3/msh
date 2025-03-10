@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:27:19 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/09 22:38:40 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/10 17:26:11 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*get_full_block(char *s, int *i)
 void	get_command(char *input, t_token **token, int *i)
 {
 	(*token)->value = get_full_block(input, i);
-	(*token)->key = WORD;
+	(*token)->key = COMMAND;
 	if (!(*token)->value)
 	{
 		free(*token);
@@ -134,5 +134,4 @@ t_list	*tokenizer(char *input)
 		token = get_next_token(input, &i);
 	}
 	return (tok_list);
-	// return (optimize_list(&tok_list));
 }

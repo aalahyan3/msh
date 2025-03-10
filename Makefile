@@ -6,12 +6,12 @@
 #    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/09 20:24:33 by aalahyan         ###   ########.fr        #
+#    Updated: 2025/03/10 17:40:29 by aalahyan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = #-fsanitize=address -g#-Wall -Wextra -Werror 
+CFLAGS = -fsanitize=address -g#-Wall -Wextra -Werror 
 NAME = minishell
 
 SRCS = 	minishell.c \
@@ -20,6 +20,8 @@ SRCS = 	minishell.c \
 		parser/tokenizer.c\
 		parser/ast.c\
 		parser/ast_visualizer.c\
+		parser/ast_v.c\
+		parser/expand_leafs.c\
 		parser/optimize_list.c\
 		parser/token_generator.c\
 		executor/execute_ast.c\

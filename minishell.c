@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 10:16:23 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/08 15:32:44 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/10 17:26:50 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ int main(int ac, char **av, char **env)
 		}
 		add_history(prompt);
 		ast = process_prompt(prompt);
-		execute_ast(ast, env);
+		// execute_ast(ast, env);
 	}
 }
