@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 10:16:23 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/10 11:32:07 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/10 23:00:19 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
+	(void)env;
 	draw_ascii_art();
 	while (1)
 	{
