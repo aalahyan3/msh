@@ -6,11 +6,34 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 20:01:27 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/09 15:16:36 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/10 23:36:55 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	clear_ast(t_ast **ast)
+{
+	t_ast	*left;
+	t_ast	*right;
+
+	left = (*ast)->left;
+	right = (*ast)->right;
+	clear_token((*ast)->token);
+	free(*ast);
+	*ast = NULL;
+	if (left)
+		clear_ast(&left);
+	if (right)
+		clear_ast(&right);
+}
+
+void	clear_token(t_token *token)
+{
+	if (token->value)
+		free(token->value);
+	free(token);
+}
 
 t_ast	*process_prompt(char *prompt)
 {
@@ -22,7 +45,18 @@ t_ast	*process_prompt(char *prompt)
 		return (NULL);
 	ast = create_ast(tok_list);
 	if (!ast)
-		return (NULL);//free_tok_list(tok_list);
-	// debug_ast_centered(ast);
+	{
+		ft_lstclear(&tok_list, NULL);
+		return (NULL);
+	}
+	if (!expand_ast_leafs(ast))
+	{
+		printf("hello\n");
+		clear_ast(&ast);
+		return (NULL);
+	}
+	// debug_ast(ast);
+	ast_vis(ast, 0);
 	return (ast);
 }
+

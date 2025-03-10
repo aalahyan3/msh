@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/10 17:40:22 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/10 23:51:26 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ int	execute_word(t_ast *ast, char **env)
 	char	*path;
 	int		i;
 
-	args = get_args(ast);
+	args = (char **)ast->data;
+	printf("args = %s\n", args[0]);
+	printf("args[0] = %s\n", args[0]);
+	printf("args[1] = %s\n", args[1]);
 	if (is_builtin(args) == 0)
 		return (run_builting(args, env));
 	path = get_cmd_path(ast->token->value, env, &i);
@@ -82,7 +85,7 @@ int	execute_ast(t_ast *ast, char **env)
 		return (execute_pipe(ast, env));
 	if (ast->token->key == AND || ast->token->key == OR)
 		return (execute_logic(ast, env));
-	if (ast->token->key == WORD || ast->token->key == WORD_DQ)
-		return (execute_word(ast, env));
+	if (ast->token->key == COMMAND)
+		return (execute_word(ast->right, env));
 	return (1);
 }

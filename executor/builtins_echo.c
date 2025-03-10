@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 10:34:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/10 22:44:40 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/10 23:18:09 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int ft_echo(char **args, char **env)
 	i = 1;
 	while(args[i])
 	{
-		printf("args[%d] = %s\n", i, args[i]);
 		i++;
 		return(0);
 	}

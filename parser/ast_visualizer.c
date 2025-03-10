@@ -1,437 +1,420 @@
-// Centered Tree Visualization for AST
-
-# include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 # include "parser.h"
-// Helper function to convert token key to string representation
-const char *token_key_to_string(enum e_token key)
+// enum e_token
+// {
+// 	NONE,//0
+// 	BLOCK,//1
+// 	PIPE,//2
+// 	WORD,//3
+// 	WORD_SQ,//4
+// 	WORD_DQ,//5
+// 	REDIRECT_IN,//6
+// 	REDIRECT_OUT,//7
+// 	APPEND,//8
+// 	HERE_DOC,//9
+// 	HERE_DOC_END,//10
+// 	AND,//11
+// 	OR,//12
+// 	WILD_CARD//13
+// };
+
+// typedef struct s_token
+// {
+// 	char				*value;
+// 	enum e_token		key;
+// }	t_token;
+
+// typedef struct s_ast
+// {
+// 	t_token				*token;
+// 	char				**args;   //ls -la token = ls , args = [ls, -la]
+// 	struct s_ast		*left;
+// 	struct s_ast		*right;
+// }	t_ast;
+
+// Function to get token type as string
+char *get_token_type(enum e_token key)
 {
-    switch(key)
+    switch (key)
     {
-        case AND: return "AND";
-        case OR: return "OR";
+        case NONE: return "NONE";
+        case BLOCK: return "BLOCK";
         case PIPE: return "PIPE";
+        case WORD: return "WORD";
+        case WORD_SQ: return "WORD_SQ";
+        case WORD_DQ: return "WORD_DQ";
         case REDIRECT_IN: return "REDIRECT_IN";
         case REDIRECT_OUT: return "REDIRECT_OUT";
-        case APPEND: return "APPEND";
-        case HERE_DOC: return "HERE_DOC";
-        case WORD: return "WORD";
-        case WORD_DQ: return "WORD_DQ";
-        case WORD_SQ: return "WORD_SQ";
+        // case APPEND: return "APPEND";
+        // case HERE_DOC: return "HERE_DOC";
+        // case HERE_DOC_END: return "HERE_DOC_END";
+        case AND: return "AND";
+        case OR: return "OR";
         case WILD_CARD: return "WILD_CARD";
-        default: return "COMMAND";
+        default: return "UNKNOWN";
     }
 }
 
-// Structure to store node information for visualization
-typedef struct s_node_info {
-    char *value;
-    int position;
-    int level;
-} t_node_info;
+// Function to get token symbol
+char *get_token_symbol(enum e_token key)
+{
+    switch (key)
+    {
+        case PIPE: return "|";
+        case REDIRECT_IN: return "<";
+        case REDIRECT_OUT: return ">";
+        // case APPEND: return ">>";
+        case HERE_DOC: return "<<";
+        case AND: return "&&";
+        case OR: return "||";
+        default: return NULL;
+    }
+}
 
-// Calculate the height of the AST
-int ast_height(t_ast *root)
+
+
+// Function to get node content
+char *get_node_content(t_ast *node)
+{
+    static char buffer[256];
+    
+    if (!node || !node->token)
+        return "NULL";
+    
+    char *symbol = get_token_symbol(node->token->key);
+    if (symbol)
+    {
+        snprintf(buffer, sizeof(buffer), "[%s]", symbol);
+    }
+    else if (node->token->value)
+    {
+        snprintf(buffer, sizeof(buffer), "[%s: %s]", get_token_type(node->token->key), node->token->value);
+    }
+    else
+    {
+        snprintf(buffer, sizeof(buffer), "[%s]", get_token_type(node->token->key));
+    }
+    
+    return buffer;
+}
+
+// Function to print arguments if they exist
+// void print_args(t_ast *node)
+// {
+//     if (!node || !node->args || !node->args[0])
+//         return;
+    
+//     printf(" args: [");
+//     int i = 0;
+//     while (node->args[i])
+//     {
+//         printf("%s", node->args[i]);
+//         if (node->args[i + 1])
+//             printf(", ");
+//         i++;
+//     }
+//     printf("]");
+// }
+
+// Function to calculate the height of the tree
+int tree_height(t_ast *root)
 {
     if (!root)
         return 0;
     
-    int left_height = ast_height(root->left);
-    int right_height = ast_height(root->right);
+    int left_height = tree_height(root->left);
+    int right_height = tree_height(root->right);
     
-    return 1 + (left_height > right_height ? left_height : right_height);
+    return (left_height > right_height ? left_height : right_height) + 1;
 }
 
-// Calculate the total number of nodes in the AST
-int count_nodes(t_ast *root)
+// Function to print a horizontal line
+void print_hline(int length)
 {
-    if (!root)
-        return 0;
-    
-    return 1 + count_nodes(root->left) + count_nodes(root->right);
+    for (int i = 0; i < length; i++)
+        printf("-");
 }
 
-// Get the maximum width needed for a node label
-int get_max_label_width(t_ast *root)
+// Function to print spaces
+void print_spaces(int count)
 {
-    if (!root)
-        return 0;
-    
-    int this_width = strlen(token_key_to_string(root->token->key));
-    int left_width = get_max_label_width(root->left);
-    int right_width = get_max_label_width(root->right);
-    
-    int max_width = this_width;
-    if (left_width > max_width) max_width = left_width;
-    if (right_width > max_width) max_width = right_width;
-    
-    return max_width;
+    for (int i = 0; i < count; i++)
+        printf(" ");
 }
-
-// Calculate the horizontal position for each node in a balanced tree layout
-void calculate_positions(t_ast *root, t_node_info *nodes, int *index, int level, int left_pos, int right_pos)
+// Helper function to fill the matrix with the tree representation
+void fill_matrix(char **matrix, t_ast *node, int row, int col, int width)
+{
+    if (!node || row >= 20)
+        return;
+    
+    // Get node content
+    char *content = get_node_content(node);
+    int content_len = strlen(content);
+    
+    // Place the content in the matrix
+    for (int i = 0; i < content_len && col + i < width; i++)
+        matrix[row][col + i] = content[i];
+    
+    // Draw vertical line to children if any
+    if (node->left || node->right)
+        matrix[row + 1][col + content_len/2] = '|';
+    
+    // Calculate positions for children
+    int spacing = 10 * (tree_height(node) - 1);
+    if (spacing < 5) spacing = 5;
+    
+    int left_pos = col - spacing;
+    int right_pos = col + spacing;
+    
+    // Draw horizontal lines to children
+    if (node->left)
+    {
+        for (int i = left_pos + 2; i < col + content_len/2; i++)
+            matrix[row + 2][i] = '-';
+        matrix[row + 2][left_pos + 1] = '+';
+    }
+    
+    if (node->right)
+    {
+        for (int i = col + content_len/2 + 1; i < right_pos; i++)
+            matrix[row + 2][i] = '-';
+        matrix[row + 2][right_pos] = '+';
+    }
+    
+    // Recursively fill in the children
+    if (node->left)
+        fill_matrix(matrix, node->left, row + 3, left_pos, width);
+    
+    if (node->right)
+        fill_matrix(matrix, node->right, row + 3, right_pos, width);
+}
+// Function to visualize the tree with proper spacing
+void print_tree(t_ast *root, int level, int indent, int is_right)
 {
     if (!root)
         return;
     
-    int current = *index;
-    (*index)++;
+    const int SPACING = 4;  // Spacing between levels
+    const int LINE_LENGTH = 4;  // Length of connecting lines
     
-    // Calculate middle position
-    int position = (left_pos + right_pos) / 2;
+    // Calculate new indent for children
+    int new_indent = indent;
     
-    // Store node information
-    nodes[current].value = strdup(token_key_to_string(root->token->key));
-    nodes[current].position = position;
-    nodes[current].level = level;
+    // Recursively print right subtree
+    print_tree(root->right, level + 1, new_indent + SPACING, 1);
     
-    // Process children
-    if (root->left || root->right)
+    // Print current node
+    print_spaces(indent);
+    
+    if (is_right && level > 0)
     {
-        int mid = (left_pos + right_pos) / 2;
-        if (root->left)
-            calculate_positions(root->left, nodes, index, level + 1, left_pos, mid);
-        if (root->right)
-            calculate_positions(root->right, nodes, index, level + 1, mid, right_pos);
+        printf("┌");
+        print_hline(LINE_LENGTH);
     }
+    else if (level > 0)
+    {
+        printf("└");
+        print_hline(LINE_LENGTH);
+    }
+    
+    printf("%s", get_node_content(root));
+    // 
+    printf("\n");
+    
+    // Print connecting line for children if needed
+    if (root->left && root->right)
+    {
+        print_spaces(indent + LINE_LENGTH / 2);
+        printf("│\n");
+    }
+    
+    // Recursively print left subtree
+    print_tree(root->left, level + 1, new_indent + SPACING, 0);
 }
 
-// Function to compare node_info structs for sorting by level
-int compare_node_info(const void *a, const void *b)
-{
-    t_node_info *na = (t_node_info *)a;
-    t_node_info *nb = (t_node_info *)b;
-    
-    if (na->level != nb->level)
-        return na->level - nb->level;
-    
-    return na->position - nb->position;
-}
-
-// Print a centered tree representation of the AST
-void print_centered_tree(t_ast *root)
+// Main visualization function
+void ast_v(t_ast *root)
 {
     if (!root)
     {
-        printf("Empty AST\n");
+        printf("Empty tree\n");
         return;
     }
     
-    // Calculate tree dimensions
-    int height = ast_height(root);
-    int node_count = count_nodes(root);
-    int max_width = get_max_label_width(root);
+    printf("\nAST Tree Visualization:\n");
+    printf("======================\n\n");
     
-    // Create an array to store node information
-    t_node_info *nodes = (t_node_info *)malloc(node_count * sizeof(t_node_info));
-    if (!nodes)
+    print_tree(root, 0, 0, 0);
+    printf("\n");
+}
+
+// Another approach: Print the tree level by level with proper spacing
+void ast_h(t_ast *root)
+{
+    if (!root)
     {
-        printf("Memory allocation failed\n");
+        printf("Empty tree\n");
         return;
     }
-    
-    // Calculate display width based on max depth
-    int display_width = 80; // Default width
-    if (height > 3)
-        display_width = 4 * (1 << (height - 1)) * (max_width + 2);
-    
-    // Calculate positions for each node
-    int index = 0;
-    calculate_positions(root, nodes, &index, 0, 0, display_width);
-    
-    // Sort nodes by level for display
-    qsort(nodes, node_count, sizeof(t_node_info), compare_node_info);
-    
-    printf("\n=== AST Visualization ===\n\n");
-    
-    // Print the tree level by level
-    int current_level = 0;
-    int start_index = 0;
-    
-    for (int i = 0; i < node_count; i++)
+
+    // Queue for level-order traversal
+    t_ast **queue = malloc(1000 * sizeof(t_ast *));
+    if (!queue)
+        return;
+
+    int front = 0, rear = 0;
+    queue[rear++] = root;
+    queue[rear++] = NULL;  // Marker for level end
+
+    int level = 0;
+    int max_height = tree_height(root);
+    const int NODE_WIDTH = 20;  // Width allocated for each node
+
+    printf("\nHorizontal Tree Layout:\n");
+    printf("=====================\n\n");
+
+    while (front < rear)
     {
-        if (nodes[i].level > current_level)
+        t_ast *current = queue[front++];
+
+        if (!current)
         {
-            // Print connections for the current level
-            char *line = (char *)calloc(display_width + 1, sizeof(char));
-            if (!line)
-            {
-                printf("Memory allocation failed\n");
-                break;
-            }
-            memset(line, ' ', display_width);
-            line[display_width] = '\0';
+            printf("\n\n");  // Double newline between levels
             
-            // Draw connections
-            for (int j = start_index; j < i; j++)
+            // Print vertical connections between levels
+            if (front < rear)
             {
-                int pos = nodes[j].position;
-                
-                // Draw connection to left child
-                for (int k = 0; k < node_count; k++)
+                int nodes_at_next_level = 0;
+                int i = front;
+                while (i < rear && queue[i] != NULL)
                 {
-                    if (nodes[k].level == current_level + 1)
-                    {
-                        if (nodes[k].position < pos && nodes[k].position > (pos - 10))
-                        {
-                            for (int l = nodes[k].position + nodes[k].value[0]; l < pos; l++)
-                                line[l] = '-';
-                            line[nodes[k].position] = '/';
-                        }
-                        else if (nodes[k].position > pos && nodes[k].position < (pos + 10))
-                        {
-                            for (int l = pos + strlen(nodes[j].value); l < nodes[k].position; l++)
-                                line[l] = '-';
-                            line[nodes[k].position] = '\\';
-                        }
-                    }
+                    nodes_at_next_level++;
+                    i++;
+                }
+
+                for (int j = 0; j < nodes_at_next_level; j++)
+                {
+                    print_spaces(NODE_WIDTH / 2 + j * NODE_WIDTH);
+                    printf("|\n");
                 }
             }
-            
-            printf("%s\n", line);
-            free(line);
-            
-            // Move to next level
-            printf("\n");
-            current_level = nodes[i].level;
-            start_index = i;
-        }
-        
-        // Print leading spaces
-        for (int j = 0; j < nodes[i].position; j++)
-            printf(" ");
-        
-        // Print the node value
-        printf("%s", nodes[i].value);
-    }
-    
-    printf("\n\n=========================\n\n");
-    
-    // Free allocated memory
-    for (int i = 0; i < node_count; i++)
-        free(nodes[i].value);
-    free(nodes);
-}
 
-// Advanced visualization with better spacing and connections
-void visualize_ast_centered(t_ast *root)
-{
-    if (!root)
-    {
-        printf("Empty AST\n");
-        return;
-    }
-    
-    // Create a 2D array to hold the tree
-    int height = ast_height(root);
-    if (height <= 0) {
-        printf("Invalid tree height\n");
-        return;
-    }
-    
-    int width = (1 << height) * 4; // Width based on potential max nodes
-    
-    char **tree_display = (char **)malloc((2 * height) * sizeof(char *));
-    if (!tree_display)
-    {
-        printf("Memory allocation failed\n");
-        return;
-    }
-    
-    for (int i = 0; i < 2 * height; i++)
-    {
-        tree_display[i] = (char *)malloc((width + 1) * sizeof(char));
-        if (!tree_display[i])
-        {
-            printf("Memory allocation failed\n");
-            // Free previously allocated memory
-            for (int j = 0; j < i; j++)
-                free(tree_display[j]);
-            free(tree_display);
-            return;
-        }
-        // Initialize with spaces
-        for (int j = 0; j < width; j++)
-            tree_display[i][j] = ' ';
-        tree_display[i][width] = '\0';
-    }
-    
-    // Queue for level-order traversal
-    typedef struct s_queue_node {
-        t_ast *node;
-        int level;
-        int position;
-        struct s_queue_node *next;
-    } t_queue_node;
-    
-    t_queue_node *queue = NULL;
-    t_queue_node *tail = NULL;
-    
-    // Add root to queue
-    t_queue_node *root_node = (t_queue_node *)malloc(sizeof(t_queue_node));
-    if (!root_node) {
-        printf("Memory allocation failed\n");
-        for (int i = 0; i < 2 * height; i++)
-            free(tree_display[i]);
-        free(tree_display);
-        return;
-    }
-    
-    root_node->node = root;
-    root_node->level = 0;
-    root_node->position = width / 2;
-    root_node->next = NULL;
-    queue = tail = root_node;
-    
-    // Process the queue
-    while (queue)
-    {
-        // Dequeue
-        t_queue_node *current = queue;
-        queue = queue->next;
-        if (!queue) tail = NULL;
-        
-        if (!current->node) {
-            free(current);
+            if (front < rear)
+                queue[rear++] = NULL;  // Add marker for the next level
+                
+            level++;
             continue;
         }
-        
-        // Get the label for the current node
-        const char *label = token_key_to_string(current->node->token->key);
-        int label_len = strlen(label);
-        
-        // Calculate position to center the label
-        int start_pos = current->position - (label_len / 2);
-        if (start_pos < 0) start_pos = 0;
-        if (start_pos + label_len >= width) start_pos = width - label_len - 1;
-        
-        // Add the label to the display
-        for (int i = 0; i < label_len && (start_pos + i) < width; i++)
-            tree_display[current->level * 2][start_pos + i] = label[i];
-        
-        // Fixed spacing calculation for deeper trees
-        int spacing = width / (2 << (current->level + 1));
-        if (spacing < 3) spacing = 3;
-        
-        // Process left child
-        if (current->node->left)
-        {
-            int child_pos = current->position - spacing;
-            if (child_pos < 0) child_pos = 0;
-            
-            // Draw connection to left child
-            int connect_row = current->level * 2 + 1;
-            int from_pos = current->position;
-            
-            // Draw diagonal line
-            for (int i = child_pos; i < from_pos; i++) {
-                int y = connect_row;
-                int x = i;
-                if (i == child_pos)
-                    tree_display[y][x] = '/';
-                else
-                    tree_display[y][x] = '-';
-            }
-            
-            // Enqueue left child
-            t_queue_node *left_node = (t_queue_node *)malloc(sizeof(t_queue_node));
-            if (left_node) {
-                left_node->node = current->node->left;
-                left_node->level = current->level + 1;
-                left_node->position = child_pos;
-                left_node->next = NULL;
-                
-                if (!queue)
-                    queue = tail = left_node;
-                else {
-                    tail->next = left_node;
-                    tail = left_node;
-                }
-            }
-        }
-        
-        // Process right child
-        if (current->node->right)
-        {
-            int child_pos = current->position + spacing;
-            if (child_pos >= width) child_pos = width - 1;
-            
-            // Draw connection to right child
-            int connect_row = current->level * 2 + 1;
-            int from_pos = current->position;
-            int to_pos = child_pos;
-            
-            // Draw diagonal line
-            for (int i = from_pos + 1; i <= to_pos; i++) {
-                int y = connect_row;
-                int x = i;
-                if (i == to_pos)
-                    tree_display[y][x] = '\\';
-                else
-                    tree_display[y][x] = '-';
-            }
-            
-            // Enqueue right child
-            t_queue_node *right_node = (t_queue_node *)malloc(sizeof(t_queue_node));
-            if (right_node) {
-                right_node->node = current->node->right;
-                right_node->level = current->level + 1;
-                right_node->position = child_pos;
-                right_node->next = NULL;
-                
-                if (!queue)
-                    queue = tail = right_node;
-                else {
-                    tail->next = right_node;
-                    tail = right_node;
-                }
-            }
-        }
-        
-        free(current);
+
+        // Print the node content
+        printf("%-*s", NODE_WIDTH, get_node_content(current));
+
+        // Add children to queue
+        if (current->left)
+            queue[rear++] = current->left;
+        if (current->right)
+            queue[rear++] = current->right;
+    }
+
+    free(queue);
+    printf("\n\n");
+}
+
+// Final version that combines horizontal and vertical representations
+void ast_vw(t_ast *root)
+{
+    if (!root)
+    {
+        printf("Empty tree\n");
+        return;
     }
     
-    // Print the tree
-    printf("\n==== AST Visualization ====\n\n");
-    for (int i = 0; i < 2 * height; i++)
+    // Create a matrix to represent the tree
+    const int MAX_HEIGHT = 20;  // Adjust as needed
+    const int MAX_WIDTH = 200;  // Adjust as needed
+    char **matrix = malloc(MAX_HEIGHT * sizeof(char *));
+    
+    if (!matrix)
+        return;
+        
+    for (int i = 0; i < MAX_HEIGHT; i++)
     {
-        // Check if line has content
+        matrix[i] = malloc(MAX_WIDTH * sizeof(char));
+        if (!matrix[i])
+        {
+            for (int j = 0; j < i; j++)
+                free(matrix[j]);
+            free(matrix);
+            return;
+        }
+        
+        // Initialize with spaces
+        for (int j = 0; j < MAX_WIDTH; j++)
+            matrix[i][j] = ' ';
+    }
+    
+    // Fill the matrix with the tree representation
+    int root_pos = MAX_WIDTH / 2;
+    fill_matrix(matrix, root, 0, root_pos, MAX_WIDTH);
+    
+    // Print the matrix
+    printf("\nTree Visualization (Wide Format):\n");
+    printf("===============================\n\n");
+    
+    for (int i = 0; i < MAX_HEIGHT; i++)
+    {
         int has_content = 0;
-        for (int j = 0; j < width; j++) {
-            if (tree_display[i][j] != ' ') {
+        for (int j = 0; j < MAX_WIDTH; j++)
+        {
+            if (matrix[i][j] != ' ')
+            {
                 has_content = 1;
                 break;
             }
         }
         
-        if (!has_content) continue;
-        
-        // Find start and end positions to trim spaces
-        int start = 0;
-        while (start < width && tree_display[i][start] == ' ')
-            start++;
+        if (!has_content)
+            break;
             
-        int end = width - 1;
-        while (end >= 0 && tree_display[i][end] == ' ')
-            end--;
-            
-        if (start <= end) {
-            for (int j = 0; j < start; j++)
-                printf(" ");
-            for (int j = start; j <= end; j++)
-                printf("%c", tree_display[i][j]);
-            printf("\n");
-        }
+        for (int j = 0; j < MAX_WIDTH; j++)
+            printf("%c", matrix[i][j]);
+        printf("\n");
     }
-    printf("\n============================\n\n");
     
-    // Free allocated memory
-    for (int i = 0; i < 2 * height; i++)
-        free(tree_display[i]);
-    free(tree_display);
+    // Free the matrix
+    for (int i = 0; i < MAX_HEIGHT; i++)
+        free(matrix[i]);
+    free(matrix);
+    printf("\n-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n\n");
 }
 
-// Main visualization function that uses the centered approach
-void debug_ast_centered(t_ast *root)
-{
-    visualize_ast_centered(root);
-}
+
+
+// Function to demonstrate usage
+// void example_usage()
+// {
+//     // Create a sample tree
+//     t_token token_and = {NULL, AND};
+//     t_token token_ls = {strdup("ls"), WORD};
+//     t_token token_pipe = {NULL, PIPE};
+//     t_token token_grep = {strdup("grep"), WORD};
+//     t_token token_cat = {strdup("cat"), WORD};
+//     
+//     char *args_ls[] = {strdup("ls"), strdup("-la"), NULL};
+//     char *args_grep[] = {strdup("grep"), strdup("file"), NULL};
+//     char *args_cat[] = {strdup("cat"), strdup("file.txt"), NULL};
+//     
+//     t_ast node_cat = {&token_cat, args_cat, NULL, NULL};
+//     t_ast node_grep = {&token_grep, args_grep, NULL, NULL};
+//     t_ast node_pipe = {&token_pipe, NULL, &node_cat, &node_grep};
+//     t_ast node_ls = {&token_ls, args_ls, NULL, NULL};
+//     t_ast node_and = {&token_and, NULL, &node_ls, &node_pipe};
+//     
+//     // Visualize the tree
+//     visualize_ast(&node_and);
+//     
+//     // Alternative visualization
+//     visualize_ast_wide(&node_and);
+// }
