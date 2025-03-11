@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:27:32 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/11 15:46:30 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/11 17:43:22 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_cmd_tok
 typedef struct s_red
 {
 	char			*name;
-	enum e_red_type type;
+	enum e_red_type type; // INPU
 }	t_red;
 
 typedef struct s_reds
