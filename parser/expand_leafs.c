@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 20:48:09 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/10 22:37:43 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:14:14 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,6 +267,7 @@ t_ast	*get_cmd_node(t_token *token)
 	node->left = NULL;
 	node->right = NULL;
 	node->token = NULL;
+	
 	return (node);
 }
 
@@ -274,7 +275,7 @@ bool	expand_node(t_ast **ast)
 {
 	(*ast)->left = get_red_node((*ast)->token);
 	(*ast)->right = get_cmd_node((*ast)->token);
-	return ((*ast)->left || (*ast)->right);
+	return ((*ast)->right);
 }
 
 bool	expand_ast_leafs(t_ast *ast)
@@ -283,10 +284,7 @@ bool	expand_ast_leafs(t_ast *ast)
 	{
 		return (expand_node(&ast));
 	}
-	if (ast->left)
-		return (expand_ast_leafs(ast->left));
-	if (ast->right)
-		return (expand_ast_leafs(ast->right));
+		return (expand_ast_leafs(ast->left) && expand_ast_leafs(ast->right));
 	return (true);
 }
 
