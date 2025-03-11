@@ -6,23 +6,49 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 10:34:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/08 16:00:56 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/10 23:18:09 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "executor.h"
+
+int	check_for_n_flag(char **arg)
+{
+	int i;
+	size_t n;
+
+	i = 1;
+	n = 1;
+	while(arg[i] && arg[i][0] == '-' && arg[i][1] == 'n')
+	{
+		while (arg[i][n] == 'n')
+			n++;
+		if (arg[i][n] != '\0')
+			return (i);
+		i++;
+	}
+	return (i);
+}
 
 int ft_echo(char **args, char **env)
 {
 	int i;
-	int n;
+	int index;
 
 	i = 1;
+	while(args[i])
+	{
+		i++;
+		return(0);
+	}
 	(void)env;
-	n = 0;
-	if (args[1] && ft_strncmp(args[1], "-n\0", 3) == 0)
-		n = 1;
-	i += (n == 1);
+	if (!args[i])
+	{
+		write(1, "\n", 2);
+		return (0);
+	}
+	i = check_for_n_flag(args);
+	index = i;
 	while (args[i])
 	{
 		ft_putstr_fd(args[i], 1);
@@ -30,7 +56,7 @@ int ft_echo(char **args, char **env)
 			write(1, " ", 1);
 		i++;
 	}
-	if (!n)
+	if(index == 1)
 		write(1, "\n", 2);
 	return (0);
 }

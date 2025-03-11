@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/09 17:01:01 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/11 14:12:45 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ int is_builtin(char **args)
 {
 	if (ft_strncmp(args[0], "echo\0", 5) == 0)
 		return (0);
-	if (args[0] && ft_strncmp(args[0], "pwd", 3) == 0)
+	else if (args[0] && ft_strncmp(args[0], "pwd", 3) == 0)
+		return (0);
+	else if (args[0] && ft_strncmp(args[0], "cd", 2) == 0)
 		return (0);
 	return (-1);
 }
@@ -27,6 +29,8 @@ int	run_builting (char **args, char **env)
  		return (ft_echo(args, env));
 	if (args[0] && ft_strncmp(args[0], "pwd", 3) == 0)
 		return (ft_pwd(env));
+	if (args[0] && ft_strncmp(args[0], "cd", 2) == 0)
+		return (ft_cd(args[1]));
 	return (1);
 }
 
@@ -36,10 +40,10 @@ int	execute_word(t_ast *ast, char **env)
 	char	*path;
 	int		i;
 
-	args = get_args(ast);
+	args = (char **)ast->data;
 	if (is_builtin(args) == 0)
 		return (run_builting(args, env));
-	path = get_cmd_path(ast->token->value, env, &i);
+	path = get_cmd_path(args[0], env, &i);
 	if (path)
 	{
 		execute_simple_cmd(path, args, env);
@@ -49,9 +53,12 @@ int	execute_word(t_ast *ast, char **env)
 	else
 	{
 		if (i)
-			printf("minishell: %s: command not found\n", ast->token->value);
-		free_arr(args);
-		return (127);
+		{
+			write(2, "minishell: ", 11);
+			write(2, args[0], ft_strlen(args[0]));
+			write(2, ": command not found\n", 21);
+		}
+		return (free_arr(args), 127);
 	}
 	return (0);
 }
@@ -75,7 +82,7 @@ int	execute_ast(t_ast *ast, char **env)
 		return (execute_pipe(ast, env));
 	if (ast->token->key == AND || ast->token->key == OR)
 		return (execute_logic(ast, env));
-	if (ast->token->key == WORD || ast->token->key == WORD_DQ)
-		return (execute_word(ast, env));
+	if (ast->token->key == COMMAND)
+		return (execute_word(ast->right, env));
 	return (1);
 }
