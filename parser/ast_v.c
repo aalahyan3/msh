@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_v.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 17:28:56 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/10 22:48:56 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/11 15:56:04 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,7 @@ void ast_vis(t_ast *ast, int level)
 	t_token *tok = (t_token *)ast->token;
 	if (tok->key == COMMAND)
 	{
-
 		print_red_files(ast->left);
-
 		print_cmd_data(ast->right);
 	}
 	else
@@ -63,6 +61,5 @@ void ast_vis(t_ast *ast, int level)
 		printf("root = %d\n", ((t_token *)ast->token)->key);
 		ast_vis(ast->left, level++);
 		int	l = level--;
-		ast_vis(ast->right, level--);
 	}
 }

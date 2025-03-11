@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/11 14:12:45 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/11 15:51:40 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	run_builting (char **args, char **env)
 		return (ft_pwd(env));
 	if (args[0] && ft_strncmp(args[0], "cd", 2) == 0)
 		return (ft_cd(args[1]));
+	printf("ended\n");
 	return (1);
 }
 
@@ -40,9 +41,12 @@ int	execute_word(t_ast *ast, char **env)
 	char	*path;
 	int		i;
 
+	if (!ast)
+		return (1);
 	args = (char **)ast->data;
 	if (is_builtin(args) == 0)
 		return (run_builting(args, env));
+	printf("here\n");
 	path = get_cmd_path(args[0], env, &i);
 	if (path)
 	{
