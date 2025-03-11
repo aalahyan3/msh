@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:27:32 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/10 21:09:19 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/11 15:46:30 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ enum e_red_type
 	HERE_DOC
 };
 
+
+typedef struct s_cmd_tok
+{
+	char	*str;
+	int		*quotes;
+}	t_cmd_tok;
 
 
 typedef struct s_red
