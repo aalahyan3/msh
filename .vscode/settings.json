@@ -9,6 +9,10 @@
 		"stdio.h": "c",
 		"ios": "c",
 		"libft.h": "c",
+<<<<<<< HEAD
 		"TEST.C": "cpp"
+=======
+		"executor.h": "c"
+>>>>>>> 4f80f63baa1ca5f48267b135b650faffa67f5ec9
 	}
 }

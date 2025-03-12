@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 10:34:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/10 23:18:09 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/11 15:40:32 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,6 @@ int ft_echo(char **args, char **env)
 	int index;
 
 	i = 1;
-	while(args[i])
-	{
-		i++;
-		return(0);
-	}
 	(void)env;
 	if (!args[i])
 	{
