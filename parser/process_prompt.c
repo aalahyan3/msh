@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_prompt.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 20:01:27 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/12 03:45:36 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:16:46 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	clear_token(t_token *token)
 	free(token);
 }
 
-t_ast	*process_prompt(char *prompt)
+t_ast	*process_prompt(char *prompt, t_list *env)
 {
 	t_list	*tok_list;
 	t_ast	*ast;
@@ -49,7 +49,7 @@ t_ast	*process_prompt(char *prompt)
 		ft_lstclear(&tok_list, NULL);
 		return (NULL);
 	}
-	if (!expand_ast_leafs(ast))
+	if (!expand_ast_leafs(ast, env))
 	{
 		clear_ast(&ast);
 		return (NULL);

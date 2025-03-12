@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 21:22:40 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/11 21:40:48 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:05:06 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ struct s_env	*make_env_node(char *var)
 		return (free(key), free(value), NULL);
 	env->key = key;
 	env->value = value;
+	env->defined = true;
 	return (env);
 }
 
@@ -57,5 +58,6 @@ t_list	*build_env(char **env_array)
 		ft_lstadd_back(&env, ft_lstnew(make_env_node(env_array[i])));
 		i++;
 	}
-	return ()
+	ft_lstadd_back(&env, ft_lstnew(make_env_node("LAST_EXIT=0")));
+	return (env);
 }

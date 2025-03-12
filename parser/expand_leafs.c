@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:08:42 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/12 16:16:28 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:25:00 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,10 +253,11 @@ void free_2d_array(char **arr)
 	arr = NULL;
 }
 
-t_ast	*get_cmd_node(t_token *token)
+t_ast	*get_cmd_node(t_token *token, t_list *env)
 {
 	t_ast	*node;
 	char	**cmd_array;
+	get_cmd_arr(token->value, env);
 	cmd_array = get_cmd_array(token->value);
 	if (!cmd_array)
 		return (NULL);
@@ -271,20 +272,20 @@ t_ast	*get_cmd_node(t_token *token)
 	return (node);
 }
 
-bool	expand_node(t_ast **ast)
+bool	expand_node(t_ast **ast, t_list *env)
 {
 	(*ast)->left = get_red_node((*ast)->token);
-	(*ast)->right = get_cmd_node((*ast)->token);
+	(*ast)->right = get_cmd_node((*ast)->token, env);
 	return ((*ast)->right);
 }
 
-bool	expand_ast_leafs(t_ast *ast)
+bool	expand_ast_leafs(t_ast *ast, t_list *env)
 {
 	if ((enum e_red_type)((t_token *)(ast->token)->key) == COMMAND)
 	{
-		return (expand_node(&ast));
+		return (expand_node(&ast, env));
 	}
-		return (expand_ast_leafs(ast->left) && expand_ast_leafs(ast->right));
+		return (expand_ast_leafs(ast->left, env) && expand_ast_leafs(ast->right, env));
 	return (true);
 }
 

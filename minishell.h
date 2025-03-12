@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 13:52:40 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/12 00:28:58 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:16:25 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include "ft_func/ft_func.h"
 # include "parser/parser.h"
 # include "executor/executor.h"
+# include "env/env.h"
+
 # define BLUE   "\033[1m\033[36m"
 # define RESET  "\033[0m"
 
@@ -60,7 +62,7 @@
 // 	enum e_tok_type		type;
 // }	t_token;
 
-t_ast	*process_prompt(char *prompt);
+t_ast	*process_prompt(char *prompt, t_list *env);
 
 
 /*General Utils*/

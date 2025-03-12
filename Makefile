@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
+#    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/11 23:01:20 by aaitabde         ###   ########.fr        #
+#    Updated: 2025/03/12 17:27:29 by aalahyan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,13 +16,14 @@ NAME = minishell
 
 SRCS = 	minishell.c \
 		ft_func/ft_fork.c\
+		env/build_env.c\
 		parser/process_prompt.c\
 		parser/tokenizer.c\
 		parser/ast.c\
 		parser/ast_visualizer.c\
 		parser/ast_v.c\
 		parser/expand_leafs.c\
-		parser/optimize_list.c\
+		parser/quotes_expansion.c\
 		parser/token_generator.c\
 		executor/execute_ast.c\
 		executor/execute_pipe.c\
@@ -57,6 +58,8 @@ $(BIN)/%.o: %.c minishell.h
 $(BIN)/%.o: parser/%.c parser/parser.h
 	$(CC) $(READLINE_COMPILE) $(CFLAGS) -c $< -o $@
 $(BIN)/%.o: executor/%.c
+	$(CC) $(READLINE_COMPILE) $(CFLAGS) -c $< -o $@
+$(BIN)/%.o: env/%.c
 	$(CC) $(READLINE_COMPILE) $(CFLAGS) -c $< -o $@
 clean:
 	make clean -C libft
