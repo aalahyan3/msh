@@ -12,7 +12,47 @@
 
 #include "parser.h"
 
+char *get_next_cmd(char *s, int *i)
+{
+    int start;
+
+    while (s[*i])
+    {
+
+        while (s[*i] && (s[*i] == ' ' || s[*i] == '\t' || s[*i] == '<' || s[*i] == '>'))
+        {
+            if (s[*i] == '<' || s[*i] == '>')
+            {
+                (*i)++;
+                while (s[*i] && (s[*i] == ' ' || s[*i] == '\t'))
+                    (*i)++;
+                if (s[*i] == '\'' || s[*i] == '"')
+                    skip_quotes(s, i, s[*i]);
+                else
+                    while (s[*i] && s[*i] != ' ' && s[*i] != '\t' && s[*i] != '<' && s[*i] != '>')
+                        (*i)++;
+            }
+            else
+                (*i)++;
+        }
+        if (s[*i] && s[*i] != '<' && s[*i] != '>')
+        {
+            start = *i;
+            while (s[*i] && s[*i] != ' ' && s[*i] != '\t' && s[*i] != '<' && s[*i] != '>')
+            {
+                if (s[*i] == '\'' || s[*i] == '"')
+                    skip_quotes(s, i, s[*i]);
+                else
+                    (*i)++;
+            }
+            return (ft_substr(s, start, *i - start));
+        }
+    }
+    return NULL;
+}
+
+
 char	**get_cmd_array(char *s)
 {
-	
+	get_next_
 }

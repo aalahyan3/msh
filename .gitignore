@@ -2,3 +2,4 @@ bin/
 .vscode/
 libft/bin
 minishell
+libft/libft.a
