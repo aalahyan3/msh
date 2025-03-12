@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/12 04:46:43 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:51:23 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,102 +77,6 @@ int	execute_logic(t_ast *ast, char **env)
 }
 
 #include "../minishell.h"
-
-// void handle_here_doc(t_red *redirect)
-// {
-// 	int pipefd[2];
-// 	if (pipe(pipefd) == -1)
-// 	{
-// 		perror("pipe");
-// 		exit(1);
-// 	}
-// 	char *line;
-// 	while (1)
-// 	{
-// 		line = readline(">");
-// 		printf("redirect->name == %s\n", redirect->name);
-// 		printf("line == %s\n", line);
-// 		exit(0);
-// 		if (ft_strncmp(line, redirect->name, ft_strlen(redirect->name)) == 0 && 
-// 			(ft_strlen(redirect->name) == ft_strlen(line)))
-// 			break;
-// 		write(pipefd[1], line, strlen(line));
-// 		free(line);
-// 	}
-// 	free(line);
-// 	close(pipefd[1]);
-// 	dup2(pipefd[0], STDIN_FILENO);
-// }
-
-// void handle_input_redirection(t_red *redirect)
-// {
-// 	int fd = open(redirect->name, O_RDONLY);
-// 	if (fd < 0)
-// 	{
-// 		perror("minishell :");
-// 		exit(1);
-// 	}
-// 	dup2(fd, STDIN_FILENO);
-// 	close(fd);
-// }
-
-// void handle_output_redirection(t_red *redirect, int flags)
-// {
-// 	int fd = open(redirect->name, flags, 0644);
-// 	if (fd < 0)
-// 	{
-// 		perror("minishell :");
-// 		exit(1);
-// 	}
-// 	dup2(fd, STDOUT_FILENO);
-// 	close(fd);
-// }
-
-// void handle_redirections_child(t_red **redirects, int red_count)
-// {
-// 	for (int i = 0; i < red_count; i++)
-// 	{
-// 		if (redirects[i]->type == HERE_DOC)
-// 			handle_here_doc(redirects[i]);
-// 		else if (redirects[i]->type == INPUT)
-// 			handle_input_redirection(redirects[i]);
-// 		else if (redirects[i]->type == OUTPUT)
-// 			handle_output_redirection(redirects[i], O_WRONLY | O_CREAT | O_TRUNC);
-// 		else if (redirects[i]->type == APPEND)
-// 			handle_output_redirection(redirects[i], O_WRONLY | O_CREAT | O_APPEND);
-// 	}
-// }
-
-// int handle_redirections(t_ast *ast, char **env)
-// {
-// 	t_red	**redirects;
-// 	int		red_count;
-// 	pid_t	pid;
-// 	int		status;
-
-// 	red_count = 0;
-// 	redirects = (t_red **)ast->left->data;
-// 	while (redirects[red_count])
-// 		red_count++;
-// 	pid = fork();
-// 	if (pid == -1)
-// 	{
-// 		perror("fork");
-// 		return -1;
-// 	}
-// 	if (pid == 0)
-// 	{
-// 		handle_redirections_child(redirects, red_count);
-// 		exit(execute_word(ast->right, env));
-// 	}
-// 	else
-// 	{
-// 		waitpid(pid, &status, 0);
-// 		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
-// 			return (-1);
-// 	}
-// 	return 0;
-// }
 int handle_redirections(t_ast *ast, char **env)
 {
 	t_red **redirects = (t_red **)ast->left->data;
@@ -210,7 +114,7 @@ int handle_redirections(t_ast *ast, char **env)
 					char *tmp = line;
 					line = ft_strjoin(line, "\n");
 					free(tmp);
-					write(pipefd[1], line, strlen(line));
+					write(pipefd[1], line, ft_strlen(line));
 					free(line);
 				}
 				free(line);

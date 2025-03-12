@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:27:19 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/11 16:14:00 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:38:41 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ t_token	*get_next_token(char *input, int *i)
 {
 	t_token	*token;
 
-	while (input[*i] && (input[*i] == ' ' || input[*i] == '\t'))
+	while (input[*i] && (input[*i] == ' ' || input[*i] == '\t'))//\n
 		*i += 1;
 	if (!input[*i])
 		return (NULL);
