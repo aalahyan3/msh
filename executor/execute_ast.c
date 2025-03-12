@@ -6,11 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/03/11 17:48:28 by aalahyan         ###   ########.fr       */
-=======
-/*   Updated: 2025/03/12 04:46:43 by aaitabde         ###   ########.fr       */
->>>>>>> 4f80f63baa1ca5f48267b135b650faffa67f5ec9
+/*   Updated: 2025/03/12 16:13:06 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +210,7 @@ int handle_redirections(t_ast *ast, char **env)
 					char *tmp = line;
 					line = ft_strjoin(line, "\n");
 					free(tmp);
-					write(pipefd[1], line, strlen(line));
+					write(pipefd[1], line, ft_strlen(line));
 					free(line);
 				}
 				free(line);

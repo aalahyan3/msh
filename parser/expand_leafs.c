@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_leafs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/08 20:48:09 by aalahyan          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/03/11 17:56:51 by aalahyan         ###   ########.fr       */
-=======
-/*   Updated: 2025/03/11 17:53:59 by aaitabde         ###   ########.fr       */
->>>>>>> 4f80f63baa1ca5f48267b135b650faffa67f5ec9
+/*   Created: 2025/03/12 16:08:42 by aalahyan          #+#    #+#             */
+/*   Updated: 2025/03/12 16:16:28 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +50,7 @@ char	*get_next_red(char *s, int *i)
 				*i += 1;
 			if (s[*i] == '\'' || s[*i] == '"')
 				skip_quotes(s, i, s[*i]);
-			while (s[*i] && s[*i] != ' ' && s[*i] != '\t')
+			while (s[*i] && s[*i] != ' ' && s[*i] != '\t' && s[*i] != '<' && s[*i] != '>')
 				*i += 1;
 			return (ft_substr(s, start, *i - start));
 		}
