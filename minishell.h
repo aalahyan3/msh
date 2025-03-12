@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 13:52:40 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/09 16:04:11 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/12 00:28:58 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <readline/readline.h>
 # include <stdbool.h>
 # include <sys/stat.h>
+# include <fcntl.h>
 
 # include "libft/libft.h"
 # include "ft_func/ft_func.h"
