@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 10:16:23 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/11 17:54:09 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/12 04:41:17 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ int main(int ac, char **av, char **env)
 				write(1, "exit\n", 5);
 			exit(prompt == NULL);
 		}
-		int fd = open("minishell_1", O_CREAT | O_RDWR, 0644);
-		ft_putstr_fd(prompt, fd);
 		add_history(prompt);
 		ast = process_prompt(prompt);
 		execute_ast(ast, env);
