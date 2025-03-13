@@ -52,15 +52,14 @@ static char *get_next_cmd(char *s, int *i)
 }
 
 
+
+
 char	**get_cmd_arr(char *s, t_list *env)
 {
-	char	*cmd;
-	int	i = 0;
-	cmd = get_next_cmd(s, &i);
-	while (cmd)
-	{
-		printf("%s\n", cmd);
-		free(cmd);
-		cmd = get_next_cmd(s, &i);
-	}
+	char	**expanded_vars;
+
+	expanded_vars = expand_vars(s, env);
+	if (!expanded_vars)
+		return (NULL);
+	return (expanded_vars);
 }

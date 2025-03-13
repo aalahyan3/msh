@@ -1,13 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   free_utils.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/09 14:56:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/09 15:04:17 by aaitabde         ###   ########.fr       */
+/*   Created: 2025/03/12 21:40:20 by aalahyan          #+#    #+#             */
+/*   Updated: 2025/03/12 21:43:03 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
+#ifndef FREE_UTILS_H
+# define FREE_UTILS_H
+
+# include <stdlib.h>
+
+void	free_2d_array(char **arr);
+
+#endif

@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:08:42 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/12 17:25:00 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/12 22:09:04 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,25 +240,13 @@ char	**get_cmd_array(char *s)
 	return (arr);
 }
 
-void free_2d_array(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-	}
-	free(arr);
-	arr = NULL;
-}
 
 t_ast	*get_cmd_node(t_token *token, t_list *env)
 {
 	t_ast	*node;
 	char	**cmd_array;
-	get_cmd_arr(token->value, env);
-	cmd_array = get_cmd_array(token->value);
+	cmd_array =  get_cmd_arr(token->value, env);
+	// cmd_array = get_cmd_array(token->value);
 	if (!cmd_array)
 		return (NULL);
 	node = malloc(sizeof(t_ast));

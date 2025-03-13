@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:27:32 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/12 17:30:11 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/12 21:42:12 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <stdio.h>
 # include "../libft/libft.h"
 # include "../env/env.h"
+# include "../free_utils/free_utils.h"
+
 enum e_token
 {
 	NONE,
@@ -88,7 +90,7 @@ bool	expand_ast_leafs(t_ast *ast, t_list *env);
 void ast_vis(t_ast *ast, int level); ////testing
 void	skip_quotes(char *s, int *i, char c);
 char	**get_cmd_arr(char *s, t_list *env);
-
+char	**expand_vars(char *s, t_list *env);
 
 
 #endif

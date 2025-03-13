@@ -6,7 +6,7 @@
 #    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/12 17:27:29 by aalahyan         ###   ########.fr        #
+#    Updated: 2025/03/12 21:41:47 by aalahyan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,12 +17,14 @@ NAME = minishell
 SRCS = 	minishell.c \
 		ft_func/ft_fork.c\
 		env/build_env.c\
+		free_utils/free_2d_array.c\
 		parser/process_prompt.c\
 		parser/tokenizer.c\
 		parser/ast.c\
 		parser/ast_visualizer.c\
 		parser/ast_v.c\
 		parser/expand_leafs.c\
+		parser/expand_vars.c\
 		parser/quotes_expansion.c\
 		parser/token_generator.c\
 		executor/execute_ast.c\
@@ -60,6 +62,8 @@ $(BIN)/%.o: parser/%.c parser/parser.h
 $(BIN)/%.o: executor/%.c
 	$(CC) $(READLINE_COMPILE) $(CFLAGS) -c $< -o $@
 $(BIN)/%.o: env/%.c
+	$(CC) $(READLINE_COMPILE) $(CFLAGS) -c $< -o $@
+$(BIN)/%.o: free_utils/%.c
 	$(CC) $(READLINE_COMPILE) $(CFLAGS) -c $< -o $@
 clean:
 	make clean -C libft

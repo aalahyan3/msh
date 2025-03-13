@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 13:52:40 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/12 17:16:25 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/12 22:31:43 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,12 @@
 // 	enum e_token		key;
 // 	enum e_tok_type		type;
 // }	t_token;
+
+// typedef struct s_msh
+// {
+// 	t_list	*env;
+// 	int		last_exit;
+// }	t_msh;
 
 t_ast	*process_prompt(char *prompt, t_list *env);
 
