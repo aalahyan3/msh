@@ -6,7 +6,11 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 10:16:23 by aalahyan          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/03/12 22:22:52 by aalahyan         ###   ########.fr       */
+=======
+/*   Updated: 2025/03/12 14:36:35 by aaitabde         ###   ########.fr       */
+>>>>>>> origin/executer
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +25,7 @@ static void draw_ascii_art(void)
     ft_printf("| | | | | || || | | || |\\__ \\| | | ||  __/| || |\n");
     ft_printf("|_| |_| |_||_||_| |_||_||___/|_| |_| \\___||_||_| by aalahyan and aaitabde\n\n"RESET);
 }
-
+// ls > out1.txt > out2.txt > out3.txt > out4.txt > out5.txt > out6.txt > ou7.txt && echo done | cat -e > result.txt
 int main(int ac, char **av, char **env)
 {
 	char *prompt;
