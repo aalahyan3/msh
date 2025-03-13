@@ -13,6 +13,5 @@ minishell
 # Ignore static library file
 libft/libft.a
 
-executor
 
 test.c
