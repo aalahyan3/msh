@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 10:16:23 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 07:11:21 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/14 07:17:03 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void handle_sig(int sig)
 	{
 		write(1, "\n", 1);
 		rl_on_new_line();
-		rl_replace_line("", 0);
+		// rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	// write(1, "\n", 1);
@@ -48,7 +48,7 @@ int main(int ac, char **av, char **env)
 	t_ast *ast;
 	t_list	*env_l;
 
-	rl_catch_signals = 0;
+	// rl_catch_signals = 0;
 	(void)ac;
 	(void)av;
 	env_l = build_env(env);
