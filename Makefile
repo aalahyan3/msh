@@ -6,22 +6,25 @@
 #    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/14 12:23:18 by aalahyan         ###   ########.fr        #
+#    Updated: 2025/03/14 22:26:23 by aalahyan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -fsanitize=address -g3#-Wall -Wextra -Werror 
+CFLAGS = #-fsanitize=address -g3#-Wall -Wextra -Werror 
 NAME = minishell
 
 SRCS = 	minishell.c \
 		ft_func/ft_fork.c\
 		ft_func/ft_isspace.c\
 		env/build_env.c\
+		env/clear_env.c\
 		free_utils/free_2d_array.c\
 		parser/process_prompt.c\
 		parser/tokenize.c\
+		parser/parsing.c\
 		parser/asstes.c\
+		parser/free_ast.c\
 		parser/build_ast.c\
 		parser/ast_vis.c\
 		parser/get_redirections.c\
@@ -43,7 +46,7 @@ BIN = bin
 OBJS = $(patsubst %,$(BIN)/%,$(notdir $(SRCS:.c=.o)))
 
 
-all: libft $(NAME)
+all bonus: libft $(NAME)
 
 $(NAME): $(BIN) $(OBJS)
 	$(CC) $(CFLAGS) -lft -Llibft $(OBJS) $(READLINE_LINK) -o $(NAME)

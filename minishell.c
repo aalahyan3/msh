@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 10:16:23 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 11:53:32 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/14 22:32:21 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@ void handle_signals(void)
 	signal(SIGINT, handle_sig);
 	signal(SIGQUIT, SIG_IGN);
 }
+void	leaks(void) __attribute__((destructor));
+
+void leaks(void)
+{
+	system("leaks minishell");
+}
 
 int main(int ac, char **av, char **env)
 {
@@ -64,8 +70,11 @@ int main(int ac, char **av, char **env)
 			exit(prompt == NULL);
 		}
 		add_history(prompt);
-		ast = process_prompt(prompt, env_l);
+		ast = parse(prompt, env_l);
 		ast_vis(ast, 0, "");
 		execute_ast(ast, env_l);
+		free_ast(ast);
 	}
+	clear_env(env_l);
+	rl_clear_history();
 }

@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_tok.c                                         :+:      :+:    :+:   */
+/*   clear_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/14 09:03:37 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 09:03:59 by aalahyan         ###   ########.fr       */
+/*   Created: 2025/03/14 22:24:11 by aalahyan          #+#    #+#             */
+/*   Updated: 2025/03/14 22:25:43 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parser.h"
+# include "env.h"
 
-void	free_tok(t_tok *tok)
+
+static void free_env(void *content)
 {
-	if (tok->content)
-		free(tok->content);
-	free(tok);
+	struct s_env	*env;
+
+	env = (struct s_env *)content;
+	free(env->key);
+	free(env->value);
+	free(env);
+}
+void	clear_env(t_list *env_l)
+{
+	ft_lstclear(&env_l, free_env);
 }
