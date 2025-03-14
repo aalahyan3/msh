@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/14 03:12:02 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/14 03:23:12 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	execute_word(t_ast *ast, char **env)
 	char	*path;
 	int		i;
 
-	
 	if (!ast || !ast->data)
 		return (1);
 	args = (char **)ast->data;
