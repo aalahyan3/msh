@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 20:55:32 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/10 17:06:38 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/13 00:28:25 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ t_ast *create_ast(t_list *tok_list)
 		return (free(ast), NULL);
 	left = extract_left(&tok_list, root);
 	right = tok_list;
+	printf("root is %d\n", ((t_token *)root->content)->key);
 	ast->token = root->content;
 	ast->left = create_ast(left);
 	ast->right = create_ast(right);

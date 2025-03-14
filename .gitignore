@@ -1,4 +1,17 @@
-bin/
+# Ignore .vscode folder
 .vscode/
-libft/bin
+
+# Ignore bin/ folder
+bin/
+
+# Ignore libft/bin folder
+libft/bin/
+
+# Ignore compiled binary minishell
 minishell
+
+# Ignore static library file
+libft/libft.a
+
+
+test.c

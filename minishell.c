@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 10:16:23 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/12 16:00:09 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/14 01:27:32 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,13 @@ int main(int ac, char **av, char **env)
 {
 	char *prompt;
 	t_ast *ast;
+	t_list	*env_l;
 
 	(void)ac;
 	(void)av;
+	env_l = build_env(env);
+	if (!env_l)
+		exit(1);
 	draw_ascii_art();
 	while (1)
 	{
@@ -39,7 +43,7 @@ int main(int ac, char **av, char **env)
 			exit(prompt == NULL);
 		}
 		add_history(prompt);
-		ast = process_prompt(prompt);
+		ast = process_prompt(prompt, env_l);
 		execute_ast(ast, env);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/14 01:18:16 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/14 03:12:02 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 int is_builtin(char **args)
 {
-	if (args && ft_strncmp(args[0], "echo\0", 5) == 0)
+	if(!args || !*args)
+		return(1);
+	if (args && args[0] && ft_strncmp(args[0], "echo\0", 5) == 0)
 		return (0);
 	else if (args && args[0] && ft_strncmp(args[0], "pwd", 3) == 0)
 		return (0);
@@ -40,6 +42,7 @@ int	execute_word(t_ast *ast, char **env)
 	char	*path;
 	int		i;
 
+	
 	if (!ast || !ast->data)
 		return (1);
 	args = (char **)ast->data;
@@ -189,6 +192,6 @@ int	execute_ast(t_ast *ast, char **env)
 		if (handle_redirections(ast, env) == -1)
 			return (1);
 	}
-	return (execute_word(ast->right, env));
-	return (1);
+	else
+		return (execute_word(ast, env));
 }

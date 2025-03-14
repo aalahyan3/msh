@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 17:28:56 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/11 15:56:04 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/14 01:56:16 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ char	*get_action(enum e_red_type t)
 		return "append";
 	if (t == HERE_DOC)
 		return "here_doc";
+	return(NULL);
 }
 void print_red_files(t_ast *ast)
 {
