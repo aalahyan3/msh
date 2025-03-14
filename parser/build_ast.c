@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 01:06:01 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 07:39:14 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/14 09:27:37 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,14 @@ t_list *get_root(t_list *tok_list)
 	t_list *root;
 	t_list	*curr;
 	bool	and_or_or;
+	bool	first_pipe;
+	bool	first_block;
 
+	and_or_or = false;
+	first_pipe = false;
+	first_block = false;
 	curr = tok_list;
 	root = NULL;
-	and_or_or = false;
 	while (curr)
 	{
 		if (((t_tok *)curr->content)->type == OR || ((t_tok *)curr->content)->type == AND)
@@ -28,12 +32,14 @@ t_list *get_root(t_list *tok_list)
 			root = curr;
 			and_or_or = true;
 		}
-		else if (((t_tok *)curr->content)->type == PIPE && !and_or_or)
+		else if (((t_tok *)curr->content)->type == PIPE && !and_or_or && !first_pipe)
 		{
 			root = curr;
+			first_pipe = true;
 		}
-		else if (!and_or_or && ((t_tok *)curr->content)->type == BLOCK)
+		else if (!and_or_or && ((t_tok *)curr->content)->type == BLOCK && !first_block)
 		{
+			first_block = true;
 			root = curr;
 		}
 		curr = curr->next;
