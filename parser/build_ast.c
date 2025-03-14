@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 01:06:01 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 09:10:08 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/14 10:40:53 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ t_ast	*build_ast(t_list *tok_list)
 
 	if (!tok_list)
 		return (NULL);
-	printf("rr\n");
 	if (ft_lstsize(tok_list) == 1)
 	{
 		return (expand_block(((t_tok *)(tok_list->content))->content));
@@ -80,7 +79,6 @@ t_ast	*build_ast(t_list *tok_list)
 	if (!ast)
 		return (NULL);
 	root = get_root(tok_list);
-	printf("root: %s, %d\n", ((t_tok *)root->content)->content, ((t_tok *)root->content)->type);
 	if (!root)
 		return (NULL);
 	if (((t_tok *)root->content)->type == BLOCK)

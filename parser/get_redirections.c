@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 02:15:57 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 10:21:28 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/14 10:40:34 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ char	*get_next_red(char *s, int *i)
 		}
 		if (s[*i]  && s[*i] == '>' || s[*i] == '<')
 		{
+			start = *i;
 			while (s[*i] && (s[*i] == '>' || s[*i] == '<'))
 				*i += 1;
 			while (s[*i] && (s[*i] == ' ' || s[*i] == '\t'))
 				*i += 1;
-			start = *i;
 			if (s[*i] == '\'' || s[*i] == '"')
 				skip_quotes(s, i, s[*i]);
 			while (s[*i] && s[*i] != ' ' && s[*i] != '\t' && s[*i] != '<' && s[*i] != '>')
@@ -88,6 +88,8 @@ t_reds	*get_red_struct(char *s)
 		else
 			red->type = OUTPUT;
 	}
+	while (*s && ft_isspace(*s))
+		s++;
 	red->file = ft_strdup(s);
 	red->fd = -1;
 	return (red);
