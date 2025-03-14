@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 11:09:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/10 13:49:24 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/14 09:00:52 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 /*Executor*/
 
-int		execute_ast(t_ast *ast, char **env);
+int	execute_ast(t_ast *ast, t_list *env);
 pid_t	execute_simple_cmd(char *path, char **args, char **env);
-int		execute_pipe(t_ast *ast, char **env);
+int		execute_pipe(t_ast *ast, t_list *env);
 
 // cmd path utils
 

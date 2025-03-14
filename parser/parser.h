@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/05 17:27:32 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 07:15:29 by aaitabde         ###   ########.fr       */
+/*   Created: 2025/03/13 23:32:47 by aalahyan          #+#    #+#             */
+/*   Updated: 2025/03/14 07:16:40 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,11 @@ typedef struct s_tok
 
 typedef struct s_ast
 {
-	void				*data;
-	struct s_ast		*left;
-	struct s_ast		*right;
+	char			*content;
+	void			*data;
+	enum e_tok_type	type;
+	struct s_ast	*left;
+	struct s_ast	*right;
 }	t_ast;
 
 t_list	*tokenize(char	*prompt);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 10:16:23 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 07:11:21 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/14 08:56:29 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,11 @@ static void draw_ascii_art(void)
 // ls > out1.txt > out2.txt > out3.txt > out4.txt > out5.txt > out6.txt > ou7.txt && echo done | cat -e > result.txt
 void handle_sig(int sig)
 {
-	if (sig == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-	// write(1, "\n", 1);
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
-
 
 void handle_signals(void)
 {
@@ -68,6 +63,6 @@ int main(int ac, char **av, char **env)
 		add_history(prompt);
 		ast = process_prompt(prompt, env_l);
 		ast_vis(ast, 0, "");
-		// execute_ast(ast, env);
+		execute_ast(ast, env_l);
 	}
 }
