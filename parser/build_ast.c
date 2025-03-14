@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 01:06:01 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 07:39:14 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/14 09:10:08 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,26 @@ t_list *get_root(t_list *tok_list)
 {
 	t_list *root;
 	t_list	*curr;
-	bool	and_or_or;
+	int		first_pipe;
+	int		first_block;
 
+	first_pipe = 0;
+	first_block = 0;
 	curr = tok_list;
 	root = NULL;
-	and_or_or = false;
 	while (curr)
 	{
 		if (((t_tok *)curr->content)->type == OR || ((t_tok *)curr->content)->type == AND)
+			root = curr;
+		else if (((t_tok *)curr->content)->type == PIPE && !first_pipe)
 		{
 			root = curr;
-			and_or_or = true;
+			first_pipe = 1;
 		}
-		else if (((t_tok *)curr->content)->type == PIPE && !and_or_or)
+		else if (!first_block && ((t_tok *)curr->content)->type == BLOCK)
 		{
 			root = curr;
-		}
-		else if (!and_or_or && ((t_tok *)curr->content)->type == BLOCK)
-		{
-			root = curr;
+			first_block = 1;
 		}
 		curr = curr->next;
 	}
@@ -70,6 +71,7 @@ t_ast	*build_ast(t_list *tok_list)
 
 	if (!tok_list)
 		return (NULL);
+	printf("rr\n");
 	if (ft_lstsize(tok_list) == 1)
 	{
 		return (expand_block(((t_tok *)(tok_list->content))->content));
@@ -78,6 +80,7 @@ t_ast	*build_ast(t_list *tok_list)
 	if (!ast)
 		return (NULL);
 	root = get_root(tok_list);
+	printf("root: %s, %d\n", ((t_tok *)root->content)->content, ((t_tok *)root->content)->type);
 	if (!root)
 		return (NULL);
 	if (((t_tok *)root->content)->type == BLOCK)
