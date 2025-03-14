@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/14 03:26:04 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/14 05:07:22 by aaitabde         ###   ########.fr       */
+/*   Created: 2025/03/01 10:16:23 by aalahyan          #+#    #+#             */
+/*   Updated: 2025/03/14 07:11:21 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int main(int ac, char **av, char **env)
 		}
 		add_history(prompt);
 		ast = process_prompt(prompt, env_l);
-		execute_ast(ast, env);
+		ast_vis(ast, 0, "");
+		// execute_ast(ast, env);
 	}
 }
