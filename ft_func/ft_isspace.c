@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process_prompt.c                                   :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 23:32:16 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 06:04:56 by aalahyan         ###   ########.fr       */
+/*   Created: 2025/03/13 23:42:45 by aalahyan          #+#    #+#             */
+/*   Updated: 2025/03/13 23:43:32 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "ft_func.h"
 
-t_ast	*process_prompt(char *prompt, t_list *env)
+int	ft_isspace(int c)
 {
-	t_list	*tok_list;
-	t_ast	*ast;
-
-	if (!prompt)
-		return (NULL);
-	tok_list = tokenize(prompt);
-	free(prompt);
-	if (!tok_list)
-		return (NULL);
-	ast = build_ast(tok_list);
-	// ast_vis(ast, 0, "");
-	return (ast);
+	return ((c>=9 && c<=13) || c == 32);
 }

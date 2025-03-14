@@ -6,7 +6,7 @@
 #    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/12 21:41:47 by aalahyan         ###   ########.fr        #
+#    Updated: 2025/03/14 07:08:01 by aalahyan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,25 +16,25 @@ NAME = minishell
 
 SRCS = 	minishell.c \
 		ft_func/ft_fork.c\
+		ft_func/ft_isspace.c\
 		env/build_env.c\
 		free_utils/free_2d_array.c\
 		parser/process_prompt.c\
-		parser/tokenizer.c\
-		parser/ast.c\
-		parser/ast_visualizer.c\
-		parser/ast_v.c\
-		parser/expand_leafs.c\
-		parser/expand_vars.c\
-		parser/quotes_expansion.c\
-		parser/token_generator.c\
-		executor/execute_ast.c\
-		executor/execute_pipe.c\
-		executor/execute_simple_cmd.c\
-		executor/command_path_utils.c\
-		executor/get_cmd_arguments.c\
-		executor/builtins_echo.c\
-		executor/builtins_pwd.c\
-		executor/builtins_cd.c\
+		parser/tokenize.c\
+		parser/asstes.c\
+		parser/build_ast.c\
+		parser/ast_vis.c\
+		parser/get_redirections.c\
+		parser/expand_block.c\
+		parser/free_red_structs.c\
+		# executor/execute_ast.c\
+		# executor/execute_pipe.c\
+		# executor/execute_simple_cmd.c\
+		# executor/command_path_utils.c\
+		# executor/get_cmd_arguments.c\
+		# executor/builtins_echo.c\
+		# executor/builtins_pwd.c\
+		# executor/builtins_cd.c\
 
 READLINE_COMPILE = -I$(shell brew --prefix readline)/include
 READLINE_LINK = -lreadline -L$(shell brew --prefix readline)/lib
