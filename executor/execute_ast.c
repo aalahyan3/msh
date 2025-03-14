@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/12 15:51:23 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/14 01:18:16 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 int is_builtin(char **args)
 {
-	if (!args && ft_strncmp(args[0], "echo\0", 5) == 0)
+	if (args && ft_strncmp(args[0], "echo\0", 5) == 0)
 		return (0);
-	else if (!args && args[0] && ft_strncmp(args[0], "pwd", 3) == 0)
+	else if (args && args[0] && ft_strncmp(args[0], "pwd", 3) == 0)
 		return (0);
-	else if (!args && args[0] && ft_strncmp(args[0], "cd", 2) == 0)
+	else if (args && args[0] && ft_strncmp(args[0], "cd\0", 3) == 0)
 		return (0);
 	return (-1);
 }
 
 int	run_builting (char **args, char **env)
 {
-	if (!args && args[0] && ft_strncmp(args[0], "echo", 5) == 0)
+	if (args && args[0] && ft_strncmp(args[0], "echo", 5) == 0)
  		return (ft_echo(args, env));
-	if (!args && args[0] && ft_strncmp(args[0], "pwd", 3) == 0)
+	if (args && args[0] && ft_strncmp(args[0], "pwd", 3) == 0)
 		return (ft_pwd(env));
-	if (!args && args[0] && ft_strncmp(args[0], "cd", 2) == 0)
+	if (args && args[0] && ft_strncmp(args[0], "cd", 2) == 0)
 		return (ft_cd(args[1]));
 	return (1);
 }
@@ -103,21 +103,21 @@ int handle_redirections(t_ast *ast, char **env)
 				if (pipe(pipefd) == -1)
 				{
 					perror("pipe");
-					exit(1);
-				}
-				char *line;
-				while (line)
-				{
-					line = readline("heredoc> ");
-					if (ft_strncmp(line, redirects[i]->name, ft_strlen(redirects[i]->name)) == 0 && (ft_strlen(redirects[i]->name) == ft_strlen(line)))
-						break ;
-					char *tmp = line;
-					line = ft_strjoin(line, "\n");
-					free(tmp);
-					write(pipefd[1], line, ft_strlen(line));
-					free(line);
-				}
-				free(line);
+					exit(1);//bullshit
+				}//bullshit
+				char *line;//bullshit
+				while (line)//bullshit
+				{//bullshit
+					line = readline("heredoc> ");//bullshit
+					if (ft_strncmp(line, redirects[i]->name, ft_strlen(redirects[i]->name)) == 0 && (ft_strlen(redirects[i]->name) == ft_strlen(line)))//bullshit
+						break ;//bullshit
+					char *tmp = line;//bullshit
+					line = ft_strjoin(line, "\n");//bullshit
+					free(tmp);//bullshit
+					write(pipefd[1], line, ft_strlen(line));//bullshit
+					free(line);//bullshit
+				}//bullshit
+				free(line);//bullshit
 				dup2(pipefd[0], STDIN_FILENO);
 				close(pipefd[1]);
 			}
@@ -189,7 +189,6 @@ int	execute_ast(t_ast *ast, char **env)
 		if (handle_redirections(ast, env) == -1)
 			return (1);
 	}
-	else
-		return (execute_word(ast->right, env));
+	return (execute_word(ast->right, env));
 	return (1);
 }
