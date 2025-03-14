@@ -3,14 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
+#    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2025/03/12 21:41:47 by aalahyan         ###   ########.fr        #
-=======
-#    Updated: 2025/03/12 14:37:49 by aaitabde         ###   ########.fr        #
->>>>>>> origin/executer
+#    Updated: 2025/03/14 03:18:17 by aaitabde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

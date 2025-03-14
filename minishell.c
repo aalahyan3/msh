@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 10:16:23 by aalahyan          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/03/12 22:22:52 by aalahyan         ###   ########.fr       */
-=======
-/*   Updated: 2025/03/12 14:36:35 by aaitabde         ###   ########.fr       */
->>>>>>> origin/executer
+/*   Updated: 2025/03/14 03:18:06 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
