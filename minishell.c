@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 10:16:23 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 11:54:45 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/14 12:43:12 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,55 @@ void handle_sig(int sig)
 	}
 }
 
-
 void handle_signals(void)
 {
 	signal(SIGINT, handle_sig);
 	signal(SIGQUIT, SIG_IGN);
+}
+
+void read_heredoc_input(int fd, const char *delimiter)
+{
+    char *line;
+
+    while (1)
+    {
+        // Prompt with a simple "> " prompt.
+        line = readline("> ");
+        if (!line)
+            break;  // End-of-file (Ctrl-D) or error.
+        if (strcmp(line, delimiter) == 0)
+        {
+            free(line);
+            break;
+        }
+        write(fd, line, strlen(line));
+        write(fd, "\n", 1);
+        free(line);
+    }
+}
+
+void process_heredocs(t_ast *ast)
+{
+	t_red	**reds;
+
+	
+	if (!ast)
+		return;
+	
+	if (ast->type == BLOCK)
+	{
+		if (ast->left && ast->left->data)
+		reds = (t_red **)ast->data;
+	}
+	
+    process_heredocs(ast->left);
+    process_heredocs(ast->right);
+}
+
+void	prepare_heredoc(t_ast *ast)
+{
+	t_ast	*tmp;
+	t_reds	**reds;
 }
 
 int main(int ac, char **av, char **env)
@@ -66,6 +110,7 @@ int main(int ac, char **av, char **env)
 		add_history(prompt);
 		ast = process_prompt(prompt, env_l);
 		ast_vis(ast, 0, "");
+		process_heredocs(ast);
 		execute_ast(ast, env_l);
 	}
 }
