@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 10:16:23 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 11:16:58 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/14 11:18:02 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,10 @@ void handle_signals(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void	remap_heredoc(t_ast *ast)
-{
+// void	remap_heredoc(t_ast *ast)
+// {
 	
-}
-{
-	
-}
+// }
 
 int main(int ac, char **av, char **env)
 {
@@ -70,7 +67,7 @@ int main(int ac, char **av, char **env)
 		add_history(prompt);
 		ast = process_prompt(prompt, env_l);
 		ast_vis(ast, 0, "");
-		remap_heredoc(ast, env_l);
+		// remap_heredoc(ast, env_l);
 		execute_ast(ast, env_l);
 	}
 }
