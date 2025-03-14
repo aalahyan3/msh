@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 01:41:11 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 06:37:23 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/14 10:19:20 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void ast_vis(t_ast *node, int depth, char *prefix)
         t_reds **reds = (t_reds **)node->data;
         for (int i = 0; reds[i]; i++)
         {
-            printf(green"file = %s" reset, reds[i]->file);
+            printf(green"file = |%s|" reset, reds[i]->file);
         }
         printf("\n" reset);
     }
