@@ -6,12 +6,12 @@
 #    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/14 10:38:26 by aaitabde         ###   ########.fr        #
+#    Updated: 2025/03/14 11:33:27 by aaitabde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = #-fsanitize=address -g3#-Wall -Wextra -Werror 
+CFLAGS = -fsanitize=address -g3#-Wall -Wextra -Werror 
 NAME = minishell
 
 SRCS = 	minishell.c \
@@ -28,14 +28,14 @@ SRCS = 	minishell.c \
 		parser/expand_block.c\
 		parser/free_red_structs.c\
 		executor/execute_ast.c\
+		executor/execute_pipe.c\
+		executor/execute_simple_cmd.c\
 		executor/command_path_utils.c\
 		executor/get_cmd_arguments.c\
-		executor/execute_simple_cmd.c\
-		executor/execute_pipe.c\
-		executor/builtins_echo.c\
-		executor/builtins_pwd.c\
-		executor/builtins_cd.c\
-/
+		# executor/builtins_echo.c\
+		# executor/builtins_pwd.c\
+		# executor/builtins_cd.c\
+
 READLINE_COMPILE = -I$(shell brew --prefix readline)/include
 READLINE_LINK = -lreadline -L$(shell brew --prefix readline)/lib
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 10:16:23 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 11:18:02 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/14 11:31:40 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,19 @@ static void draw_ascii_art(void)
     ft_printf("|_| |_| |_||_||_| |_||_||___/|_| |_| \\___||_||_| by aalahyan and aaitabde\n\n"RESET);
 }
 
+// ls > out1.txt > out2.txt > out3.txt > out4.txt > out5.txt > out6.txt > ou7.txt && echo done | cat -e > result.txt
 void handle_sig(int sig)
 {
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	if (sig == SIGINT)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+		// rl_replace_line("", 0);
+		rl_redisplay();
+	}
+	// write(1, "\n", 1);
 }
+
 
 void handle_signals(void)
 {
@@ -36,18 +42,13 @@ void handle_signals(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-// void	remap_heredoc(t_ast *ast)
-// {
-	
-// }
-
 int main(int ac, char **av, char **env)
 {
 	char *prompt;
 	t_ast *ast;
 	t_list	*env_l;
 
-	rl_catch_signals = 0;
+	// rl_catch_signals = 0;
 	(void)ac;
 	(void)av;
 	env_l = build_env(env);
@@ -67,7 +68,6 @@ int main(int ac, char **av, char **env)
 		add_history(prompt);
 		ast = process_prompt(prompt, env_l);
 		ast_vis(ast, 0, "");
-		// remap_heredoc(ast, env_l);
-		execute_ast(ast, env_l);
+		execute_ast(ast, env);
 	}
 }
