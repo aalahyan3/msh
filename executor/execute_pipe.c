@@ -6,13 +6,13 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 11:00:29 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/12 03:41:25 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/14 09:00:41 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-int execute_pipe(t_ast *ast, char **env)
+int execute_pipe(t_ast *ast, t_list *env)
 {
 	int		pipefd[2];
 	pid_t	pid1;

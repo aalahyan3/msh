@@ -6,45 +6,77 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/12 15:51:23 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/14 11:33:11 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-int is_builtin(char **args)
+// int is_builtin(char **args)
+// {
+// 	if(!args || !*args)
+// 		return(1);
+// 	if (args && args[0] && ft_strncmp(args[0], "echo\0", 5) == 0)
+// 		return (0);
+// 	else if (args && args[0] && ft_strncmp(args[0], "pwd", 3) == 0)
+// 		return (0);
+// 	else if (args && args[0] && ft_strncmp(args[0], "cd\0", 3) == 0)
+// 		return (0);
+// 	return (-1);
+// }
+
+// int	run_builting (char **args, t_list *env)
+// {
+// 	if (args && args[0] && ft_strncmp(args[0], "echo", 5) == 0)
+//  		return (ft_echo(args, env));
+// 	if (args && args[0] && ft_strncmp(args[0], "pwd", 3) == 0)
+// 		return (ft_pwd(env));
+// 	if (args && args[0] && ft_strncmp(args[0], "cd", 2) == 0)
+// 		return (ft_cd(args[1]));
+// 	return (1);
+// }
+
+char	**make_env(t_list *ev)
 {
-	if (!args && ft_strncmp(args[0], "echo\0", 5) == 0)
-		return (0);
-	else if (!args && args[0] && ft_strncmp(args[0], "pwd", 3) == 0)
-		return (0);
-	else if (!args && args[0] && ft_strncmp(args[0], "cd", 2) == 0)
-		return (0);
-	return (-1);
+	int		i;
+	char	**env;
+	char	*tmp;
+	char	*tmp1;
+
+	i = 0;
+	env = (char **)malloc((ft_lstsize(ev) + 1) * sizeof(char *));
+	if (!env)
+		return (NULL);
+	while (ev)
+	{
+		tmp = ft_strjoin(((struct s_env*)(ev->content))->key, "=");
+		if (!tmp)
+			return (free_arr(env), NULL);
+		tmp1 = ft_strjoin(tmp, ((struct s_env*)(ev->content))->value);
+		if (!tmp1)
+			return (free_arr(env), NULL);
+		free(tmp);
+		env[i] = tmp1;;
+		ev = ev->next;
+		i++;
+	}
+	env[i] = NULL;
+	return (env);
 }
 
-int	run_builting (char **args, char **env)
-{
-	if (!args && args[0] && ft_strncmp(args[0], "echo", 5) == 0)
- 		return (ft_echo(args, env));
-	if (!args && args[0] && ft_strncmp(args[0], "pwd", 3) == 0)
-		return (ft_pwd(env));
-	if (!args && args[0] && ft_strncmp(args[0], "cd", 2) == 0)
-		return (ft_cd(args[1]));
-	return (1);
-}
-
-int	execute_word(t_ast *ast, char **env)
+int	execute_word(t_ast *ast, t_list *ev)
 {
 	char	**args;
 	char	*path;
 	int		i;
+	char	**env;
 
 	if (!ast || !ast->data)
 		return (1);
+	env = make_env(ev);
 	args = (char **)ast->data;
-	if (is_builtin(args) == 0)
-		return (run_builting(args, env));
+	// if (is_builtin(args) == 0)
+	// 	return (run_builting(args, env));
 	path = get_cmd_path(args[0], env, &i);
 	if (path)
 	{
@@ -65,131 +97,96 @@ int	execute_word(t_ast *ast, char **env)
 	return (0);
 }
 
-int	execute_logic(t_ast *ast, char **env)
+int	execute_logic(t_ast *ast, t_list *env)
 {
 	int	status;
 
 	status = execute_ast(ast->left, env);
-	if ((status != 0 && ast->token->key == AND) || \
-		(status == 0 && ast->token->key == OR))
+	if ((status != 0 && ast->type == AND) || \
+		(status == 0 && ast->type == OR))
 		return (status);
 	return(execute_ast(ast->right, env));
 }
 
-#include "../minishell.h"
-int handle_redirections(t_ast *ast, char **env)
+void	file_open_error(char *filename)
 {
-	t_red **redirects = (t_red **)ast->left->data;
-	int red_count = 0;
-	while (redirects[red_count])
-		red_count++;
-	int fd;
-	pid_t pid;
-	int status;
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("fork");
-		return -1;
-	}
-	if (pid == 0)
-	{
-		int i = 0;
-		while (i < red_count)
-		{
-			if (redirects[i]->type == HERE_DOC)
-			{
-				int pipefd[2];
-				if (pipe(pipefd) == -1)
-				{
-					perror("pipe");
-					exit(1);
-				}
-				char *line;
-				while (line)
-				{
-					line = readline("heredoc> ");
-					if (ft_strncmp(line, redirects[i]->name, ft_strlen(redirects[i]->name)) == 0 && (ft_strlen(redirects[i]->name) == ft_strlen(line)))
-						break ;
-					char *tmp = line;
-					line = ft_strjoin(line, "\n");
-					free(tmp);
-					write(pipefd[1], line, ft_strlen(line));
-					free(line);
-				}
-				free(line);
-				dup2(pipefd[0], STDIN_FILENO);
-				close(pipefd[1]);
-			}
-			i++;
-		}
-		i = 0;
-		while (i < red_count)
-		{
-			if (redirects[i]->type == INPUT)
-			{
-				fd = open(redirects[i]->name, O_RDONLY);
-				if (fd < 0)
-				{
-					write(2, "minishell: ", 11);
-					write(2, redirects[i]->name, ft_strlen(redirects[i]->name));
-					write(2, ": No such file or directory\n", 28);
-					exit(1);
-				}
-				dup2(fd, STDIN_FILENO);
-			}
-			else if (redirects[i]->type == OUTPUT)
-			{
-				fd = open(redirects[i]->name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-				if (fd < 0)
-				{
-					write(2, "minishell: ", 11);
-					write(2, redirects[i]->name, ft_strlen(redirects[i]->name));
-					write(2, ": No such file or directory\n", 28);;
-					exit(1);
-				}
-				dup2(fd, STDOUT_FILENO);
-			}
-			else if (redirects[i]->type == APPEND)
-			{
-				fd = open(redirects[i]->name, O_WRONLY | O_CREAT | O_APPEND, 0644);
-				if (fd < 0)
-				{
-					write(2, "minishell: ", 11);
-					write(2, redirects[i]->name, ft_strlen(redirects[i]->name));
-					write(2, ": No such file or directory\n", 28);
-					exit(1);
-				}
-				dup2(fd, STDOUT_FILENO);
-			}
-			close(fd);
-			i++;
-		}
-		exit(execute_word(ast->right, env));
-	}
-	else
-	{
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
-			return -1;
-	}
-	return 0;
+	write(2, "minishell: ", 11);
+	write(2, filename, ft_strlen(filename));
+	write(2, ": No such file or directory\n", 28);	
 }
 
-int	execute_ast(t_ast *ast, char **env)
+int handle_redirections(t_ast *ast, t_list *env)
 {
-	if (!ast || !ast->token || !ast->token->key)
+	t_reds	**reds;
+	int		red_count;
+	int		fd;
+
+	if (!ast || !ast->data)
 		return (1);
-	if (ast->token->key == PIPE)
-		return (execute_pipe(ast, env));
-	if (ast->token->key == AND || ast->token->key == OR)
-		return (execute_logic(ast, env));
-	if (ast->left)
+	reds = (t_reds **)ast->data;
+	red_count = 0;
+	while (reds[red_count])
 	{
-		if (handle_redirections(ast, env) == -1)
-			return (1);
+		if (reds[red_count]->type == INPUT)
+		{
+			fd = open(reds[red_count]->file, O_RDONLY);
+			if (fd < 0)
+				(file_open_error(reds[red_count]->file), exit(1));
+			dup2(fd, STDIN_FILENO);
+			close(fd);
+		}
+		else if (reds[red_count]->type == OUTPUT)
+		{
+			fd = open(reds[red_count]->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			if (fd < 0)
+				(file_open_error(reds[red_count]->file), exit(1));
+			dup2(fd, STDOUT_FILENO);
+			close(fd);
+		}
+		else if (reds[red_count]->type == APPEND)
+		{
+			fd = open(reds[red_count]->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			if (fd < 0)
+				(file_open_error(reds[red_count]->file), exit(1));
+			dup2(fd, STDOUT_FILENO);
+			close(fd);
+		}
+		red_count++;
 	}
-	else
-		return (execute_word(ast->right, env));
-	return (1);
+	return (0);
+}
+
+
+int	execute_block(t_ast *ast, t_list *env)
+{
+	pid_t	pid;
+	int		status;
+
+	if(!ast || !ast->left)
+		return (1);
+	pid = fork();
+	if (pid < 0)
+		return (1);
+	if (pid == 0)
+	{
+		handle_redirections(ast->left, env);
+		exit(execute_ast(ast->right, env));
+	}
+	waitpid(pid, &status, 0);
+	return (WEXITSTATUS(status));
+}
+
+int	execute_ast(t_ast *ast, t_list *env)
+{
+	if (!ast)
+		return (1);
+	if (ast->type == BLOCK)
+		return (execute_block(ast, env));
+	if (ast->type == COMMAND)
+		return (execute_word(ast, env));
+	if (ast->type == AND || ast->type == OR)
+		return (execute_logic(ast, env));
+	if (ast->type == PIPE)
+		return (execute_pipe(ast, env));
+	return(1);
 }

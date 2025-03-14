@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 02:42:28 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 06:26:53 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/14 11:30:48 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,12 @@ char	*get_parenthisis_block(char *s)
 
 	i = 0;
 	while (s[i] && s[i] != '(')
-		i++;
+	{
+		if (s[i] == '\'' || s[i] == '"')
+			skip_quotes(s, &i, s[i]);
+		else
+			i++;
+	}
 	if (!s[i])
 		return (NULL);
 	i++;
@@ -39,7 +44,7 @@ char	*get_parenthisis_block(char *s)
 	}
 	if (expected)
 		return (NULL);
-	return (ft_substr(s, start, i - start - 1));
+	return (ft_substr(s, start, i - start - 1 ));
 }
 
 static char *get_next_cmd(char *s, int *i)

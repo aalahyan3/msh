@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 01:41:11 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 10:19:20 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/14 10:22:51 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void ast_vis_cmd(t_ast *node, int depth, char *prefix)
     printf("%s", prefix);
     if (!node->data)
     {
-        printf("null\n");
+        printf("null\n" reset);
     }
     char **cmd = (char **)node->data;
     printf(green"command = %s" reset, cmd[0]);
@@ -59,7 +59,7 @@ void ast_vis_red(t_ast *node, int depth, char *prefix)
     printf("%s", prefix);
     if (!node->data)
     {
-        printf("null\n");
+        printf("null\n" reset);
         return;
     }
     t_reds **reds = (t_reds **)node->data;
@@ -108,7 +108,7 @@ void ast_vis(t_ast *node, int depth, char *prefix)
         printf(yellow"[command] ");
         if (!node->data)
         {
-            printf("null\n");
+            printf("null\n" reset);
             return;
         }
         char **cmd = (char **)node->data;

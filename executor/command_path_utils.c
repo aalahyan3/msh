@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 07:57:43 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/10 14:04:26 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/14 09:07:16 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,9 @@ char	*get_cmd_path(char *full_cmd, char **env, int *i)
 				return(free_arr(cmd), NULL);
 			}
 		}
-		printf("minishell: %s: No such file or directory\n", cmd[0]);
+		write(2, "minishell: ", 11);
+		write(2, cmd[0], ft_strlen(cmd[0]));
+		write(2, ": No such file or directory\n", 28);
 		*i = 0;
 		return(free_arr(cmd), NULL);
 	}

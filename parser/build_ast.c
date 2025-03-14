@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 01:06:01 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 10:40:53 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/14 10:42:05 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,31 @@ t_list *get_root(t_list *tok_list)
 {
 	t_list *root;
 	t_list	*curr;
-	int		first_pipe;
-	int		first_block;
+	bool	and_or_or;
+	bool	first_pipe;
+	bool	first_block;
 
-	first_pipe = 0;
-	first_block = 0;
+	and_or_or = false;
+	first_pipe = false;
+	first_block = false;
 	curr = tok_list;
 	root = NULL;
 	while (curr)
 	{
 		if (((t_tok *)curr->content)->type == OR || ((t_tok *)curr->content)->type == AND)
-			root = curr;
-		else if (((t_tok *)curr->content)->type == PIPE && !first_pipe)
 		{
 			root = curr;
-			first_pipe = 1;
+			and_or_or = true;
 		}
-		else if (!first_block && ((t_tok *)curr->content)->type == BLOCK)
+		else if (((t_tok *)curr->content)->type == PIPE && !and_or_or && !first_pipe)
 		{
 			root = curr;
-			first_block = 1;
+			first_pipe = true;
+		}
+		else if (!and_or_or && ((t_tok *)curr->content)->type == BLOCK && !first_block)
+		{
+			first_block = true;
+			root = curr;
 		}
 		curr = curr->next;
 	}
