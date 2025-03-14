@@ -1,0 +1,20 @@
+total 336
+drwxr-xr-x  19 aalahyan  2024_khouribga     646 Mar 14 12:03 .
+drwxr-xr-x  14 aalahyan  2024_khouribga     476 Mar 14 09:41 ..
+-rw-r--r--   1 aalahyan  2024_khouribga    6148 Mar 14 06:54 .DS_Store
+drwxr-xr-x  15 aalahyan  2024_khouribga     510 Mar 14 11:56 .git
+-rw-r--r--   1 aalahyan  2024_khouribga     196 Mar 14 06:54 .gitignore
+-rw-r--r--   1 aalahyan  2024_khouribga    2494 Mar 14 11:56 Makefile
+-rw-r--r--   1 aalahyan  2024_khouribga       5 Mar 14 11:56 README.md
+drwxr-xr-x  20 aalahyan  2024_khouribga     680 Mar 14 11:54 bin
+drwxr-xr-x   4 aalahyan  2024_khouribga     136 Mar 14 11:56 env
+drwxr-xr-x  12 aalahyan  2024_khouribga     408 Mar 14 11:56 executor
+-rw-r--r--   1 aalahyan  2024_khouribga       0 Mar 14 12:05 file
+-rw-r--r--   1 aalahyan  2024_khouribga       0 Mar 14 12:05 fillll
+drwxr-xr-x   6 aalahyan  2024_khouribga     204 Mar 14 09:16 free_utils
+drwxr-xr-x   6 aalahyan  2024_khouribga     204 Mar 14 07:09 ft_func
+drwxr-xr-x  63 aalahyan  2024_khouribga    2142 Mar 14 11:56 libft
+-rwxr-xr-x   1 aalahyan  2024_khouribga  140320 Mar 14 11:54 minishell
+-rw-r--r--   1 aalahyan  2024_khouribga    1821 Mar 14 11:56 minishell.c
+-rw-r--r--   1 aalahyan  2024_khouribga    1939 Mar 14 06:54 minishell.h
+drwxr-xr-x  13 aalahyan  2024_khouribga     442 Mar 14 11:56 parser

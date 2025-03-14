@@ -6,12 +6,12 @@
 #    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/14 07:08:01 by aalahyan         ###   ########.fr        #
+#    Updated: 2025/03/14 12:20:08 by aalahyan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -fsanitize=address -g#-Wall -Wextra -Werror 
+CFLAGS = #-fsanitize=address -g#-Wall -Wextra -Werror 
 NAME = minishell
 
 SRCS = 	minishell.c \
@@ -27,7 +27,7 @@ SRCS = 	minishell.c \
 		parser/get_redirections.c\
 		parser/expand_block.c\
 		parser/free_red_structs.c\
-		# executor/execute_ast.c\
+		executor/execute_ast.c\
 		# executor/execute_pipe.c\
 		# executor/execute_simple_cmd.c\
 		# executor/command_path_utils.c\
