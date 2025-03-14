@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:27:32 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 07:10:23 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/14 07:15:29 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ typedef struct s_tok
 
 typedef struct s_ast
 {
-	t_token				*token;
 	void				*data;
 	struct s_ast		*left;
 	struct s_ast		*right;
