@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/14 09:15:20 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/14 11:14:03 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,13 +108,80 @@ int	execute_logic(t_ast *ast, t_list *env)
 	return(execute_ast(ast->right, env));
 }
 
+void	file_open_error(char *filename)
+{
+	write(2, "minishell: ", 11);
+	write(2, filename, ft_strlen(filename));
+	write(2, ": No such file or directory\n", 28);	
+}
+
+int handle_redirections(t_ast *ast, t_list *env)
+{
+	t_reds	**reds;
+	int		red_count;
+	int		fd;
+
+	if (!ast || !ast->data)
+		return (1);
+	reds = (t_reds **)ast->data;
+	red_count = 0;
+	while (reds[red_count])
+	{
+		if (reds[red_count]->type == INPUT)
+		{
+			fd = open(reds[red_count]->file, O_RDONLY);
+			if (fd < 0)
+				(file_open_error(reds[red_count]->file), exit(1));
+			dup2(fd, STDIN_FILENO);
+			close(fd);
+		}
+		else if (reds[red_count]->type == OUTPUT)
+		{
+			fd = open(reds[red_count]->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			if (fd < 0)
+				(file_open_error(reds[red_count]->file), exit(1));
+			dup2(fd, STDOUT_FILENO);
+			close(fd);
+		}
+		else if (reds[red_count]->type == APPEND)
+		{
+			fd = open(reds[red_count]->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			if (fd < 0)
+				(file_open_error(reds[red_count]->file), exit(1));
+			dup2(fd, STDOUT_FILENO);
+			close(fd);
+		}
+		red_count++;
+	}
+	return (0);
+}
+
+
+int	execute_block(t_ast *ast, t_list *env)
+{
+	pid_t	pid;
+	int		status;
+
+	if(!ast || !ast->left)
+		return (1);
+	pid = fork();
+	if (pid < 0)
+		return (1);
+	if (pid == 0)
+	{
+		handle_redirections(ast->left, env);
+		exit(execute_ast(ast->right, env));
+	}
+	waitpid(pid, &status, 0);
+	return (WEXITSTATUS(status));
+}
 
 int	execute_ast(t_ast *ast, t_list *env)
 {
 	if (!ast)
 		return (1);
 	if (ast->type == BLOCK)
-		return (execute_ast(ast->right, env));
+		return (execute_block(ast, env));
 	if (ast->type == COMMAND)
 		return (execute_word(ast, env));
 	if (ast->type == AND || ast->type == OR)
@@ -123,4 +190,3 @@ int	execute_ast(t_ast *ast, t_list *env)
 		return (execute_pipe(ast, env));
 	return(1);
 }
- 
