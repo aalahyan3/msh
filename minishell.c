@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 10:16:23 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/15 17:44:37 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/15 17:48:19 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,4 @@ int main(int ac, char **av, char **env)
 	clear_env(env_l);
 	rl_clear_history();
 }
-  
+    
