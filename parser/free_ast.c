@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 22:16:20 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 22:19:25 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/15 18:03:03 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,14 @@ void	free_ast(t_ast *ast)
 {
 	char	**args;
 	t_reds	**reds;
+	t_ast	*left;
+	t_ast	*right;
 
 	if (!ast)
 		return ;
-	free_ast(ast->left);
-	free_ast(ast->right);
+	left = ast->left;
+	right = ast->right;
+	printf("freeing ast->content\n");
 	if(ast->content)
 		free(ast->content);
 	if (ast->type == REDIRECTIONS)
@@ -38,4 +41,6 @@ void	free_ast(t_ast *ast)
 		free_2d_array(args);
 	}
 	free(ast);
+	free_ast(left);
+	free_ast(right);
 }
