@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/01 10:16:23 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/15 17:48:19 by aaitabde         ###   ########.fr       */
+/*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
+/*   Updated: 2025/03/15 17:52:43 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -21,7 +22,8 @@ static void draw_ascii_art(void)
 	ft_printf("| | | | | || || | | || |\\__ \\| | | ||  __/| || |\n");
 	ft_printf("|_| |_| |_||_||_| |_||_||___/|_| |_| \\___||_||_| by aalahyan and aaitabde\n\n"RESET);
 }
-// void	leaks(void) __attribute__((destructor));
+
+void	leaks(void) __attribute__((destructor));
 
 // void leaks(void)
 // {
@@ -61,4 +63,4 @@ int main(int ac, char **av, char **env)
 	clear_env(env_l);
 	rl_clear_history();
 }
-    
+  

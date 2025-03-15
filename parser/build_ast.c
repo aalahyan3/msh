@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 01:06:01 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 10:42:05 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/15 17:17:54 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_list *get_root(t_list *tok_list)
 			root = curr;
 			first_pipe = true;
 		}
-		else if (!and_or_or && ((t_tok *)curr->content)->type == BLOCK && !first_block)
+		else if (!and_or_or && ((t_tok *)curr->content)->type == BLOCK && !first_block && !first_pipe)
 		{
 			first_block = true;
 			root = curr;
@@ -54,6 +54,8 @@ t_list	*extract_left(t_list *tok_list, t_list *root)
 
 	curr = tok_list;
 	prev = NULL;
+	if (curr == root)
+		return (NULL);
 	while (curr && curr != root)
 	{
 		prev = curr;
@@ -84,7 +86,7 @@ t_ast	*build_ast(t_list *tok_list)
 	if (!ast)
 		return (NULL);
 	root = get_root(tok_list);
-	if (!root)
+	 if (!root)
 		return (NULL);
 	if (((t_tok *)root->content)->type == BLOCK)
 	{
