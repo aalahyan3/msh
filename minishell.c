@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/01 10:16:23 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/15 17:38:48 by aalahyan         ###   ########.fr       */
+/*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
+/*   Updated: 2025/03/15 17:45:38 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -78,3 +79,4 @@ int main(int ac, char **av, char **env)
 	clear_env(env_l);
 	rl_clear_history();
 }
+  
