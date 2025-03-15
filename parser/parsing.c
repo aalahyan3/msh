@@ -6,13 +6,41 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 08:57:28 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 08:59:50 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/14 22:20:28 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
+bool	syntax_error(t_ast *ast)
+{
+	if (!ast)
+		return (false);
+	if (ast->type == PIPE || ast->type == AND || ast->type == OR)
+	{
+		if (!ast->left || !ast->right)
+		{
+			ft_printf("msh: syntax error near unexpected token '%s'\n", ast->content);
+			return (false);
+		}
+		if (!syntax_error(ast->left) || !syntax_error(ast->right))
+			return (false);
+	}
+	return (true);
+}
+
 t_ast	*parse(char *prompt, t_list *env_l)
 {
-	
+	t_ast	*ast;
+
+	ast = process_prompt(prompt, env_l);
+	if (!ast)
+		return (NULL);
+	free(prompt);
+	if (!syntax_error(ast))
+	{
+		free_ast(ast);
+		return (NULL);
+	}
+	return (ast);
 }

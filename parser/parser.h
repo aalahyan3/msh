@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 23:32:47 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 07:16:40 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/14 22:19:32 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,12 @@ t_ast	*process_prompt(char *prompt, t_list *env);
 void	skip_quotes(char *s, int *i, char c);
 void	skip_parentheses(char *s, int *i);
 t_ast	*build_ast(t_list *tok_list);
-void ast_vis(t_ast *node, int depth, char *prefix);////////////////!!!!!!!!!
+void 	ast_vis(t_ast *node, int depth, char *prefix);////////////////!!!!!!!!!
 t_ast	*get_redirections(char *s);
 t_ast	*expand_block(char *s);
 void	free_red_structs(t_reds **reds);
+t_ast	*parse(char *prompt, t_list *env_l);
+void	free_ast(t_ast *ast);
 
 
 #endif

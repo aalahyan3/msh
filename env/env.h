@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 21:19:14 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 07:40:17 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/14 22:26:03 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ struct s_env
 };
 
 t_list	*build_env(char **env_array);
+void	clear_env(t_list *env_l);
 
 
 #endif

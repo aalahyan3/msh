@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 23:40:10 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 11:08:35 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/14 12:27:24 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ t_list	*tokenize(char	*prompt)
 	tok = get_next_token(prompt, &i);
 	while (tok)
 	{
-		printf("token: %s\n", tok->content);
 		ft_lstadd_back(&tok_list, ft_lstnew(tok));
 		tok = get_next_token(prompt, &i);
 	}
