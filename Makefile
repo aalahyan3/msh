@@ -6,22 +6,24 @@
 #    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/15 11:32:19 by aaitabde         ###   ########.fr        #
+#    Updated: 2025/03/15 13:25:05 by aaitabde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -fsanitize=address -g3#-Wall -Wextra -Werror 
+CFLAGS = #-fsanitize=address -g3#-Wall -Wextra -Werror 
 NAME = minishell
 
 SRCS = 	minishell.c \
 		ft_func/ft_fork.c\
 		ft_func/ft_isspace.c\
 		env/build_env.c\
+		env/clear_env.c\
 		free_utils/free_2d_array.c\
 		parser/process_prompt.c\
 		parser/tokenize.c\
-		parser/asstes.c\
+		parser/parsing.c\
+		parser/free_ast.c\
 		parser/build_ast.c\
 		parser/ast_vis.c\
 		parser/get_redirections.c\
@@ -35,6 +37,7 @@ SRCS = 	minishell.c \
 		executor/signals_handeling.c\
 		executor/redirections_heredoc.c\
 		executor/redirections_error_display.c\
+		parser/asstes.c\
 		# executor/builtins_echo.c\
 		# executor/builtins_pwd.c\
 		# executor/builtins_cd.c\
@@ -46,7 +49,7 @@ BIN = bin
 OBJS = $(patsubst %,$(BIN)/%,$(notdir $(SRCS:.c=.o)))
 
 
-all: libft $(NAME)
+all bonus: libft $(NAME)
 
 $(NAME): $(BIN) $(OBJS)
 	$(CC) $(CFLAGS) -lft -Llibft $(OBJS) $(READLINE_LINK) -o $(NAME)
