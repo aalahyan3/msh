@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 10:16:23 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/15 12:48:54 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/15 13:25:50 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ static void draw_ascii_art(void)
 	ft_printf("| | | | | || || | | || |\\__ \\| | | ||  __/| || |\n");
 	ft_printf("|_| |_| |_||_||_| |_||_||___/|_| |_| \\___||_||_| by aalahyan and aaitabde\n\n"RESET);
 }
-void	leaks(void) __attribute__((destructor));
+// void	leaks(void) __attribute__((destructor));
 
-void leaks(void)
-{
-	system("leaks minishell");
-}
+// void leaks(void)
+// {
+// 	system("leaks minishell");
+// }
 
 int main(int ac, char **av, char **env)
 {

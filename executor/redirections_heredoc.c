@@ -6,26 +6,50 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:27:31 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/15 11:29:44 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/15 17:17:24 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
+char	*gen_name()
+{
+	int		i;
+	char	*suffix;
+	char	*name;
+
+	i = 0;
+	while(1)
+	{
+		suffix = ft_itoa(i);
+		name = ft_strjoin("/tmp/heredoc", suffix);
+		if (access(name, F_OK) == -1)
+			return (free(suffix), name);
+		free(suffix);
+		i++;
+	}
+	return (NULL);
+}
+
 void handle_heredoc(t_reds *red)
 {
 	char *line;
+	char *filename;
 	int fd;
 	int fd_read;
 
-	fd = open("/tmp/tmpfile", O_RDWR | O_CREAT | O_TRUNC, 0600);
-	fd_read = open("/tmp/tmpfile", O_RDONLY);
+	filename = gen_name();	
+	fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0600);
+	fd_read = open(filename, O_RDONLY);
 	if (fd == -1)
 	{
 		perror("minishell: open");
-		exit(1);
+		if (fd_read != -1)
+			close(fd_read);
+		free(filename);
+		return ;
 	}
-	unlink("/tmp/tmpfile");
+	unlink(filename);
 	while (1)
 	{
 		line = readline("> ");
@@ -39,7 +63,8 @@ void handle_heredoc(t_reds *red)
 		free(line);
 	}
 	free(red->file);
-	red->file = ft_strdup("/tmp/tmpfile");
+	free(filename);
+	red->file = ft_strdup(filename);
 	red->fd = fd_read;
 	red->type = INPUT;
 }

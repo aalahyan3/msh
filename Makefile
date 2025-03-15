@@ -6,7 +6,7 @@
 #    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/15 13:21:58 by aaitabde         ###   ########.fr        #
+#    Updated: 2025/03/15 13:25:05 by aaitabde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ SRCS = 	minishell.c \
 		executor/signals_handeling.c\
 		executor/redirections_heredoc.c\
 		executor/redirections_error_display.c\
-		# parser/assetes.c\
+		parser/asstes.c\
 		# executor/builtins_echo.c\
 		# executor/builtins_pwd.c\
 		# executor/builtins_cd.c\
