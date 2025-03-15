@@ -3,28 +3,25 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
+#    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/14 22:26:23 by aalahyan         ###   ########.fr        #
+#    Updated: 2025/03/15 11:32:19 by aaitabde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = #-fsanitize=address -g3#-Wall -Wextra -Werror 
+CFLAGS = -fsanitize=address -g3#-Wall -Wextra -Werror 
 NAME = minishell
 
 SRCS = 	minishell.c \
 		ft_func/ft_fork.c\
 		ft_func/ft_isspace.c\
 		env/build_env.c\
-		env/clear_env.c\
 		free_utils/free_2d_array.c\
 		parser/process_prompt.c\
 		parser/tokenize.c\
-		parser/parsing.c\
 		parser/asstes.c\
-		parser/free_ast.c\
 		parser/build_ast.c\
 		parser/ast_vis.c\
 		parser/get_redirections.c\
@@ -35,6 +32,9 @@ SRCS = 	minishell.c \
 		executor/execute_simple_cmd.c\
 		executor/command_path_utils.c\
 		executor/get_cmd_arguments.c\
+		executor/signals_handeling.c\
+		executor/redirections_heredoc.c\
+		executor/redirections_error_display.c\
 		# executor/builtins_echo.c\
 		# executor/builtins_pwd.c\
 		# executor/builtins_cd.c\
@@ -46,7 +46,7 @@ BIN = bin
 OBJS = $(patsubst %,$(BIN)/%,$(notdir $(SRCS:.c=.o)))
 
 
-all bonus: libft $(NAME)
+all: libft $(NAME)
 
 $(NAME): $(BIN) $(OBJS)
 	$(CC) $(CFLAGS) -lft -Llibft $(OBJS) $(READLINE_LINK) -o $(NAME)
