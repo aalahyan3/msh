@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 10:16:23 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 22:32:21 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/15 17:17:45 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void handle_signals(void)
 	signal(SIGINT, handle_sig);
 	signal(SIGQUIT, SIG_IGN);
 }
-void	leaks(void) __attribute__((destructor));
+// void	leaks(void) __attribute__((destructor));
 
 void leaks(void)
 {
@@ -71,7 +71,6 @@ int main(int ac, char **av, char **env)
 		}
 		add_history(prompt);
 		ast = parse(prompt, env_l);
-		ast_vis(ast, 0, "");
 		execute_ast(ast, env_l);
 		free_ast(ast);
 	}
