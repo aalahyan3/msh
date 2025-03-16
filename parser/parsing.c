@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 08:57:28 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/15 17:17:15 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/16 19:46:13 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ t_ast	*parse(char *prompt, t_list *env_l)
 	t_ast	*ast;
 
 	ast = process_prompt(prompt, env_l);
+	free(prompt);
 	if (!ast)
 		return (NULL);
-	free(prompt);
 	ast_vis(ast, 0, "");
 	if (!syntax_error(ast))
 	{

@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 02:42:28 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 11:30:48 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/16 19:40:02 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,9 +159,10 @@ t_ast	*expand_block(char *s)
 	ast = malloc(sizeof(t_ast));
 	if (!ast)
 		return (NULL);
-	ast->content = s;
+	ast->content = ft_strdup(s);
 	ast->type = BLOCK;
 	ast->left = get_redirections(s);
 	ast->right = get_block(s);
+	free(s);
 	return (ast);
 }

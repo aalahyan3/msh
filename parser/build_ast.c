@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 01:06:01 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/15 17:17:54 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/16 19:42:21 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,28 @@ t_list	*extract_left(t_list *tok_list, t_list *root)
 
 
 
+static void	free_tok_not_content(void *content)
+{
+	t_tok	*tok;
 
+	tok = (t_tok *)content;
+	free(tok);
+}
 t_ast	*build_ast(t_list *tok_list)
 {
 	t_ast	*ast;
 	t_list	*left;
 	t_list	*right;
 	t_list	*root;
+	char	*save;
 
 	if (!tok_list)
 		return (NULL);
 	if (ft_lstsize(tok_list) == 1)
 	{
-		return (expand_block(((t_tok *)(tok_list->content))->content));
+		save = ((t_tok *)(tok_list->content))->content;
+		ft_lstclear(&tok_list, free_tok_not_content);
+		return (expand_block(save));
 	}
 	ast = malloc(sizeof(t_ast));
 	if (!ast)
@@ -93,11 +102,14 @@ t_ast	*build_ast(t_list *tok_list)
 		free(ast);
 		return (expand_block(((t_tok *)(root->content))->content));
 	}
-	ast->content = ((t_tok *)root->content)->content;
+	ast->content = ft_strdup(((t_tok *)root->content)->content);
 	ast->type = ((t_tok *)root->content)->type;
 	ast->data = NULL;
 	left = extract_left(tok_list, root);
 	right = root->next;
+	free(((t_tok *)root->content)->content);
+	free(((t_tok *)root->content));
+	free(root);
 	ast->left = build_ast(left);
 	ast->right = build_ast(right);
 	return (ast);

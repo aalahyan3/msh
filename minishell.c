@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/15 18:00:15 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/16 19:44:57 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ static void draw_ascii_art(void)
 	ft_printf("|_| |_| |_||_||_| |_||_||___/|_| |_| \\___||_||_| by aalahyan and aaitabde\n\n"RESET);
 }
 
-void	leaks(void) __attribute__((destructor));
-
+// void	leaks(void) __attribute__((destructor));b
 void leaks(void)
 {
 	system("leaks minishell");
@@ -56,7 +55,7 @@ int main(int ac, char **av, char **env)
 		add_history(prompt);
 		ast = parse(prompt, env_l);
 		process_heredocs(ast);
-		// execute_ast(ast, env_l);
+		execute_ast(ast, env_l);
 		free_ast(ast);
 	}
 	clear_env(env_l);

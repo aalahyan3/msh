@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 01:41:11 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 10:22:51 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/16 19:47:45 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,5 @@ void ast_vis(t_ast *node, int depth, char *prefix)
         ast_vis(node->left, depth + 1, "L-- ");
         ast_vis(node->right, depth + 1, "R-- ");
     }
+    printf(reset);
 }
-
-// Example usage
