@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/17 08:48:15 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/17 13:41:49 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int main(int ac, char **av, char **env)
 		exit(1);
 	draw_ascii_art();
 	handle_signals();
-
 	while (1)
 	{
 		prompt = readline("msh$ ");

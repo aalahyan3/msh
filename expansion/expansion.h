@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:53:51 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/17 07:19:35 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/17 13:14:10 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,7 @@ char	**split_msh(char const *s);
 char	**split_and_join(char **arr);
 char	**expand_wildcards(char	**arr);
 char	*expand_quotes(char *s);
+char	*find_in_env(char *key, t_list *env);
+char	*expand_here_doc(char *line, t_list *env_l);
 
 #endif
