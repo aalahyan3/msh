@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 03:02:29 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/17 03:28:45 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/17 11:32:03 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static void	defernciate_command(char *str)
 					str[i] = '\x02';
 				i++;
 			}
+			continue ;
 		}
 		i++;
 	}
