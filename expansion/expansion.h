@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.h                                              :+:      :+:    :+:   */
+/*   expansion.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/11 21:19:14 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/16 20:55:36 by aalahyan         ###   ########.fr       */
+/*   Created: 2025/03/16 19:53:51 by aalahyan          #+#    #+#             */
+/*   Updated: 2025/03/17 03:07:12 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_H
-# define ENV_H
+#ifndef EXPANSION_H
+# define EXPANSION_H
 
-# include <stdbool.h>
-# include "../libft/libft.h"
+# include "../env/env.h"
+# include "../ft_func/ft_func.h"
+# include "../parser/parser.h"
 
-struct s_env
-{
-	char	*key;
-	char	*value;
-	bool	defined;
-};
+char	**expand_vars(char **old, t_list *env_l);
+char	**expand(char **arr, t_list *env_l);
+char	**split_by_quotes(char *s);
+char	**split_not_quotes(char *cmd);
+char	**split_msh(char const *s);
+char	**split_and_join(char **arr);
 
-t_list	*build_env(char **env_array);
-void	clear_env(t_list *env_l);
 
 #endif

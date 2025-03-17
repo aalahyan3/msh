@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 23:32:47 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/16 01:59:50 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/17 03:43:16 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "../ft_func/ft_func.h"
 # include "../env/env.h"
 # include "../free_utils/free_utils.h"
-
+# include "../expansion/expansion.h"
 
 enum e_tok_type
 {

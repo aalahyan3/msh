@@ -6,12 +6,12 @@
 #    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/15 23:11:26 by aalahyan         ###   ########.fr        #
+#    Updated: 2025/03/17 03:18:01 by aalahyan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -g #-fsanitize=address -g3#-Wall -Wextra -Werror 
+CFLAGS = -fsanitize=address -g3#-Wall -Wextra -Werror 
 NAME = minishell
 
 SRCS = 	minishell.c \
@@ -20,6 +20,12 @@ SRCS = 	minishell.c \
 		env/build_env.c\
 		env/clear_env.c\
 		free_utils/free_2d_array.c\
+		expansion/expand_vars.c\
+		expansion/expand.c\
+		expansion/split_by_quotes.c\
+		expansion/split_msh.c\
+		expansion/split_not_quotes.c\
+		expansion/split_and_join.c\
 		parser/process_prompt.c\
 		parser/tokenize.c\
 		parser/parsing.c\
@@ -70,6 +76,8 @@ $(BIN)/%.o: executor/%.c
 $(BIN)/%.o: env/%.c
 	$(CC) $(READLINE_COMPILE) $(CFLAGS) -c $< -o $@
 $(BIN)/%.o: free_utils/%.c
+	$(CC) $(READLINE_COMPILE) $(CFLAGS) -c $< -o $@
+$(BIN)/%.o: expansion/%.c
 	$(CC) $(READLINE_COMPILE) $(CFLAGS) -c $< -o $@
 clean:
 	make clean -C libft

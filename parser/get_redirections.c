@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 02:15:57 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/14 10:40:34 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/16 20:47:59 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ t_reds	*get_red_struct(char *s)
 	while (*s && ft_isspace(*s))
 		s++;
 	red->file = ft_strdup(s);
+	if (!red->file)
+		return (NULL);
 	red->fd = -1;
 	return (red);
 }

@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 21:22:40 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/12 22:26:59 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/16 20:56:15 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,10 @@ char	*get_key(char *var)
 
 struct s_env	*make_env_node(char *var)
 {
-	char	*key;
-	char	*value;
-	char	*tmp;
+	char			*key;
+	char			*value;
+	char			*tmp;
 	struct s_env	*env;
-
 
 	key = get_key(var);
 	if (!key)

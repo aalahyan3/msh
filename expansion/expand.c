@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.h                                              :+:      :+:    :+:   */
+/*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/11 21:19:14 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/16 20:55:36 by aalahyan         ###   ########.fr       */
+/*   Created: 2025/03/16 21:44:28 by aalahyan          #+#    #+#             */
+/*   Updated: 2025/03/17 03:41:40 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_H
-# define ENV_H
+#include "expansion.h"
 
-# include <stdbool.h>
-# include "../libft/libft.h"
-
-struct s_env
+char	**expand(char **arr, t_list *env_l)
 {
-	char	*key;
-	char	*value;
-	bool	defined;
-};
+	char	**vars_expanded;
 
-t_list	*build_env(char **env_array);
-void	clear_env(t_list *env_l);
-
-#endif
+	vars_expanded = expand_vars(arr, env_l);
+	free_2d_array(arr);
+	if (!vars_expanded)
+		return (NULL);
+	return (vars_expanded);
+}
