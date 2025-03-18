@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 21:44:28 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/18 12:46:01 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/18 13:10:27 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ char	**expand(char **arr, t_list *env_l)
 {
 	char	**vars_expanded;
 	char	**wildcards_expanded;
-
+	if (!arr)
+		return (NULL);
 	vars_expanded = expand_vars(arr, env_l);
 	if (!vars_expanded)
 		return (NULL);

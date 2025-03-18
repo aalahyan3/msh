@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/18 12:46:16 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/18 13:14:08 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,6 @@ int	execute_word(t_ast *ast, t_list *ev)
 	args = expand((char **)ast->data, ev);
 	if(!args)
 		return (1);
-	if (is_builtin(args) == 0)
-		return (run_builting(args, ev));
 	path = get_cmd_path(args[0], env, &i);
 	if (path)
 	{
@@ -174,9 +172,8 @@ int	execute_block(t_ast *ast, t_list *env)
 	if(!ast || !ast->left)
 		return (1);
 	args = expand((char **)ast->right->data, env);	
-	ast->right->data = (void *)args;
 	if (args && is_builtin(args) == 0)
-		return (execute_ast(ast->right, env));
+		return (run_builting(args, env));
 	pid = fork();
 	if (pid < 0)
 		return (1);

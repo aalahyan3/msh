@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/18 10:47:51 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/18 12:56:36 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ int main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	env_l = build_env(env);
-	if (!env_l)
-		exit(1);
 	draw_ascii_art();
 	handle_signals();
 	while (1)
