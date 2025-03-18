@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/18 12:38:21 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/18 12:46:16 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,11 +126,9 @@ int handle_redirections(t_ast *ast, t_list *env)
 	int		red_count;
 	int		infd;
 	int		oufd;
-	int 	index;
 
 	if (!ast || !ast->data)
 		return (0);
-	index = 0;
 	infd = STDIN_FILENO;
 	oufd = STDOUT_FILENO;
 	reds = (t_reds **)ast->data;
@@ -145,7 +143,6 @@ int handle_redirections(t_ast *ast, t_list *env)
 				return (perror("minishell : open"), 1);
 			dup2(reds[red_count]->fd, STDIN_FILENO);
 			close(reds[red_count]->fd);
-			index = 2;
 		}
 		else if (reds[red_count]->type == OUTPUT)
 		{
@@ -154,7 +151,6 @@ int handle_redirections(t_ast *ast, t_list *env)
 				return (perror("minishell : open"), 1);
 			dup2(reds[red_count]->fd, STDOUT_FILENO);
 			close(reds[red_count]->fd);
-			index = 2;
 		}
 		else if (reds[red_count]->type == APPEND)
 		{
@@ -163,11 +159,10 @@ int handle_redirections(t_ast *ast, t_list *env)
 				return (perror("minishell : open"), 1);
 			dup2(reds[red_count]->fd, STDOUT_FILENO);
 			close(reds[red_count]->fd);
-			index = 2;
 		}
 		red_count++;
 	}
-	return (index);
+	return (0);
 }
 
 int	execute_block(t_ast *ast, t_list *env)
@@ -178,11 +173,10 @@ int	execute_block(t_ast *ast, t_list *env)
 
 	if(!ast || !ast->left)
 		return (1);
-	args = expand((char **)ast->right->data, env);
-	printf("args[0] = %s\n", args[0]);
-	return (1);
-	if (is_builtin(args) == 0)
-		return (run_builting(args, env));
+	args = expand((char **)ast->right->data, env);	
+	ast->right->data = (void *)args;
+	if (args && is_builtin(args) == 0)
+		return (execute_ast(ast->right, env));
 	pid = fork();
 	if (pid < 0)
 		return (1);
