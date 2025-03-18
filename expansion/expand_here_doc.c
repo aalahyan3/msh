@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_here_doc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 12:52:06 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/17 13:25:41 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/18 10:37:56 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ char	*expand_here_doc(char *line, t_list *env_l)
 	final = NULL;
 	while (chunk)
 	{
-		printf("%s\n", chunk);
-		
 		if (*chunk == '$')
 			chunk = expander(chunk, env_l);
 		temp = ft_strjoin(final, chunk);

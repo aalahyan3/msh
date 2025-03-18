@@ -1,0 +1,15 @@
+Makefile
+README.md
+bin
+env
+executor
+expansion
+free_utils
+ft_func
+l
+libft
+minishell
+minishell.c
+minishell.h
+parser
+[0m[0m

@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:43:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/14 01:20:49 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/18 11:32:37 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,18 @@ char	*trim_last_dir(char *cwd)
 int	ft_cd(char *path)
 {
 	struct stat st;
+	char *home;
 
+	home = getenv("HOME");
 	if (!path)
-		return (chdir(getenv("HOME")));
+	{
+		printf("home = %s\n", home);
+		int ret = chdir(home);
+		printf("chdir return value: %d\n", ret);
+		if (ret == -1)
+			perror("minishell");
+		return (1);
+	}
 	if (!*path)
 		return (1);
 	if (ft_strncmp(path, "..", 2) == 0)

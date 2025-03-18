@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.h                                              :+:      :+:    :+:   */
+/*   builins_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/11 21:19:14 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/18 11:21:33 by aaitabde         ###   ########.fr       */
+/*   Created: 2025/03/18 11:12:36 by aaitabde          #+#    #+#             */
+/*   Updated: 2025/03/18 11:18:16 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_H
-# define ENV_H
+#include "executor.h"
 
-# include <stdbool.h>
-# include "../libft/libft.h"
-
-struct s_env
+int ft_export(char **args, t_list *env)
 {
-	char	*key;
-	char	*value;
-	bool	defined;
-};
-
-t_list	*build_env(char **env_array);
-void	clear_env(t_list *env_l);
-char	**make_env(t_list *ev);
-#endif
+	printf("export\n");
+	printf("args[0] = %s\n", args[0]);
+	return (0);
+}

@@ -6,12 +6,30 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 11:09:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/15 11:34:43 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/18 11:49:39 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+# ifndef EXECUTOR_H
+# define EXECUTOR_H
+# include "../parser/parser.h"
+# include "../env/env.h"
+# include "../libft/libft.h"
 
+# include <fcntl.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <sys/stat.h>
+
+# ifndef DONE_REDIRECTION
+# define DONE_REDIRECTION 2
+# endif
+# ifndef ERROR_REDIRECTION
+# define ERROR_REDIRECTION 1
+# endif
+# ifndef NO_REDIRECTION
+# define NO_REDIRECTION 0
+# endif
 /*Executor*/
 
 int		execute_ast(t_ast *ast, t_list *env);
@@ -32,10 +50,12 @@ int		ft_echo(char **args, char **env);
 int		ft_pwd(char **env);
 int		ft_cd(char *path);
 
+
 //signals
 
 void	handle_signals(void);
 
 //redirections 
-void	check_syntax(t_reds **reds);
-void	process_heredocs(t_ast *ast);
+int 	check_syntax(t_reds **reds);
+void	process_heredocs(t_ast *ast, t_list *env);
+# endif

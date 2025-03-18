@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:27:31 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/15 17:17:24 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/18 10:41:48 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,16 @@ char	*gen_name()
 	return (NULL);
 }
 
-void handle_heredoc(t_reds *red)
+void handle_heredoc(t_reds *red, t_list *ev)
 {
-	char *line;
-	char *filename;
-	int fd;
-	int fd_read;
+	char	*line;
+	char	*filename;
+	int		fd;
+	int		expand;
+	int		fd_read;
+	char	*tmp;
 
+	expand = 1;
 	filename = gen_name();	
 	fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0600);
 	fd_read = open(filename, O_RDONLY);
@@ -50,6 +53,14 @@ void handle_heredoc(t_reds *red)
 		return ;
 	}
 	unlink(filename);
+	if ((red->file[0] == '\'' && red->file[ft_strlen(red->file) - 1] == '\'') || \
+	(red->file[0] == '\"' && red->file[ft_strlen(red->file) - 1] == '\"'))
+	{
+		tmp = red->file;
+		red->file = ft_substr(red->file, 1, ft_strlen(red->file) - 2);
+		free(tmp);
+		expand = 0;
+	}
 	while (1)
 	{
 		line = readline("> ");
@@ -57,6 +68,12 @@ void handle_heredoc(t_reds *red)
 		{
 			free(line);
 			break ;
+		}
+		if (expand)
+		{
+			tmp = line;
+			line = expand_here_doc(tmp, ev);
+			free(tmp);
 		}
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
@@ -68,7 +85,6 @@ void handle_heredoc(t_reds *red)
 	red->fd = fd_read;
 	red->type = INPUT;
 }
-
 
 void read_heredoc_input(int fd, const char *delimiter)
 {
@@ -90,7 +106,7 @@ void read_heredoc_input(int fd, const char *delimiter)
 	}
 }
 
-void process_heredocs(t_ast *ast)
+void process_heredocs(t_ast *ast, t_list *env)
 {
 	t_reds **reds;
 	int i;
@@ -101,16 +117,17 @@ void process_heredocs(t_ast *ast)
 	if (ast->type == REDIRECTIONS && ast->data)
 	{
 		reds = (t_reds **)ast->data;
-		check_syntax(reds);
+		if (check_syntax(reds))
+			return ;
 		i = 0;
 		while (reds[i])
 		{
 			if (reds[i]->type == HEREDOC)
-				handle_heredoc(reds[i]);
+				handle_heredoc(reds[i], env);
 			i++;
 		}
 	}
-	process_heredocs(ast->left);
-	process_heredocs(ast->right);
+	process_heredocs(ast->left, env);
+	process_heredocs(ast->right, env);
 }
 

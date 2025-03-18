@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:30:20 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/15 11:30:30 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/18 10:22:58 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	print_type(enum e_red_type s_reds)
 		write(2, "`<<'\n", 6);
 }
 
-void	check_syntax(t_reds **reds)
+int	check_syntax(t_reds **reds)
 {
 	int i;
 
@@ -35,8 +35,9 @@ void	check_syntax(t_reds **reds)
 		if (reds[i]->file[0] == '\0')
 		{
 			if (reds[i + 1])
-				print_type(reds[i + 1]->type);
+				return (print_type(reds[i + 1]->type), 1);
 		}
 		i++;
 	}
+	return (0);
 }

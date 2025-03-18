@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 07:57:43 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/14 09:07:16 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/18 10:21:18 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	get_path_index(char **env)
 	return (i);
 }
 
-static char	*search_in_path(char **cmd, char **env)
+static char	*search_in_path(char *full_cmd, char **env)
 {
 	char	**paths;
 	char	*path_cmd;
@@ -49,62 +49,59 @@ static char	*search_in_path(char **cmd, char **env)
 
 	i = get_path_index(env);
 	if (i == 0)
-		return (free_arr(cmd), NULL);
+		return (NULL);
 	paths = ft_split(env[i] + 5, ':');
 	if (!paths)
-		return (free_arr(cmd), NULL);
+		return ( NULL);
 	i = -1;
 	while (paths[++i])
 	{
 		tmp = ft_strjoin(paths[i], "/");
-		path_cmd = ft_strjoin(tmp, cmd[0]);
+		path_cmd = ft_strjoin(tmp, full_cmd);
 		free(tmp);
 		if (access(path_cmd, X_OK) == 0)
-			return (free_arr(cmd), free_arr(paths), path_cmd);
+			return ( free_arr(paths), path_cmd);
 		free(path_cmd);
 	}
 	free_arr(paths);
-	free_arr(cmd);
 	return (NULL);
 }
 
 char	*get_cmd_path(char *full_cmd, char **env, int *i)
 {
-	char	**cmd;
 	char	*tmp;
 	struct stat st;
-	
-	cmd = ft_split(full_cmd, ' ');
-	if (!cmd)
+
+	if (!full_cmd)
 		return (NULL);
-	if (ft_strchr(cmd[0], '/'))
+	if (ft_strchr(full_cmd, '/'))
 	{
-		if (stat(cmd[0], &st) == 0)
+		if (stat(full_cmd, &st) == 0)
 		{
 			if (S_ISDIR(st.st_mode))
 			{
-				printf("minishell: %s: is a directory\n", cmd[0]);
+				printf("minishell: %s: is a directory\n", full_cmd);
 				*i = 0;
-				return(free_arr(cmd), NULL);
+				return(NULL);
 			}
-			if (access(cmd[0], X_OK) == 0)
+			if (access(full_cmd, X_OK) == 0)
 			{
-				tmp = ft_strdup(cmd[0]);
-				return(free_arr(cmd), tmp);
+				tmp = ft_strdup(full_cmd);
+				return(tmp);
 			}
-			if (access(cmd[0], F_OK) == 0)
+			if (access(full_cmd, F_OK) == 0)
 			{
-				printf("minishell: %s: Permission denied\n", cmd[0]);
+				printf("minishell: %s: Permission denied\n", full_cmd);
 				*i = 0;
-				return(free_arr(cmd), NULL);
+				return(NULL);
 			}
 		}
 		write(2, "minishell: ", 11);
-		write(2, cmd[0], ft_strlen(cmd[0]));
+		write(2, full_cmd, ft_strlen(full_cmd));
 		write(2, ": No such file or directory\n", 28);
 		*i = 0;
-		return(free_arr(cmd), NULL);
+		return(NULL);
 	}
 	*i = 1;
-	return (search_in_path(cmd, env));
+	return (search_in_path(full_cmd, env));
 }
