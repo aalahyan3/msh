@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 23:32:47 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/18 22:23:22 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/18 23:11:43 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ enum e_tok_type
 	BLOCK,
 	COMMAND,
 	REDIRECTIONS,
-	SYMBOL,
+	SYMBOL_1,
+	SYMBOL_2,
+	FORBIDDEN,
 	WORD
 };
 
@@ -76,6 +78,7 @@ void	free_red_structs(t_reds **reds);
 t_ast	*parse(char *prompt, t_list *env_l);
 void    free_ast(t_ast *ast);
 bool	initial_checks(char *s);
+bool	linear_parsing(char *s);
 
 
 #endif

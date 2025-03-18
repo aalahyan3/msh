@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 08:57:28 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/18 22:31:00 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/18 23:13:26 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ t_ast	*parse(char *prompt, t_list *env_l)
 	t_ast	*ast;
 	if (!initial_checks(prompt))
 		return (free(prompt), NULL);
-	// if (!linear_token_checker(prompt))
-	// 	return (free(prompt), NULL);
+	if (!linear_parsing(prompt))
+		return (free(prompt), NULL);
 	ast = process_prompt(prompt, env_l);
 	free(prompt);
 	if (!ast)
