@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/18 12:56:36 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/18 21:02:26 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int main(int ac, char **av, char **env)
 		}
 		add_history(prompt);
 		ast = parse(prompt, env_l);
+		if (!ast)
+			continue ;
 		process_heredocs(ast, env_l);
 		execute_ast(ast, env_l);
 		free_ast(ast);

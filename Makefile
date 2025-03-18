@@ -6,7 +6,7 @@
 #    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/18 19:57:01 by aalahyan         ###   ########.fr        #
+#    Updated: 2025/03/18 21:04:22 by aalahyan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRCS = 	minishell.c \
 		parser/get_redirections.c\
 		parser/expand_block.c\
 		parser/free_red_structs.c\
+		parser/initial_checks.c\
 		executor/execute_ast.c\
 		executor/execute_pipe.c\
 		executor/execute_simple_cmd.c\

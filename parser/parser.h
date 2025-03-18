@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 23:32:47 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/17 03:43:16 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/18 22:23:22 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ enum e_tok_type
 	AND,
 	BLOCK,
 	COMMAND,
-	REDIRECTIONS
+	REDIRECTIONS,
+	SYMBOL,
+	WORD
 };
 
 enum e_red_type
@@ -37,6 +39,8 @@ enum e_red_type
 	APPEND,
 	HEREDOC
 };
+
+
 
 typedef struct s_reds
 {
@@ -71,6 +75,7 @@ t_ast	*expand_block(char *s);
 void	free_red_structs(t_reds **reds);
 t_ast	*parse(char *prompt, t_list *env_l);
 void    free_ast(t_ast *ast);
+bool	initial_checks(char *s);
 
 
 #endif

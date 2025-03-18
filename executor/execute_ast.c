@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_ast.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/18 13:14:08 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/18 22:35:10 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ int	execute_block(t_ast *ast, t_list *env)
 
 	if(!ast || !ast->left)
 		return (1);
-	args = expand((char **)ast->right->data, env);	
+	args = expand((char **)ast->right->data, env);
 	if (args && is_builtin(args) == 0)
 		return (run_builting(args, env));
 	pid = fork();
