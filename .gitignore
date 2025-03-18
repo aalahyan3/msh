@@ -1,17 +1,12 @@
-# Ignore .vscode folder
-.vscode/
+*
+!executer/
+!expansion/
+!Makefile
+!minishell.c
+!minishell.h
+!README.md
+!env/
+!libft/
+!ft_func/
+!free_utils/
 
-# Ignore bin/ folder
-bin/
-
-# Ignore libft/bin folder
-libft/bin/
-
-# Ignore compiled binary minishell
-minishell
-
-# Ignore static library file
-libft/libft.a
-
-
-test.c
