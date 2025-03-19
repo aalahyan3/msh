@@ -6,12 +6,12 @@
 #    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/18 11:22:42 by aaitabde         ###   ########.fr        #
+#    Updated: 2025/03/19 17:39:22 by aaitabde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -fsanitize=address -g3#-Wall -Wextra -Werror 
+CFLAGS = #-Wall -Wextra -Werror 
 NAME = minishell
 
 SRCS = 	minishell.c \
@@ -50,6 +50,8 @@ SRCS = 	minishell.c \
 		executor/builtins_echo.c\
 		executor/builtins_pwd.c\
 		executor/builtins_cd.c\
+		executor/builtins_env.c\
+		executor/builtins_unset.c\
 
 READLINE_COMPILE = -I$(shell brew --prefix readline)/include
 READLINE_LINK = -lreadline -L$(shell brew --prefix readline)/lib

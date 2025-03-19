@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/18 13:14:08 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/19 17:53:39 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@ int is_builtin(char **args)
 		return (0);
 	else if (args && args[0] && ft_strncmp(args[0], "cd\0", 3) == 0)
 		return (0);
+	else if (args && args[0] && ft_strncmp(args[0], "export\0", 7) == 0)
+		return (0);
+	else if (args && args[0] && ft_strncmp(args[0], "env\0", 4) == 0)
+		return (0);
+	else if (args && args[0] && ft_strncmp(args[0], "unset\0", 6) == 0)
+		return (0);
 	return (-1);
 }
 
@@ -36,6 +42,10 @@ int	run_builting (char **args, t_list *envp)
 		return (ft_pwd(env));
 	if (args && args[0] && ft_strncmp(args[0], "cd", 2) == 0)
 		return (ft_cd(args[1]));
+	if (args && args[0] && ft_strncmp(args[0], "env", 3) == 0)
+		return (ft_env(envp));
+	if (args && args[0] && ft_strncmp(args[0], "unset", 3) == 0)
+		return (ft_unset(envp, args));
 	return (1);
 }
 
@@ -171,7 +181,7 @@ int	execute_block(t_ast *ast, t_list *env)
 
 	if(!ast || !ast->left)
 		return (1);
-	args = expand((char **)ast->right->data, env);	
+	args = expand((char **)ast->right->data, env);
 	if (args && is_builtin(args) == 0)
 		return (run_builting(args, env));
 	pid = fork();
@@ -181,7 +191,7 @@ int	execute_block(t_ast *ast, t_list *env)
 	{
 		if (handle_redirections(ast->left, env) == 1)
 			exit(1);
-		exit(execute_word(ast->right, env));
+		exit(execute_block(ast->right, env));
 	}
 	waitpid(pid, &status, 0);
 	return (WEXITSTATUS(status));

@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 11:09:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/18 11:49:39 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/19 17:44:29 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	free_arr(char **arr);
 int		ft_echo(char **args, char **env);
 int		ft_pwd(char **env);
 int		ft_cd(char *path);
-
-
+int     ft_env(t_list *env);
+int     ft_unset(t_list *env, char **keys);
 //signals
 
 void	handle_signals(void);
