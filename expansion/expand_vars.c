@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 21:52:33 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/18 22:43:46 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/19 20:34:07 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*find_in_env(char *key, t_list *env)
 	return ("");
 }
 
-char *get_next_var(char *s, int *i, t_list *env_l)
+char *get_next_var(char *s, int *i, t_list *env_l, bool is_dq)
 {
 	int start;
 	char *v;
@@ -50,8 +50,17 @@ char *get_next_var(char *s, int *i, t_list *env_l)
 	if (s[*i] == '$')
 	{
 		(*i)++;
+		if (!s[*i] && is_dq)
+			return (ft_strdup("$"));
 		while (s[*i] && (ft_isalnum(s[*i]) || s[*i] == '_'))
 			(*i)++;
+		// if (!s[*i])
+		// 	return (ft_strdup("$"));
+		if (s[*i] == '\'' || s[*i] == '\"')
+		{
+			*i += ft_strlen(s + *i);
+			return (ft_strdup(s));
+		}
 		if (start == *i)
 			return (NULL);
 		t = ft_substr(s, start + 1, *i - start - 1);
@@ -72,7 +81,7 @@ char *get_next_var(char *s, int *i, t_list *env_l)
 	return (NULL);
 }
 
-void expander(char **s, t_list *env_l)
+void expander(char **s, t_list *env_l, bool is_dq)
 {
 	char	*del;
 	char	*var;
@@ -98,9 +107,9 @@ void expander(char **s, t_list *env_l)
 		return ;
 	}
 	new = temp;
-	var = get_next_var(*s, &i, env_l);
+	var = get_next_var(*s, &i, env_l, is_dq);
 	while (var)
-	{		
+	{
 		temp = ft_strjoin(new, var);
 		if (!temp)
 		{
@@ -111,7 +120,7 @@ void expander(char **s, t_list *env_l)
 		}
 		free(var);
 		new = temp;
-		var = get_next_var(*s, &i, env_l);
+		var = get_next_var(*s, &i, env_l, is_dq);
 	}
 	temp = ft_strjoin(new, del);
 	free(new);
@@ -122,16 +131,23 @@ void expander(char **s, t_list *env_l)
 
 
 
-char	*join_arr(char **arr)
+char	*join_arr(char **arr, bool is_dq)
 {
 	char	*temp;
 	char	*final;
 	int		i;
 
 	final = NULL;
+	if (is_dq)
+	{
+		temp = ft_strjoin(final, "\"");
+		if (!temp)
+			return (free_2d_array(arr), free(final), NULL);
+		final = temp;
+	}
 	i = 0;
 	while (arr[i])
-	{	
+	{
 		temp = ft_strjoin(final, arr[i]);
 		if (!temp)
 			return(free_2d_array(arr), free(final), NULL);
@@ -139,33 +155,53 @@ char	*join_arr(char **arr)
 		final = temp;
 		i++;
 	}
+	if (is_dq)
+	{
+		temp = ft_strjoin(final, "\"");
+		if (!temp)
+			return (free_2d_array(arr), free(final), NULL);
+		free(final);
+		final = temp;
+	}
 	free_2d_array(arr);
 	return (final);
 }
 
 char *expand_str(char *s, t_list *env_l)
 {
-	char **splited;
-	int i;
+	char 	**splited;
+	int 	i;
+	char	*temp;
+	bool	is_dq;
 
 	if (!*s)
 		return (NULL);
-	splited = split_by_quotes(s);
+	is_dq = false;
+	if (s[0] == '\'' && s[ft_strlen(s) - 1] == '\'')
+		return (ft_strdup(s));
+	if (s[0] == '"' && s[ft_strlen(s) - 1] == '"')
+	{
+		is_dq = true;
+		temp = ft_substr(s, 1, ft_strlen(s) - 2);
+	}
+	else
+		temp = ft_strdup(s);
+	splited = split_by_quotes(temp);
 	if (!splited)
 		return (NULL);
-	
 	i = 0;
 	while (splited[i])
 	{
 		if (*splited[i] != '\'' && ft_strchr(splited[i], '$'))
 		{
-			expander(&splited[i], env_l);
+			expander(&splited[i], env_l, is_dq);
 			if (!splited[i])
 				return (free_2d_array(splited), NULL);
 		}
 		i++;
 	}
-	return (join_arr(splited));
+	free(temp);
+	return (join_arr(splited, is_dq));
 }
 
 

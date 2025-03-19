@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:03:29 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/19 17:50:40 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/19 20:51:19 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ bool	compare_expectations(t_l_parse *prev, t_l_parse *curr)
 {
 	if (!prev)
 	{
-		if (curr->type == L_CLOSE_P || curr->type == L_OR || curr->type == L_AND || curr->type == L_PIPE || curr->type == L_SEMICOLON || curr->type == L_AMPERCENT || curr->type == L_REDIRECTION)
+		if (curr->type == L_CLOSE_P || curr->type == L_OR || curr->type == L_AND || curr->type == L_PIPE || curr->type == L_SEMICOLON || curr->type == L_AMPERCENT)
 		{
 			ft_putstr_fd("msh: syntax error near unexpected token `", 2);
 			ft_putstr_fd(curr->content, 2);
