@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 23:32:47 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/18 23:11:43 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/19 17:14:55 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,25 @@ enum e_red_type
 };
 
 
+enum e_l_parse
+{
+	L_NONE,
+	L_OR,
+	L_AND,
+	L_PIPE,
+	L_OPEN_P,
+	L_CLOSE_P,
+	L_SEMICOLON,
+	L_AMPERCENT,
+	L_REDIRECTION,
+	L_WORD
+};
+
+typedef struct s_l_parse
+{
+	char		*content;
+	enum e_l_parse	type;
+}	t_l_parse;
 
 typedef struct s_reds
 {

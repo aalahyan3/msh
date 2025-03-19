@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 21:03:19 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/18 22:03:36 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/19 17:49:15 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,12 @@ static bool	is_parenthisis(char *s)
 			{
 				return (false);
 			}
-			if (i - before == 2)
-			{
-				ft_putstr_fd("msh: syntax error near unexpected token `(`\n", 2);
-				return (false);
-			
-			}
 			continue ;
+		}
+		if (s[i] == ')')
+		{
+			ft_putstr_fd("msh: syntax error near unexpected token `)'\n", 2);
+			return (false);
 		}
 		i++;
 	}

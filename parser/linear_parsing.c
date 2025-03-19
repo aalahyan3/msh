@@ -6,111 +6,217 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:03:29 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/18 23:18:02 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/19 17:50:40 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-static enum e_tok_type get_next_token(char *s, int *i)
+static void	get_next_token_2(t_l_parse **tok, char *s, int *i)
 {
-	int		start;
-	t_tok	token;
+	int	start;
+
+	if (s[*i] == ')')
+	{
+		*i += 1;
+		(*tok)->content = ft_strdup(")");
+		(*tok)->type = L_CLOSE_P;
+	}
+	else if (s[*i] == ';')
+	{
+		*i += 1;
+		(*tok)->content = ft_strdup(";");
+		(*tok)->type = L_SEMICOLON;
+	}
+	else if (s[*i] == '|')
+	{
+		*i += 1;
+		if (s[*i] == '|')
+		{
+			*i += 1;
+			(*tok)->content = ft_strdup("||");
+			(*tok)->type = L_OR;
+		}
+		else
+		{
+			(*tok)->content = ft_strdup("|");
+			(*tok)->type = L_PIPE;
+		}
+	}
+	else if (s[*i] == '&')
+	{
+		*i += 1;
+		if (s[*i] == '&')
+		{
+			*i += 1;
+			(*tok)->content = ft_strdup("&&");
+			(*tok)->type = L_AND;
+		}
+		else
+		{
+			(*tok)->content = ft_strdup("&");
+			(*tok)->type = L_AMPERCENT;
+		}
+	}
+	else if (s[*i] == '>')
+	{
+		*i += 1;
+		if (s[*i] == '>')
+		{
+			*i += 1;
+			(*tok)->content = ft_strdup(">>");
+		}
+		else
+			(*tok)->content = ft_strdup(">");
+		(*tok)->type = L_REDIRECTION;
+	}
+	else if (s[*i] == '<')
+	{
+		*i += 1;
+		if (s[*i] == '<')
+		{
+			*i += 1;
+			(*tok)->content = ft_strdup("<<");
+		}
+		else
+			(*tok)->content = ft_strdup("<");
+		(*tok)->type = L_REDIRECTION;
+	}
+	else
+	{
+		(*tok)->type = L_WORD;
+		start = *i;
+		while (s[*i] && !ft_isspace(s[*i]) && s[*i] != '(' && s[*i] != ')' && s[*i] != '|' && s[*i] != '&' && s[*i] != ';' && s[*i] != '>' && s[*i] != '<')
+			*i += 1;
+		(*tok)->content = ft_substr(s, start, *i - start);
+	}
+	if (!(*tok)->content)
+	{
+		free(*tok);
+		*tok = NULL;
+	}
+}
+
+static t_l_parse	*get_next_token(char *s, int *i)
+{
+	t_l_parse	*tok;
 
 	while (s[*i] && ft_isspace(s[*i]))
 		*i += 1;
 	if (!s[*i])
-		return (NONE);
-	start = *i;
-	while (s[*i])
+		return (NULL);
+
+	tok = malloc(sizeof(t_l_parse));
+	if (!tok)
+		return (NULL);
+
+	if (s[*i] == '(')
 	{
-		if (s[*i] == '\'' || s[*i] == '"')
-		{
-			skip_quotes(s, i, s[*i]);
-			return (WORD);
-		}
-		else if (s[*i] == '<')
-		{
-			*i += 1;
-			if (s[*i] == '<')
-				*i += 1;
-			else
-				return (SYMBOL_1);
-			return (SYMBOL_2);
-		}
-		else if (s[*i] == '>')
-		{
-			*i += 1;
-			if (s[*i] == '>')
-				*i += 1;
-			else
-				return (SYMBOL_1);
-			return (SYMBOL_2);
-		}
-		else if (s[*i] == '|')
-		{
-			*i += 1;
-			if (s[*i] == '|')
-				*i += 1;
-			else
-				return (SYMBOL_1);
-			return (SYMBOL_2);
-		}
-		else if (s[*i] == '&')
-		{
-			*i += 1;
-			if (s[*i] == '&')
-				*i += 1;
-			else
-				return (FORBIDDEN);
-			return (SYMBOL_2);
-		}
-		else if (s[*i] == ';')
-		{
-			*i += 1;
-			return (FORBIDDEN);
-		}
-		else if (s[*i] == '(' || s[*i] == ')')
-		{
-			*i += 1;
-			return (SYMBOL_1);
-		}
-		else
-		{
-			while (s[*i] && !ft_isspace(s[*i]) && s[*i] != '\'' && s[*i] != '"' && s[*i] != '<' && s[*i] != '>' && s[*i] != '&' && s[*i] != '|' && s[*i] && s[*i] != ';' && s[*i] != '(' && s[*i] != ')')
-				*i += 1;
-			return (WORD);
-		}
 		*i += 1;
+		tok->content = ft_strdup("(");
+		tok->type = L_OPEN_P;
+		if (!tok->content)
+		{
+			free(tok);
+			return (NULL);
+		}
+		return (tok);
 	}
-	return (NONE);
+	get_next_token_2(&tok, s, i);
+	return (tok);
 }
 
-bool	compare_expectations(enum e_tok_type tok, enum e_tok_type prev, char *s, int i)
+bool	compare_expectations(t_l_parse *prev, t_l_parse *curr)
 {
-	if (tok == FORBIDDEN)
-		print_error(FORBIDDEN, s, i - 1, 1);
-	if (tok == WORD)
-		return (true);
-	if ()
-
+	if (!prev)
+	{
+		if (curr->type == L_CLOSE_P || curr->type == L_OR || curr->type == L_AND || curr->type == L_PIPE || curr->type == L_SEMICOLON || curr->type == L_AMPERCENT || curr->type == L_REDIRECTION)
+		{
+			ft_putstr_fd("msh: syntax error near unexpected token `", 2);
+			ft_putstr_fd(curr->content, 2);
+			ft_putstr_fd("'\n", 2);
+			return (false);
+		}
+	}
+	else if (prev->type == L_OPEN_P)
+	{
+		if (curr->type == L_CLOSE_P || curr->type == L_OR || curr->type == L_AND || curr->type == L_PIPE || curr->type == L_SEMICOLON || curr->type == L_AMPERCENT || curr->type == L_REDIRECTION)
+		{
+			ft_putstr_fd("msh: syntax error near unexpected token `", 2);
+			ft_putstr_fd(curr->content, 2);
+			ft_putstr_fd("'\n", 2);
+			return (false);
+		}
+	}
+	else if (prev->type == L_OR || prev->type == L_AND || prev->type == L_PIPE || prev->type == L_SEMICOLON || prev->type == L_AMPERCENT || prev->type == L_REDIRECTION)
+	{
+		if (curr->type == L_CLOSE_P || curr->type == L_OR || curr->type == L_AND || curr->type == L_PIPE || curr->type == L_SEMICOLON || curr->type == L_AMPERCENT || curr->type == L_REDIRECTION)
+		{
+			ft_putstr_fd("msh: syntax error near unexpected token `", 2);
+			ft_putstr_fd(curr->content, 2);
+			ft_putstr_fd("'\n", 2);
+			return (false);
+		}
+	}
+	else if (prev->type == L_CLOSE_P)
+	{
+		if (curr->type == L_WORD || curr->type == L_OPEN_P)
+		{
+			ft_putstr_fd("msh: syntax error near unexpected token `", 2);
+			ft_putstr_fd(curr->content, 2);
+			ft_putstr_fd("'\n", 2);
+			return (false);
+		}
+	}
+	else if (prev->type == L_WORD)
+	{
+		if (curr->type == L_OPEN_P)
+		{
+			ft_putstr_fd("msh: syntax error near unexpected token `", 2);
+			ft_putstr_fd(curr->content, 2);
+			ft_putstr_fd("'\n", 2);
+			return (false);
+		}
+	}
+	return (true);
 }
 
 bool	linear_parsing(char *s)
 {
-	int		i;
-	enum e_tok_type	token;
-	enum e_tok_type	prev;
+	t_l_parse	*token;
+	t_l_parse	*prev;
+	int			i;
+	bool		no_error;
 
 	i = 0;
-	prev = NONE;
+	prev = NULL;
 	token = get_next_token(s, &i);
-	while (token != NONE)
+	no_error = true;
+	while (token)
 	{
-		// if (!compare_expections(token, prev))
-		// 	return (false);
-		printf("token: %d\n", token);
+		if (!compare_expectations(prev, token))
+		{
+			no_error = false;
+			break ;
+		}
+		if (prev)
+		{
+			free(prev->content);
+			free(prev);
+		}
+		prev = token;
 		token = get_next_token(s, &i);
 	}
-	return (true);
+	if (prev)
+	{
+		if (prev->type == L_OPEN_P || prev->type == L_OR || prev->type == L_AND || prev->type == L_PIPE || prev->type == L_SEMICOLON || prev->type == L_AMPERCENT || prev->type == L_REDIRECTION)
+		{
+			ft_putstr_fd("msh: syntax error near unexpected token `newline'\n", 2);
+			
+			no_error = false;
+		}
+	free(prev->content);
+	free(prev);
+	}
+	return (no_error);
 }
