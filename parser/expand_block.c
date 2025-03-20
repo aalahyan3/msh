@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 02:42:28 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/17 03:43:33 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/19 19:38:28 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ t_ast	*expand_block(char *s)
 		return (NULL);
 	ast->content = ft_strdup(s);
 	ast->type = BLOCK;
+	ast->data = NULL;
 	ast->left = get_redirections(s);
 	ast->right = get_block(s);
 	free(s);
