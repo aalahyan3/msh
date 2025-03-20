@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 23:32:47 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/17 03:43:16 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/19 17:14:55 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@ enum e_tok_type
 	AND,
 	BLOCK,
 	COMMAND,
-	REDIRECTIONS
+	REDIRECTIONS,
+	SYMBOL_1,
+	SYMBOL_2,
+	FORBIDDEN,
+	WORD
 };
 
 enum e_red_type
@@ -37,6 +41,27 @@ enum e_red_type
 	APPEND,
 	HEREDOC
 };
+
+
+enum e_l_parse
+{
+	L_NONE,
+	L_OR,
+	L_AND,
+	L_PIPE,
+	L_OPEN_P,
+	L_CLOSE_P,
+	L_SEMICOLON,
+	L_AMPERCENT,
+	L_REDIRECTION,
+	L_WORD
+};
+
+typedef struct s_l_parse
+{
+	char		*content;
+	enum e_l_parse	type;
+}	t_l_parse;
 
 typedef struct s_reds
 {
@@ -71,6 +96,8 @@ t_ast	*expand_block(char *s);
 void	free_red_structs(t_reds **reds);
 t_ast	*parse(char *prompt, t_list *env_l);
 void    free_ast(t_ast *ast);
+bool	initial_checks(char *s);
+bool	linear_parsing(char *s);
 
 
 #endif

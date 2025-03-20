@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 21:52:33 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/17 03:25:22 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/18 22:43:46 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ char *get_next_var(char *s, int *i, t_list *env_l)
 
 	if (!s)
 		return (NULL);
-	while (s[*i] && (s[*i] == '\"' || s[*i] == '\''))
-		(*i)++;
+	// while (s[*i] && (s[*i] == '\"' || s[*i] == '\''))
+	// 	(*i)++;
 	start = *i;
 	if (s[*i] == '$')
 	{
@@ -82,7 +82,12 @@ void expander(char **s, t_list *env_l)
 
 	del = "";
 	if (**s == '"')
+	{
+		temp = ft_substr(*s, 1, ft_strlen(*s) - 2);
+		free(*s);
+		*s = temp;
 		del = "\"";
+	}
 	i = 0;
 	new = NULL;
 	temp = ft_strjoin(new, del);
@@ -95,7 +100,7 @@ void expander(char **s, t_list *env_l)
 	new = temp;
 	var = get_next_var(*s, &i, env_l);
 	while (var)
-	{
+	{		
 		temp = ft_strjoin(new, var);
 		if (!temp)
 		{
@@ -148,6 +153,7 @@ char *expand_str(char *s, t_list *env_l)
 	splited = split_by_quotes(s);
 	if (!splited)
 		return (NULL);
+	
 	i = 0;
 	while (splited[i])
 	{
@@ -173,7 +179,7 @@ char	**expand_vars(char **old, t_list *env_l)
 		return (NULL);
 	i = 0;
 	while (old[i])
-	{
+	{	
 		new[i] = expand_str(old[i], env_l);
 		if (!new[i])
 			return (free_2d_array(new), NULL);

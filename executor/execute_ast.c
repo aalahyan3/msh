@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/19 17:53:39 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/20 06:47:16 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,16 @@ int	run_builting (char **args, t_list *envp)
 	env = make_env(envp);
 	if (args && args[0] && ft_strncmp(args[0], "echo", 5) == 0)
  		return (ft_echo(args, env));
-	if (args && args[0] && ft_strncmp(args[0], "pwd", 3) == 0)
+	else if (args && args[0] && ft_strncmp(args[0], "pwd", 3) == 0)
 		return (ft_pwd(env));
-	if (args && args[0] && ft_strncmp(args[0], "cd", 2) == 0)
+	else if (args && args[0] && ft_strncmp(args[0], "cd", 2) == 0)
 		return (ft_cd(args[1]));
-	if (args && args[0] && ft_strncmp(args[0], "env", 3) == 0)
+	else if (args && args[0] && ft_strncmp(args[0], "env", 3) == 0)
 		return (ft_env(envp));
-	if (args && args[0] && ft_strncmp(args[0], "unset", 3) == 0)
+	else if (args && args[0] && ft_strncmp(args[0], "unset", 5) == 0)
 		return (ft_unset(envp, args));
+	else if (args && args[0] && ft_strncmp(args[0], "export", 6) == 0)
+		return (ft_export(args, envp));
 	return (1);
 }
 
@@ -90,6 +92,12 @@ int	execute_word(t_ast *ast, t_list *ev)
 	args = expand((char **)ast->data, ev);
 	if(!args)
 		return (1);
+	if (args[0] && !args[0][0])
+	{
+		write(2, "minishell: ", 11);
+		write(2, ":command not found\n", 19);
+		return (1);
+	}
 	path = get_cmd_path(args[0], env, &i);
 	if (path)
 	{
@@ -132,13 +140,9 @@ int handle_redirections(t_ast *ast, t_list *env)
 {
 	t_reds	**reds;
 	int		red_count;
-	int		infd;
-	int		oufd;
 
 	if (!ast || !ast->data)
 		return (0);
-	infd = STDIN_FILENO;
-	oufd = STDOUT_FILENO;
 	reds = (t_reds **)ast->data;
 	red_count = 0;
 	while (reds[red_count])
@@ -191,7 +195,7 @@ int	execute_block(t_ast *ast, t_list *env)
 	{
 		if (handle_redirections(ast->left, env) == 1)
 			exit(1);
-		exit(execute_block(ast->right, env));
+		exit(execute_ast(ast->right, env));
 	}
 	waitpid(pid, &status, 0);
 	return (WEXITSTATUS(status));

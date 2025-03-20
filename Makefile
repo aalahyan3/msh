@@ -6,7 +6,7 @@
 #    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/19 17:39:22 by aaitabde         ###   ########.fr        #
+#    Updated: 2025/03/20 08:10:06 by aaitabde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,8 @@ SRCS = 	minishell.c \
 		parser/get_redirections.c\
 		parser/expand_block.c\
 		parser/free_red_structs.c\
+		parser/initial_checks.c\
+		parser/linear_parsing.c\
 		executor/execute_ast.c\
 		executor/execute_pipe.c\
 		executor/execute_simple_cmd.c\
@@ -52,13 +54,13 @@ SRCS = 	minishell.c \
 		executor/builtins_cd.c\
 		executor/builtins_env.c\
 		executor/builtins_unset.c\
+		executor/builtins_export.c\
 
 READLINE_COMPILE = -I$(shell brew --prefix readline)/include
 READLINE_LINK = -lreadline -L$(shell brew --prefix readline)/lib
 
 BIN = bin
 OBJS = $(patsubst %,$(BIN)/%,$(notdir $(SRCS:.c=.o)))
-
 
 all bonus: libft $(NAME)
 

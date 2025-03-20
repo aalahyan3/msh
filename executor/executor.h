@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 11:09:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/19 17:44:29 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/20 04:30:13 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,7 @@
 # include <readline/readline.h>
 # include <sys/stat.h>
 
-# ifndef DONE_REDIRECTION
-# define DONE_REDIRECTION 2
-# endif
-# ifndef ERROR_REDIRECTION
-# define ERROR_REDIRECTION 1
-# endif
-# ifndef NO_REDIRECTION
-# define NO_REDIRECTION 0
-# endif
+
 /*Executor*/
 
 int		execute_ast(t_ast *ast, t_list *env);
@@ -51,11 +43,12 @@ int		ft_pwd(char **env);
 int		ft_cd(char *path);
 int     ft_env(t_list *env);
 int     ft_unset(t_list *env, char **keys);
+int     ft_export(char **args, t_list *env);
 //signals
 
 void	handle_signals(void);
 
-//redirections 
+//redirections
 int 	check_syntax(t_reds **reds);
 void	process_heredocs(t_ast *ast, t_list *env);
 # endif
