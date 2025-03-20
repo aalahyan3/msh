@@ -1,12 +1,3 @@
-*
-!executer/
-!expansion/
-!Makefile
-!minishell.c
-!minishell.h
-!README.md
-!env/
-!libft/
-!ft_func/
-!free_utils/
-
+libft/bin/
+minishell
+bin/
