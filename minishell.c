@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/18 21:02:26 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/20 22:44:04 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,25 +40,33 @@ int main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	env_l = build_env(env);
-	draw_ascii_art();
-	handle_signals();
-	while (1)
+	char	**res = expand_string("$?'HOME'", env_l);
+	if (!res)
+		printf("err\n");
+	for (int i = 0; res && res[i]; i++)
 	{
-		prompt = readline("msh$ ");
-		if (!prompt || ft_strncmp(prompt, "exit", 4) == 0)
-		{
-			if (!prompt)
-				write(1, "exit\n", 5);
-			exit(prompt == NULL);
-		}
-		add_history(prompt);
-		ast = parse(prompt, env_l);
-		if (!ast)
-			continue ;
-		process_heredocs(ast, env_l);
-		execute_ast(ast, env_l);
-		free_ast(ast);
+		ft_printf("%s\n", res[i]);
 	}
-	clear_env(env_l);
-	rl_clear_history();
+	exit(1);
+	// draw_ascii_art();
+	// handle_signals();
+	// while (1)
+	// {
+	// 	prompt = readline("msh$ ");
+	// 	if (!prompt || ft_strncmp(prompt, "exit", 4) == 0)
+	// 	{
+	// 		if (!prompt)
+	// 			write(1, "exit\n", 5);
+	// 		exit(prompt == NULL);
+	// 	}
+	// 	add_history(prompt);
+	// 	ast = parse(prompt, env_l);
+	// 	if (!ast)
+	// 		continue ;
+	// 	process_heredocs(ast, env_l);
+	// 	execute_ast(ast, env_l);
+	// 	free_ast(ast);
+	// }
+	// clear_env(env_l);
+	// rl_clear_history();
 }
