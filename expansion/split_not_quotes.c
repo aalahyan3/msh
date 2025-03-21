@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_not_quotes.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 03:02:29 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/20 08:10:00 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/21 21:45:52 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ static void	redefernciate_command(char	**array)
 char	**split_not_quotes(char *cmd)
 {
 	char	**array;
-
 	defernciate_command(cmd);
 	array = split_msh(cmd);
 	if (!array)
@@ -87,5 +86,6 @@ char	**split_not_quotes(char *cmd)
 	if (!array)
 		return (NULL);
 	redefernciate_command(array);
+	free(cmd);
 	return (array);
 }

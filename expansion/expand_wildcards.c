@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 06:30:30 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/17 08:12:44 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:50:22 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,35 +20,28 @@ static int get_size(char **arr)
 	i = 0;
 	while (arr[i])
 		i++;
-	return (i);
+	return (i + 1);
 }
 
-char	**get_rid_of_quotes(char **arr)
+
+
+char	**expand_wildcards(char **arr)
 {
-	char	**no_quotes;
+	char	***triple;
 	int		i;
 
-	no_quotes = malloc(sizeof(char *) * (get_size(arr) + 1));
-	if (!no_quotes)
+	triple = malloc(sizeof(char **) * get_size(arr));
+	if (!triple)
 		return (NULL);
 	i = 0;
 	while (arr[i])
 	{
-		no_quotes[i] = expand_quotes(arr[i]);
-		if (!no_quotes[i])
-			return (free_2d_array(no_quotes), NULL);
+		triple[i] = expand_string_2(arr[i]);
+		if (!triple)
+			return (free_triple_array(triple), NULL);
 		i++;
 	}
-	no_quotes[i] = NULL;
-	return (no_quotes);
-}
-
-char	**expand_wildcards(char **arr)
-{
-	char	**no_quotes;
-
-	no_quotes = get_rid_of_quotes(arr);
-	free_2d_array(arr);
-	return (no_quotes);
+	triple[i] = NULL;
+	return (triple_to_double(triple));
 }
 

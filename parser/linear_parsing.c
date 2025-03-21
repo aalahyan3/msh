@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linear_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:03:29 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/20 01:08:04 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/21 18:11:05 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ bool	compare_expectations(t_l_parse *prev, t_l_parse *curr)
 {
 	if (!prev)
 	{
-		if (curr->type == L_CLOSE_P || curr->type == L_OR || curr->type == L_AND || curr->type == L_PIPE || curr->type == L_SEMICOLON || curr->type == L_AMPERCENT )//|| curr->type == L_REDIRECTION)
+		if (curr->type == L_CLOSE_P || curr->type == L_OR || curr->type == L_AND || curr->type == L_PIPE || curr->type == L_SEMICOLON || curr->type == L_AMPERCENT || curr->type == L_REDIRECTION)
 		{
 			ft_putstr_fd("msh: syntax error near unexpected token `", 2);
 			ft_putstr_fd(curr->content, 2);
@@ -150,7 +150,7 @@ bool	compare_expectations(t_l_parse *prev, t_l_parse *curr)
 	}
 	else if (prev->type == L_OR || prev->type == L_AND || prev->type == L_PIPE || prev->type == L_SEMICOLON || prev->type == L_AMPERCENT || prev->type == L_REDIRECTION)
 	{
-		if (curr->type == L_CLOSE_P || curr->type == L_OR || curr->type == L_AND || curr->type == L_PIPE || curr->type == L_SEMICOLON || curr->type == L_AMPERCENT || curr->type == L_REDIRECTION)
+		if (curr->type == L_CLOSE_P || curr->type == L_OR || curr->type == L_AND || curr->type == L_PIPE || curr->type == L_SEMICOLON || curr->type == L_AMPERCENT)
 		{
 			ft_putstr_fd("msh: syntax error near unexpected token `", 2);
 			ft_putstr_fd(curr->content, 2);

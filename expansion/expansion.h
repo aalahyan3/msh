@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:53:51 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/17 13:14:10 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:49:21 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 # include "../ft_func/ft_func.h"
 # include "../parser/parser.h"
 
-
+# include <dirent.h>
+# define WILDCARD_PACEHOLDER '\x1'
 
 typedef struct s_args
 {
@@ -35,5 +36,12 @@ char	**expand_wildcards(char	**arr);
 char	*expand_quotes(char *s);
 char	*find_in_env(char *key, t_list *env);
 char	*expand_here_doc(char *line, t_list *env_l);
+char	**expand_string(char *str, t_list *env);
+char	**join_and_split(char **arr);
+char	**wildcard_expander(char *exp);
+char	**no_match_case(char *s);
+char	**expand_string_2(char *str);
+char	**triple_to_double(char ***triple);
+void	free_triple_array(char ***ar);
 
 #endif

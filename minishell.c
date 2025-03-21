@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/03/21 16:35:11 by aaitabde         ###   ########.fr       */
+=======
+/*   Updated: 2025/03/21 21:54:54 by aalahyan         ###   ########.fr       */
+>>>>>>> 15302e421aca2ad790fa7d2aaae0805deb2df156
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +27,7 @@ static void draw_ascii_art(void)
 	ft_printf("|_| |_| |_||_||_| |_||_||___/|_| |_| \\___||_||_| by aalahyan and aaitabde\n\n"RESET);
 }
 
-// void	leaks(void) __attribute__((destructor));
+void	leaks(void) __attribute__((destructor));
 void leaks(void)
 {
 	system("leaks minishell");
@@ -40,25 +44,39 @@ int main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	env_l = build_env(env);
-	draw_ascii_art();
-	handle_signals();
-	while (1)
+	char	**args = malloc(2 * 8);
+	args[0] = ft_strdup("hello");
+	args[1] = NULL;
+	char	**res = expand(args, env_l);
+	if (!res)
+		printf("err\n");
+	for (int i = 0; res && res[i]; i++)
 	{
-		prompt = readline("msh$ ");
-		if (!prompt || ft_strncmp(prompt, "exit", 4) == 0)
-		{
-			if (!prompt)
-				write(1, "exit\n", 5);
-			exit(prompt == NULL);
-		}
-		add_history(prompt);
-		ast = parse(prompt, env_l);
-		if (!ast)
-			continue ;
-		process_heredocs(ast, env_l);
-		execute_ast(ast, env_l);
-		free_ast(ast);
+		ft_printf("%s\n", res[i]);
 	}
+	free_2d_array(res);
+	free_2d_array(args);
 	clear_env(env_l);
-	rl_clear_history();
+	// exit(1);
+	// draw_ascii_art();
+	// handle_signals();
+	// while (1)
+	// {
+	// 	prompt = readline("msh$ ");
+	// 	if (!prompt || ft_strncmp(prompt, "exit", 4) == 0)
+	// 	{
+	// 		if (!prompt)
+	// 			write(1, "exit\n", 5);
+	// 		exit(prompt == NULL);
+	// 	}
+	// 	add_history(prompt);
+	// 	ast = parse(prompt, env_l);
+	// 	if (!ast)
+	// 		continue ;
+	// 	process_heredocs(ast, env_l);
+	// 	execute_ast(ast, env_l);
+	// 	free_ast(ast);
+	// }
+	// clear_env(env_l);
+	// rl_clear_history();
 }
