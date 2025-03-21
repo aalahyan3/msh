@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 17:12:46 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/21 17:30:51 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:57:33 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ int is_match(char *exp, char *name)
     if (*name == '\0')
     {
         // Only a trailing '*' in the pattern can match the remaining string
-        while (*exp == '*') 
+        while (*exp == WILDCARD_PACEHOLDER) 
             exp++;  // Skip over '*' characters
         return (*exp == '\0');  // If we reached the end of the pattern, it matches
     }
 
     // If the current character in the pattern is '*', we try two possibilities:
-    if (*exp == '*')
+    if (*exp == WILDCARD_PACEHOLDER)
     {
         // Case 1: Match zero characters (skip '*' and move to the next part of the pattern)
         if (is_match(exp + 1, name)) 
@@ -101,7 +101,7 @@ char	**wildcard_expander(char *exp)
 	if (!dir)
 		return (free(no_quotes),NULL);
 	i = get_size(no_quotes);
-	if (!get_size)
+	if (!i)
 		return (closedir(dir), free(no_quotes), no_match_case(exp));
 	arr = malloc((i + 1) * (sizeof(char *)));
 	if (!arr)

@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:53:51 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/21 17:26:57 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:49:21 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ char	**expand_string(char *str, t_list *env);
 char	**join_and_split(char **arr);
 char	**wildcard_expander(char *exp);
 char	**no_match_case(char *s);
-
+char	**expand_string_2(char *str);
+char	**triple_to_double(char ***triple);
+void	free_triple_array(char ***ar);
 
 #endif

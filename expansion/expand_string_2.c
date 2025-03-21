@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:40:50 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/21 17:26:49 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:46:13 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ char	**no_match_case(char *s)
 char	**expand_wildcard(char *s)
 {
 	int		alter_res;
-	char	**res;
 
 	alter_res = alter_string(s);
 	if (!alter_res)

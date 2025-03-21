@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 21:52:33 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/21 13:53:05 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:50:44 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static	int	get_size_2(char ***tr)
 	return (size + 1);
 }
 
-static void	free_triple_array(char ***ar)
+void	free_triple_array(char ***ar)
 {
 	int	i;
 
@@ -64,16 +64,17 @@ char	**triple_to_double(char ***triple)
 
 	new = malloc(sizeof(char *) * get_size_2(triple));
 	if (!new)
-		free_triple_array(triple);
+		return (free_triple_array(triple), NULL);
 	i = -1;
 	k = 0;
 	while (triple[++i])
 	{
 		j = -1;
 		while (triple[i][++j])
-			new[k++] = triple[i][j];
+			new[k++] = ft_strdup(triple[i][j]);
 	}
 	new[k] = NULL;
+	free_triple_array(triple);
 	return (new);
 }
 
