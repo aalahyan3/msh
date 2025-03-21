@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/21 13:26:05 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:53:21 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ int main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	env_l = build_env(env);
-	char	**res = expand_string("'$HOME'and $*", env_l);
-	if (!res)
-		printf("err\n");
-	for (int i = 0; res && res[i]; i++)
-	{
-		ft_printf("%s\n", res[i]);
-	}
-	exit(1);
+	// char	**res = expand_string("'$HOME'and $*", env_l);
+	// if (!res)
+	// 	printf("err\n");
+	// for (int i = 0; res && res[i]; i++)
+	// {
+	// 	ft_printf("%s\n", res[i]);
+	// }
+	// exit(1);
 	draw_ascii_art();
 	handle_signals();
 	while (1)
