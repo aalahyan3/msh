@@ -6,13 +6,13 @@
 #    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/21 18:10:52 by aalahyan         ###   ########.fr        #
+#    Updated: 2025/03/21 21:51:53 by aalahyan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
-CFLAGS = -fsanitize=address -g3#-Wall -Wextra -Werror 
+CFLAGS = #-fsanitize=address -g3#-Wall -Wextra -Werror 
 NAME = minishell
 
 SRCS = 	minishell.c \
@@ -26,7 +26,6 @@ SRCS = 	minishell.c \
 		expansion/split_by_quotes.c\
 		expansion/split_msh.c\
 		expansion/split_not_quotes.c\
-		expansion/split_and_join.c\
 		expansion/expand_quotes.c\
 		expansion/expand_wildcards.c\
 		expansion/expand_here_doc.c\
