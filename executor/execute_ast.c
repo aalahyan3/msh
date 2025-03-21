@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/20 06:47:16 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/21 16:41:30 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,52 @@ int is_builtin(char **args)
 	return (-1);
 }
 
-int	run_builting (char **args, t_list *envp)
+char **expand_export(char **args)
+{
+	int		i;
+	char	**expanded;
+
+	i = 0;
+	while (args[i])
+		i++;
+	expanded = (char **)malloc((i + 1) * sizeof(char *));
+	if (!expanded)
+		return (NULL);
+	i = 0;
+	while (args[i])
+	{
+		expanded[i] = ft_strdup(args[i]);
+		if (!expanded[i])
+			return (free_arr(expanded), NULL);
+		i++;
+	}
+	expanded[i] = NULL;
+	return (expanded);
+}
+
+int	run_builting (t_ast *node, t_list *envp)
 {
 	char	**env;
+	char	**args;
+	char	**expanded;
 
+	args = (char **)node->data;
+	// if (ft_strncmp(args[0], "export\0", 7) == 0)
+	// 	expanded = expand_export(args);
+	// else
+		expanded = expand(args, envp);
 	env = make_env(envp);
-	if (args && args[0] && ft_strncmp(args[0], "echo", 5) == 0)
- 		return (ft_echo(args, env));
-	else if (args && args[0] && ft_strncmp(args[0], "pwd", 3) == 0)
+	if (expanded && expanded[0] && ft_strncmp(expanded[0], "echo", 5) == 0)
+ 		return (ft_echo(expanded, env));
+	else if (expanded && expanded[0] && ft_strncmp(expanded[0], "pwd", 3) == 0)
 		return (ft_pwd(env));
-	else if (args && args[0] && ft_strncmp(args[0], "cd", 2) == 0)
-		return (ft_cd(args[1]));
-	else if (args && args[0] && ft_strncmp(args[0], "env", 3) == 0)
+	else if (expanded && expanded[0] && ft_strncmp(expanded[0], "cd", 2) == 0)
+		return (ft_cd(expanded[1]));
+	else if (expanded && expanded[0] && ft_strncmp(expanded[0], "env", 3) == 0)
 		return (ft_env(envp));
-	else if (args && args[0] && ft_strncmp(args[0], "unset", 5) == 0)
-		return (ft_unset(envp, args));
-	else if (args && args[0] && ft_strncmp(args[0], "export", 6) == 0)
+	else if (expanded && expanded[0] && ft_strncmp(expanded[0], "unset", 5) == 0)
+		return (ft_unset(envp, expanded));
+	else if (expanded && expanded[0] && ft_strncmp(expanded[0], "export", 6) == 0)
 		return (ft_export(args, envp));
 	return (1);
 }
@@ -183,11 +213,13 @@ int	execute_block(t_ast *ast, t_list *env)
 	int		status;
 	char	**args;
 
-	if(!ast || !ast->left)
+	if(!ast || !ast->left || !ast->right)
 		return (1);
-	args = expand((char **)ast->right->data, env);
+	args = (char **)ast->right->data;
+	if (!args)
+		return (1);
 	if (args && is_builtin(args) == 0)
-		return (run_builting(args, env));
+		return (run_builting(ast->right, env));
 	pid = fork();
 	if (pid < 0)
 		return (1);
