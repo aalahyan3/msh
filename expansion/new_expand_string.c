@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 19:25:16 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/20 22:50:28 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:30:54 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static char	*get_next_chunk(char *s, int *i)
 {
-	int	start;
+	int		start;
 
 	start = *i;
 	if (!s[*i])
@@ -22,10 +22,19 @@ static char	*get_next_chunk(char *s, int *i)
 	if (s[*i] == '$')
 	{
 		*i += 1;
-		while (s[*i] && (!ft_isalnum(s[*i]) || s[*i] != '_'))
+		if (s[*i] == '?')
+		{
+			*i += 1;
+			return (ft_strdup("$?"));
+		}
+		while (s[*i] && (!ft_isalnum(s[*i]) || s[*i] != '_') && s[*i] != '$')
 			*i += 1;
 		while (s[*i] && (ft_isalnum(s[*i]) || s[*i] == '_'))
+		{
 			*i += 1;
+			if (s[*i] == '?')
+				break ;
+		}
 		return (ft_substr(s, start, *i - start));
 	}
 	else
@@ -47,7 +56,9 @@ static void	expand_chunk(char **chunk, t_list *env, bool is_quote, bool end)
 	{
 		free(temp);
 		if (is_quote || end)
+		{
 			*chunk = ft_strdup("$");
+		}
 		else
 			*chunk = ft_strdup("");
 	return ;
@@ -80,9 +91,8 @@ static bool	expander(char **s, t_list *env, bool is_last)
 	while (chunk)
 	{
 		printf("%s\n", chunk);
-		
 		if (*chunk == '$')
-			expand_chunk(&chunk, env, (**s == '"'), (!(*s)[i] && is_last));
+			expand_chunk(&chunk, env, (**s == '"'), (!(*s)[i] || is_last));
 		if (!chunk)
 			return (free(final), false);
 		temp = ft_strjoin(final, chunk);
