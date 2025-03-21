@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 03:02:29 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/20 22:23:28 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/21 18:10:47 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	defernciate_command(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] && str[i] == '\'' || str[i] == '"')
+		if ((str[i] && str[i] == '\'') || str[i] == '"')
 		{
 			quote = str[i];
 			i++;
