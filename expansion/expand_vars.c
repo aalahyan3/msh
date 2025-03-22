@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 21:52:33 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/22 16:01:10 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/22 22:00:40 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	free_triple_array(char ***ar)
 		free_2d_array(ar[i]);
 		i++;
 	}
+	free(ar);
 	ar = NULL;
 }
 

@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 10:34:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/22 21:54:40 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/22 22:00:14 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int ft_echo(char **arg, t_list *env)
 	while (args[i])
 	{
 		ft_putstr_fd(args[i], 1);
-		if (args[i+1])
+		if (args[i + 1])
 			write(1, " ", 1);
 		i++;
 	}

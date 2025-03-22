@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expand_wildcards.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 06:30:30 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/21 17:50:22 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/22 22:00:43 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expansion.h"
-
 
 static int get_size(char **arr)
 {
@@ -22,8 +21,6 @@ static int get_size(char **arr)
 		i++;
 	return (i + 1);
 }
-
-
 
 char	**expand_wildcards(char **arr)
 {
