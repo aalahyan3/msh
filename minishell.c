@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/21 22:41:13 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/22 02:01:19 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int main(int ac, char **av, char **env)
 	(void)av;
 	env_l = build_env(env);
 	// char	**args = malloc(2 * 8);
-	// args[0] = ft_strdup("hello");
+	// args[0] = ft_strdup("\"\"ls -la\"\"");
 	// args[1] = NULL;
 	// char	**res = expand(args, env_l);
 	// if (!res)

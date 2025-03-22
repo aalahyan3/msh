@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_ast.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/20 06:47:16 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/22 02:02:46 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,11 @@ int	execute_word(t_ast *ast, t_list *ev)
 		return (1);
 	env = make_env(ev);
 	args = expand((char **)ast->data, ev);
+	for (i = 0; args && args[i]; i++)
+	{
+		printf("args[%d] = %s\n", i, args[i]);
+	}
+	
 	if(!args)
 		return (1);
 	if (args[0] && !args[0][0])
