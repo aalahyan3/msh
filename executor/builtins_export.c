@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 00:36:07 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/22 02:20:12 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/22 02:23:40 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ int check_for_valid_identifier(char *arg)
 	if (!ft_isalpha(arg[0]) && arg[0] != '_')
 		return (1);
 	equals_pos = ft_strchr(arg, '=');
-	equals_pos = '\0';
+	*equals_pos = '\0';
 	i = 1;
 	while (arg[i] && (equals_pos == NULL || &arg[i] < equals_pos))
 	{
@@ -191,52 +191,6 @@ void handle_var_without_value(char *var_name, t_list *env)
 		ft_setenv(var_name, "", 0, &env);
 }
 
-void	inject_quotes(char **str)
-{
-	int len;
-	int i;
-
-	i = 0;
-	printf("string before injecting quotes: %s\n", str);
-	if (str && *str && *str[0] == '"')
-		return ;
-	len = ft_strlen(*str);
-	char *quoted_str = malloc(len + 3);
-	if (!quoted_str)
-		return ;
-	ft_bzero(quoted_str, len + 3);
-	quoted_str[0] = '"';
-	ft_memcpy(quoted_str + 1, str, len);
-	quoted_str[len + 1] = '"';
-	quoted_str[len + 2] = '\0';
-	*str = quoted_str;
-}
-
-char    *expand_string_without_splitting(char *str, t_list *env)
-{
-	char	**expanded_str;
-	char	*tmp;
-
-	tmp = str;
-	inject_quotes(&str);
-	if (!str)
-		return (NULL);
-	expanded_str = expand(&str, env);
-	free(str);
-	if (!expanded_str)
-		return (tmp);
-	return (expanded_str[0]);
-}
-
-void    expand_value(char **value, t_list *env)
-{
-	char *expanded_value;;
-
-	expanded_value = expand_string_without_splitting(*value, env);
-	printf("expanded_value: %s\n", expanded_value);
-	if (expanded_value)
-		*value = expanded_value;
-}
 
 void parse_export_arg(char *arg, t_list *env)
 {
