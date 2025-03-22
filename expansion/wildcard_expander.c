@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 17:12:46 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/22 01:28:31 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:57:33 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int is_match(char *exp, char *name)
             exp++;  // Skip over '*' characters
         return (*exp == '\0');  // If we reached the end of the pattern, it matches
     }
+
     // If the current character in the pattern is '*', we try two possibilities:
     if (*exp == WILDCARD_PACEHOLDER)
     {
@@ -74,6 +75,7 @@ static int	get_size(char *exp)
 char	*get_next_match(DIR	*dir, char *exp)
 {
 	struct dirent	*entry;
+
 	entry = readdir(dir);
 	while (entry)
 	{
@@ -84,32 +86,17 @@ char	*get_next_match(DIR	*dir, char *exp)
 	return (NULL);
 }
 
-static void	optimize_wildcard_exp(char **exp)
-{
-	char			*ptr;
-	char			*new;
-
-	ptr = ft_strrchr(*exp, '/');
-	if (ptr)
-	{
-		new = ft_strdup(ptr + 1);
-		free(*exp);
-		*exp = new;
-	}
-}
-
 char	**wildcard_expander(char *exp)
 {
 	char	*no_quotes;
 	char	**arr;
-	DIR		*dir;
+	DIR	*dir;
 	int		i;
 	char	*match;
 
 	no_quotes = expand_quotes(exp);
 	if (!no_quotes)
 		return (NULL);
-	optimize_wildcard_exp(&no_quotes);
 	dir = opendir(".");
 	if (!dir)
 		return (free(no_quotes),NULL);
