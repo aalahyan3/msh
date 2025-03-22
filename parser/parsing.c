@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 08:57:28 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/20 08:09:48 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:20:20 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_ast	*parse(char *prompt, t_list *env_l)
 	free(prompt);
 	if (!ast)
 		return (NULL);
-	ast_vis(ast, 0, "");
+	// ast_vis(ast, 0, "");
 	if (!syntax_error(ast))
 	{
 		free_ast(ast);

@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:27:31 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/18 10:41:48 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/20 22:54:48 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void handle_heredoc(t_reds *red, t_list *ev)
 		return ;
 	}
 	unlink(filename);
-	if ((red->file[0] == '\'' && red->file[ft_strlen(red->file) - 1] == '\'') || \
+	if (red->file && red->file[0] && (red->file[0] == '\'' && red->file[ft_strlen(red->file) - 1] == '\'') || \
 	(red->file[0] == '\"' && red->file[ft_strlen(red->file) - 1] == '\"'))
 	{
 		tmp = red->file;
@@ -68,6 +68,12 @@ void handle_heredoc(t_reds *red, t_list *ev)
 		{
 			free(line);
 			break ;
+		}
+		if (!*line)
+		{
+			write(fd, "\n", 1);
+			free(line);
+			continue ;
 		}
 		if (expand)
 		{

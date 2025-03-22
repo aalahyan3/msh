@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
+#    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/21 21:51:53 by aalahyan         ###   ########.fr        #
+#    Updated: 2025/03/22 00:47:21 by aaitabde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
-CFLAGS = #-fsanitize=address -g3#-Wall -Wextra -Werror 
+CFLAGS = -fsanitize=address -g3#-Wall -Wextra -Werror 
 NAME = minishell
 
 SRCS = 	minishell.c \

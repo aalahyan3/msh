@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_ast.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/22 02:02:46 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/22 00:47:43 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,6 @@ int	execute_word(t_ast *ast, t_list *ev)
 		return (1);
 	env = make_env(ev);
 	args = expand((char **)ast->data, ev);
-	for (i = 0; args && args[i]; i++)
-	{
-		printf("args[%d] = %s\n", i, args[i]);
-	}
-	
 	if(!args)
 		return (1);
 	if (args[0] && !args[0][0])
@@ -157,7 +152,10 @@ int handle_redirections(t_ast *ast, t_list *env)
 			if (reds[red_count]->fd == -1)
 				reds[red_count]->fd = open(reds[red_count]->file, O_RDONLY);
 			if (reds[red_count]->fd < 0)
-				return (perror("minishell : open"), 1);
+			{
+				write(2, "minishell: ", 11);
+				return (perror(reds[red_count]->file), 1);
+			}
 			dup2(reds[red_count]->fd, STDIN_FILENO);
 			close(reds[red_count]->fd);
 		}
@@ -165,7 +163,11 @@ int handle_redirections(t_ast *ast, t_list *env)
 		{
 			reds[red_count]->fd = open(reds[red_count]->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			if (reds[red_count]->fd < 0)
-				return (perror("minishell : open"), 1);
+			{
+				write(2, "minishell: ", 11);
+				perror(reds[red_count]->file);
+				return (1);
+			}
 			dup2(reds[red_count]->fd, STDOUT_FILENO);
 			close(reds[red_count]->fd);
 		}
@@ -173,7 +175,11 @@ int handle_redirections(t_ast *ast, t_list *env)
 		{
 			reds[red_count]->fd = open(reds[red_count]->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 			if (reds[red_count]->fd < 0)
-				return (perror("minishell : open"), 1);
+			{
+				write(2, "minishell: ", 11);
+				perror(reds[red_count]->file);
+				return (1);
+			}
 			dup2(reds[red_count]->fd, STDOUT_FILENO);
 			close(reds[red_count]->fd);
 		}
@@ -190,7 +196,7 @@ int	execute_block(t_ast *ast, t_list *env)
 
 	if(!ast || !ast->left)
 		return (1);
-	args = expand((char **)ast->right->data, env);
+	args = (char **)ast->right->data;
 	if (args && is_builtin(args) == 0)
 		return (run_builting(args, env));
 	pid = fork();
