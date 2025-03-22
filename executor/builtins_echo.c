@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 10:34:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/11 15:40:32 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/22 21:54:40 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_for_n_flag(char **arg)
 
 	i = 1;
 	n = 1;
-	while(arg[i] && arg[i][0] == '-' && arg[i][1] == 'n')
+	while(arg[i] && arg[i][0] == '-' && arg[i][1] == 'n')// echo -n -nnnn s -n
 	{
 		while (arg[i][n] == 'n')
 			n++;
@@ -30,16 +30,20 @@ int	check_for_n_flag(char **arg)
 	return (i);
 }
 
-int ft_echo(char **args, char **env)
+int ft_echo(char **arg, t_list *env)
 {
 	int i;
 	int index;
+	char **args;
 
+	args = expand(arg, env);
+	free_2d_array(args);
+	return (0);
 	i = 1;
-	(void)env;
 	if (!args[i])
 	{
 		write(1, "\n", 2);
+		free_2d_array(args);
 		return (0);
 	}
 	i = check_for_n_flag(args);

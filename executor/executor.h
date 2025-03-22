@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 11:09:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/20 04:30:13 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/22 16:32:37 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ char	**get_args(t_ast *ast);
 // free utils
 
 void	free_arr(char **arr);
-
+void    free_env_list(t_list *env);
 // builtins
-int		ft_echo(char **args, char **env);
-int		ft_pwd(char **env);
+int		ft_echo(char **args, t_list *env);
+int		ft_pwd(t_list *env);
 int		ft_cd(char *path);
 int     ft_env(t_list *env);
 int     ft_unset(t_list *env, char **keys);

@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 00:36:07 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/22 02:23:40 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/22 16:25:03 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,26 +123,6 @@ void ft_env_sorted(t_list *ev)
 	free(env_array);
 }
 
-int check_for_valid_identifier(char *arg)
-{
-	int i;
-	char *equals_pos;
-
-	if (!ft_isalpha(arg[0]) && arg[0] != '_')
-		return (1);
-	equals_pos = ft_strchr(arg, '=');
-	*equals_pos = '\0';
-	i = 1;
-	while (arg[i] && (equals_pos == NULL || &arg[i] < equals_pos))
-	{
-		if (!ft_isalnum(arg[i]) && arg[i] != '_' && arg[i] != '$' && arg[i] != '?' && arg[i] != '!' && arg[i] != '*' && arg[i] != '#')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-
 int find_env_var(t_list *env, char *var_name, struct s_env **found_var)
 {
 	t_list *current;
@@ -167,19 +147,18 @@ int find_env_var(t_list *env, char *var_name, struct s_env **found_var)
 
 void handle_var_with_value(char *var_name, char *value, t_list *env)
 {
-    struct s_env *existing_var;
-    int found;
-    
-    found = find_env_var(env, var_name, &existing_var);
-    if (found)
-    {
-        printf("existing_var->key = |%s|\n", existing_var->key);
-        free(existing_var->value);
-        existing_var->value = ft_strdup(value);
-        existing_var->defined = 1;
-    }
-    else
-        ft_setenv(var_name, value, 1, &env);
+	struct s_env *existing_var;
+	int found;
+	
+	found = find_env_var(env, var_name, &existing_var);
+	if (found)
+	{
+		free(existing_var->value);
+		existing_var->value = ft_strdup(value);
+		existing_var->defined = 1;
+	}
+	else
+		ft_setenv(var_name, value, 1, &env);
 }
 
 void handle_var_without_value(char *var_name, t_list *env)
@@ -191,62 +170,109 @@ void handle_var_without_value(char *var_name, t_list *env)
 		ft_setenv(var_name, "", 0, &env);
 }
 
+void append_to_var(char *var_name, char *value, t_list *env)
+{
+	struct s_env *existing_var;
+	int found;
+	char *new_value;
+
+	found = find_env_var(env, var_name, &existing_var);
+	if (found)
+	{
+		new_value = ft_strjoin(existing_var->value, value);
+		free(existing_var->value);
+		existing_var->value = new_value;
+		existing_var->defined = 1;
+	}
+	else
+		ft_setenv(var_name, value, 1, &env);
+}
+
 
 void parse_export_arg(char *arg, t_list *env)
 {
-    char	*var;
-    char	*value;
-    char	*equals_pos;
+	char	*var;
+	char	*value;
+	char	*equals_pos;
+	int		append_mode;
 
-    var = ft_strdup(arg);
-    if (!var)
-        return ;
-    equals_pos = ft_strchr(var, '=');
-    if (equals_pos != NULL)
-    {
-        *equals_pos = '\0';
-        value = equals_pos + 1;
-        handle_var_with_value(var, value, env);
-    }
-    else
-        handle_var_without_value(var, env);
-    free(var);
+	var = ft_strdup(arg);
+	if (!var)
+		return ;
+	append_mode = 0;
+	equals_pos = ft_strchr(var, '=');
+	if (equals_pos != NULL)
+	{
+		if (*(equals_pos - 1) == '+')
+		{
+			append_mode = 1;
+			*(equals_pos - 1) = '\0';
+		}
+		*equals_pos = '\0';
+		value = equals_pos + 1;
+		if (append_mode)
+			append_to_var(var, value, env);
+		else
+			handle_var_with_value(var, value, env);
+	}
+	else
+		handle_var_without_value(var, env);
+	free(var);
 }
 void    inject_quotes(char **str)
 {
-    char    *key;
-    char    *value;
-    char   *new_str;
-    int     len;
-    int     i;
+	char    *key;
+	char    *value;
+	char   *new_str;
+	int     len;
+	int     i;
 
-    if (*str[0] == '\0')
-        return ;
-    value = ft_strchr(*str, '=');
-    if (value == NULL)
-        return ;
-    if (value[1] == '\'' || value[1] == '\"')
-        return ;
-    value++;
-    key = ft_substr(*str, 0, value - *str);
-    if (!key)
-        return ;
-    new_str = malloc(ft_strlen(value) + 3);
-    if (!new_str)
-        return ;
-    new_str[0] = '"';
-    i = 1;
-    len = ft_strlen(value) + 1;
-    while (i < len)
-    {
-        new_str[i] = value[i - 1];
-        i++;
-    }
-    new_str[i] = '"';
-    new_str[i + 1] = '\0';
-    free(*str);
-    *str = ft_strjoin(key, new_str);
+	if (*str[0] == '\0')
+		return ;
+	value = ft_strchr(*str, '=');
+	if (value == NULL)
+		return ;
+	if (value[1] == '\'' || value[1] == '\"')
+		return ;
+	value++;
+	key = ft_substr(*str, 0, value - *str);
+	if (!key)
+		return ;
+	new_str = malloc(ft_strlen(value) + 3);
+	if (!new_str)
+		return ;
+	new_str[0] = '"';
+	i = 1;
+	len = ft_strlen(value) + 1;
+	while (i < len)
+	{
+		new_str[i] = value[i - 1];
+		i++;
+	}
+	new_str[i] = '"';
+	new_str[i + 1] = '\0';
+	free(*str);
+	*str = ft_strjoin(key, new_str);
 }
+
+int	valid_identifier(char *key)
+{
+	int i;
+
+	if (!key || key[0] == '\0' || ft_isdigit(key[0]))
+		return (0);
+	i = 1;
+	while (key[i] && key[i] != '=')
+	{
+		if (key[i] == '+' && key[i + 1] == '=')
+			return (1);
+		if (!ft_isalnum(key[i]) && key[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 
 void	proper_export_expansion(char **args, t_list *env)
 {
@@ -255,9 +281,10 @@ void	proper_export_expansion(char **args, t_list *env)
 	i = 1;
 	while (args[i])
 	{
-        inject_quotes(&args[i]);
-        if (!args[i])
-            return ;
+		if (valid_identifier(args[i]))
+			inject_quotes(&args[i]);
+		if (!args[i])
+			return ;
 		i++;
 	}
 }
@@ -265,21 +292,31 @@ void	proper_export_expansion(char **args, t_list *env)
 int ft_export(char **args, t_list *env)
 {
 	int i;
-	int ret = 0;
 
-    if (args[1] == NULL)
-    {
-        ft_env_sorted(env);
-        return 0;
+	if (args[1] == NULL)
+	{
+		ft_env_sorted(env);
+		return (0);
 	}
-    i = 1;
 	proper_export_expansion(args, env);
-    args = expand(args, env);
-    i = 1;
-    while (args[i] != NULL)
-    {
-        parse_export_arg(args[i], env);
-        i++;
-    }
-    return (0);
+	exit(1);
+	i = 1;
+	char **tmp;
+	tmp = args;
+	args = expand(args, env);
+	exit(1);
+	while (args[i] != NULL)
+	{
+		if (!valid_identifier(args[i]))
+		{
+			write(2, "minishell: export: `", 20);
+			write(2, args[i], ft_strlen(args[i]));
+			write(2, "': not a valid identifier\n", 27);
+		}
+		else
+			parse_export_arg(args[i], env);
+		i++;
+	}
+	free_arr(args);
+	return (0);
 }
