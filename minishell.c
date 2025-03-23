@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/22 22:50:59 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/23 16:43:21 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int main(int ac, char **av, char **env)
 	t_ast *ast;
 	t_list	*env_l;
 
-	// atexit(leaks);
+	atexit(leaks);
 
 	rl_catch_signals = 0;
 	(void)ac;

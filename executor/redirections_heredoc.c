@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:27:31 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/20 22:54:48 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/23 18:08:18 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ char	*gen_name()
 	}
 	return (NULL);
 }
-
 void handle_heredoc(t_reds *red, t_list *ev)
 {
 	char	*line;
@@ -67,49 +66,36 @@ void handle_heredoc(t_reds *red, t_list *ev)
 		if (!line || ((ft_strncmp(line, red->file, ft_strlen(red->file)) == 0) && ft_strlen(red->file) == ft_strlen(line)))
 		{
 			free(line);
+			line = NULL;
 			break ;
 		}
 		if (!*line)
 		{
 			write(fd, "\n", 1);
 			free(line);
+			line = NULL;
 			continue ;
 		}
 		if (expand)
 		{
 			tmp = line;
 			line = expand_here_doc(tmp, ev);
+			printf("line: %s\n", line);
 			free(tmp);
+			tmp = NULL;
 		}
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		free(line);
+		line = NULL;
 	}
+	
 	free(red->file);
-	free(filename);
 	red->file = ft_strdup(filename);
+	free(filename);
+	close(fd);
 	red->fd = fd_read;
 	red->type = INPUT;
-}
-
-void read_heredoc_input(int fd, const char *delimiter)
-{
-	char *line;
-
-	while (1)
-	{
-		line = readline("> ");
-		if (!line)
-			break;
-		if (strcmp(line, delimiter) == 0)
-		{
-			free(line);
-			break;
-		}
-		write(fd, line, strlen(line));
-		write(fd, "\n", 1);
-		free(line);
-	}
 }
 
 void process_heredocs(t_ast *ast, t_list *env)

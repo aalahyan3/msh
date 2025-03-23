@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 00:36:07 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/22 23:31:48 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/23 17:22:41 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,7 +240,10 @@ void    inject_quotes(char **str)
 		return ;
 	new_str = malloc(ft_strlen(value) + 3);
 	if (!new_str)
+	{
+		free(key);
 		return ;
+	}
 	new_str[0] = '"';
 	i = 1;
 	len = ft_strlen(value) + 1;
@@ -253,6 +256,8 @@ void    inject_quotes(char **str)
 	new_str[i + 1] = '\0';
 	free(*str);
 	*str = ft_strjoin(key, new_str);
+	free(key);
+	free(new_str);
 }
 
 int	valid_identifier(char *key)

@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 10:34:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/22 22:15:06 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/23 17:12:11 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int ft_echo(char **arg, t_list *env)
 	char **args;
 
 	args = expand(arg, env);
-	
 	i = 1;
 	if (!args[i])
 	{
@@ -56,5 +55,6 @@ int ft_echo(char **arg, t_list *env)
 	}
 	if(index == 1)
 		write(1, "\n", 2);
+	free_2d_array(args);
 	return (0);
 }

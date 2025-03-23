@@ -6,7 +6,7 @@
 #    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/22 23:07:31 by aaitabde         ###   ########.fr        #
+#    Updated: 2025/03/23 17:31:03 by aaitabde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ SRCS = 	minishell.c \
 		executor/redirections_error_display.c\
 		parser/asstes.c\
 		executor/builtins_echo.c\
-		executor/free_utils.c\
+		free_utils/free_env_list.c\
 		executor/builtins_pwd.c\
 		executor/builtins_cd.c\
 		executor/builtins_env.c\

@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/22 23:15:09 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/23 17:13:48 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,13 +142,12 @@ int handle_redirections(t_ast *ast, t_list *env)
 	while (reds[red_count])
 	{
 		args = expand_filename(reds[red_count]->file, env);
-		// for (int i = 0; args[i]; i++)
-		// 	printf("args[%d] = %s\n", i, args[i]);
 		if (!args || (args[0] && args[1] ) || !args[0][0])
 		{
 			ft_putstr_fd("msh: ", 2);
 			ft_putstr_fd(reds[red_count]->file, 2);
 			ft_putstr_fd(": ambiguous redirect\n", 2);
+			free_arr(args);
 			return (1);
 		}
 		reds[red_count]->file = ft_strdup(args[0]);

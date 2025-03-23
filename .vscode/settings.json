@@ -19,6 +19,7 @@
         "type_traits": "c",
         "vector": "c",
         "parser.h": "c",
-        "expansion.h": "c"
+        "expansion.h": "c",
+        "free_utils.h": "c"
     }
 }
