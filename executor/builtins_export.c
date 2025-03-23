@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 00:36:07 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/22 16:25:03 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/22 23:31:48 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,7 +261,7 @@ int	valid_identifier(char *key)
 
 	if (!key || key[0] == '\0' || ft_isdigit(key[0]))
 		return (0);
-	i = 1;
+	i = 0;
 	while (key[i] && key[i] != '=')
 	{
 		if (key[i] == '+' && key[i + 1] == '=')
@@ -299,12 +299,8 @@ int ft_export(char **args, t_list *env)
 		return (0);
 	}
 	proper_export_expansion(args, env);
-	exit(1);
 	i = 1;
-	char **tmp;
-	tmp = args;
 	args = expand(args, env);
-	exit(1);
 	while (args[i] != NULL)
 	{
 		if (!valid_identifier(args[i]))

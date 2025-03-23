@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 17:06:59 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/18 17:20:48 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/23 00:30:59 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,12 @@ int ft_env(t_list *env)
     tmp = env;
     while(tmp)
     {
-        printf("%s", ((struct s_env *)tmp->content)->key);
-        printf("=");
-        printf("%s\n", ((struct s_env *)tmp->content)->value);
+        if (((struct s_env *)tmp->content)->value && ft_strncmp(((struct s_env *)tmp->content)->value, "", 1) != 0)
+        {
+            printf("%s", ((struct s_env *)tmp->content)->key);
+            printf("=");
+            printf("%s\n", ((struct s_env *)tmp->content)->value);
+        }
         tmp = tmp->next;
     }
 }

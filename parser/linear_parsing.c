@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linear_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:03:29 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/22 20:11:07 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/22 22:57:00 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ static t_l_parse	*get_next_token(char *s, int *i)
 	tok = malloc(sizeof(t_l_parse));
 	if (!tok)
 		return (NULL);
+	if (s[*i] == '\'' || s[*i] == '"')
+		skip_quotes(s, i, s[*i]);
 
 	if (s[*i] == '(')
 	{

@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/22 16:31:27 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/22 23:15:09 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,7 @@ int	execute_word(t_ast *ast, t_list *ev)
 	}
 	path = get_cmd_path(args[0], env, &i);
 	if (path)
-	{
-		execute_simple_cmd(path, args, env);
-		free(path);
-		free_arr(args);
-	}
+		return (execute_simple_cmd(path, args, env));
 	else
 	{
 		if (i)
@@ -137,6 +133,7 @@ int handle_redirections(t_ast *ast, t_list *env)
 {
 	t_reds	**reds;
 	int		red_count;
+	char	**args;
 
 	if (!ast || !ast->data)
 		return (0);
@@ -144,6 +141,18 @@ int handle_redirections(t_ast *ast, t_list *env)
 	red_count = 0;
 	while (reds[red_count])
 	{
+		args = expand_filename(reds[red_count]->file, env);
+		// for (int i = 0; args[i]; i++)
+		// 	printf("args[%d] = %s\n", i, args[i]);
+		if (!args || (args[0] && args[1] ) || !args[0][0])
+		{
+			ft_putstr_fd("msh: ", 2);
+			ft_putstr_fd(reds[red_count]->file, 2);
+			ft_putstr_fd(": ambiguous redirect\n", 2);
+			return (1);
+		}
+		reds[red_count]->file = ft_strdup(args[0]);
+		free_arr(args);
 		if (reds[red_count]->type == INPUT)
 		{
 			if (reds[red_count]->fd == -1)
@@ -203,7 +212,8 @@ int	execute_block(t_ast *ast, t_list *env)
 	{
 		if (handle_redirections(ast->left, env) == 1)
 			exit(1);
-		exit(execute_ast(ast->right, env));
+		status = execute_ast(ast->right, env);
+		exit(status);
 	}
 	waitpid(pid, &status, 0);
 	return (WEXITSTATUS(status));

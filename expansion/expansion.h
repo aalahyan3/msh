@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:53:51 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/21 17:49:21 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/22 23:03:28 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ char	**no_match_case(char *s);
 char	**expand_string_2(char *str);
 char	**triple_to_double(char ***triple);
 void	free_triple_array(char ***ar);
+char	**expand_filename(char *name, t_list *env);
 
 #endif

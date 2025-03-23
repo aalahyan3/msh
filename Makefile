@@ -6,7 +6,7 @@
 #    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/22 22:00:31 by aaitabde         ###   ########.fr        #
+#    Updated: 2025/03/22 23:07:31 by aaitabde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRCS = 	minishell.c \
 		expansion/new_join_and_split.c\
 		expansion/expand_string_2.c\
 		expansion/wildcard_expander.c\
+		expansion/expand_filename.c\
 		parser/process_prompt.c\
 		parser/tokenize.c\
 		parser/parsing.c\
