@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linear_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:03:29 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/22 22:57:00 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/23 19:46:14 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,6 +205,8 @@ bool	linear_parsing(char *s)
 	{
 		if (!compare_expectations(prev, token))
 		{
+			free(token->content);
+			free(token);
 			no_error = false;
 			break ;
 		}
@@ -216,12 +218,11 @@ bool	linear_parsing(char *s)
 		prev = token;
 		token = get_next_token(s, &i);
 	}
-	if (prev && no_error)
+	if (prev)
 	{
-		if (prev->type == L_OPEN_P || prev->type == L_OR || prev->type == L_AND || prev->type == L_PIPE || prev->type == L_SEMICOLON || prev->type == L_AMPERCENT || prev->type == L_REDIRECTION)
+		if (no_error && (prev->type == L_OPEN_P || prev->type == L_OR || prev->type == L_AND || prev->type == L_PIPE || prev->type == L_SEMICOLON || prev->type == L_AMPERCENT || prev->type == L_REDIRECTION))
 		{
 			ft_putstr_fd("msh: syntax error near unexpected token `newline'\n", 2);
-			
 			no_error = false;
 		}
 	free(prev->content);
