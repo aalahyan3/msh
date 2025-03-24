@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/24 23:26:15 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/24 23:32:12 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,32 +93,23 @@ char	*read_prompt(t_msh *msh)
 	orig_stdin = dup(STDIN_FILENO);
 	orig_stderr = dup(STDERR_FILENO);
 
-	// Redirect stdout to stderr
 	dup2(STDERR_FILENO, STDOUT_FILENO); 
-
-	// Display the prompt always to stderr
 	if (isatty(STDIN_FILENO))
 		write(2, "msh$ ", 5); 
-	else
-		write(2, "msh$ ", 5); 
-
-	// Read input
 	if (!isatty(STDIN_FILENO))
 	{
 		prompt = get_next_line(STDIN_FILENO);
 	}
 	else
 	{
-		prompt = readline(""); 
+		prompt = readline("");
 	}
-
 	while (prompt && (ends_with_incomplete_command(prompt) || has_unclosed_parenthesis(prompt)))
 	{
 		if (!isatty(STDIN_FILENO))
 			temp_prompt = get_next_line(STDIN_FILENO);
 		else
 			temp_prompt = readline("> "); 
-
 		if (temp_prompt)
 		{
 			new_prompt = ft_strjoin(prompt, temp_prompt);
@@ -129,20 +120,13 @@ char	*read_prompt(t_msh *msh)
 		else
 			break;
 	}
-
 	if (!prompt)
 		ft_exit(msh, NULL);
-
-	// Trim extra spaces
 	new_prompt = ft_strtrim(prompt, " \t\n");
 	free(prompt);
-
-	// Restore original stdout, stderr, and stdin
 	dup2(orig_stdout, STDOUT_FILENO);
 	dup2(orig_stderr, STDERR_FILENO);
 	dup2(orig_stdin, STDIN_FILENO);
-
-	// Close the saved file descriptors
 	close(orig_stdout);
 	close(orig_stderr);
 	close(orig_stdin);
