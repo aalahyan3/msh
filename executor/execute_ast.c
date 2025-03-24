@@ -6,12 +6,11 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/24 00:57:17 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/24 02:08:10 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
-
 
 int is_builtin(char **args)
 {
