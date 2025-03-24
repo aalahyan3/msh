@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/24 07:22:26 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/24 21:11:42 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	execute_word(t_msh *msh, t_ast *ast)
 		return (1);
 	if (args[0] && !args[0][0])
 	{
-		write(2, "minishell: ", 11);
+		write(2, "msh: ", 11);
 		write(2, ":command not found\n", 19);
 		return (1);
 	}
@@ -108,7 +108,7 @@ int	execute_word(t_msh *msh, t_ast *ast)
 	{
 		if (i)
 		{
-			write(2, "minishell: ", 11);
+			write(2, "msh: ", 11);
 			write(2, args[0], ft_strlen(args[0]));
 			write(2, ": command not found\n", 21);
 		}
@@ -130,10 +130,34 @@ int	execute_logic(t_msh *msh, t_ast *ast)
 
 void	file_open_error(char *filename)
 {
-	write(2, "minishell: ", 11);
+	write(2, "msh: ", 11);
 	write(2, filename, ft_strlen(filename));
 	write(2, ": No such file or directory\n", 28);	
 }
+
+ int	expand_heredoc(int fd, t_list *env)
+ {
+	char *line;
+	char *filename = gen_name();
+	
+	int new_fd = open(filename, O_RDWR | O_CREAT , 0644);
+	int new_fd_read = open(filename, O_RDONLY | O_CREAT , 0640);
+	unlink(filename);
+	free(filename);
+	while(1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break;
+		char *tmp = line;
+		line = expand_here_doc(tmp, env);
+		write(new_fd, line, ft_strlen(line));
+		free(tmp);
+		free(line);
+	}
+	close(fd);
+	return(new_fd_read);
+ }
 
 int handle_redirections(t_ast *ast, t_list *env)
 {
@@ -148,7 +172,7 @@ int handle_redirections(t_ast *ast, t_list *env)
 	while (reds[red_count])
 	{
 		args = expand_filename(reds[red_count]->file, env);
-		if (!args || (args[0] && args[1] ) || !args[0][0])
+		if (!args || (args[0] && args[1] ))
 		{
 			ft_putstr_fd("msh: ", 2);
 			ft_putstr_fd(reds[red_count]->file, 2);
@@ -162,9 +186,11 @@ int handle_redirections(t_ast *ast, t_list *env)
 		{
 			if (reds[red_count]->fd == -1)
 				reds[red_count]->fd = open(reds[red_count]->file, O_RDONLY);
+			else
+ 				reds[red_count]->fd = expand_heredoc(reds[red_count]->fd, env);
 			if (reds[red_count]->fd < 0)
 			{
-				write(2, "minishell: ", 11);
+				write(2, "msh: ", 11);
 				return (perror(reds[red_count]->file), 1);
 			}
 			dup2(reds[red_count]->fd, STDIN_FILENO);
@@ -175,7 +201,7 @@ int handle_redirections(t_ast *ast, t_list *env)
 			reds[red_count]->fd = open(reds[red_count]->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			if (reds[red_count]->fd < 0)
 			{
-				write(2, "minishell: ", 11);
+				write(2, "msh: ", 11);
 				perror(reds[red_count]->file);
 				return (1);
 			}
@@ -187,7 +213,7 @@ int handle_redirections(t_ast *ast, t_list *env)
 			reds[red_count]->fd = open(reds[red_count]->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 			if (reds[red_count]->fd < 0)
 			{
-				write(2, "minishell: ", 11);
+				write(2, "msh: ", 11);
 				perror(reds[red_count]->file);
 				return (1);
 			}
@@ -204,11 +230,13 @@ int	execute_block(t_msh *msh, t_ast *ast)
 	pid_t	pid;
 	int		status;
 	char	**args;
+	int		is_builtin_command;
 
 	if(!ast || !ast->left)
 		return (1);
 	args = (char **)ast->right->data;
-	if (args && is_builtin(args) == 0)
+	is_builtin_command = is_builtin(args);
+	if (is_builtin_command == 0 && !ast->left->data)
 		return (run_builting(msh, args));
 	pid = fork();
 	if (pid < 0)
@@ -220,13 +248,14 @@ int	execute_block(t_msh *msh, t_ast *ast)
 		msh->is_child = true;
 		if (handle_redirections(ast->left, msh->env) == 1)
 			exit(1);
-		status = execute_ast(msh ,ast->right);
+		if (is_builtin_command == 0)
+			exit(run_builting(msh, args));
+		status = execute_ast(msh, ast->right);
 		exit(status);
 	}
 	waitpid(pid, &status, 0);
 	return (WEXITSTATUS(status));
 }
-
 int	execute_ast(t_msh *msh, t_ast *node)
 {
 	signal(SIGINT, donothing);

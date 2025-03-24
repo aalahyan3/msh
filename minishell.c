@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/24 07:34:43 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/24 20:03:27 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int main(int ac, char **av, char **env)
         if (!msh.ast)
             continue ;
         process_heredocs(msh.ast, msh.env);
+		execute_ast(&msh, msh.ast);
         free_ast(msh.ast);
     }
     clear_env(msh.env);

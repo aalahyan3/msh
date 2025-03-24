@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 00:36:07 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/24 03:51:11 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/24 20:10:51 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,7 +307,7 @@ int ft_export(char **args, t_list *env)
 	{
 		if (!valid_identifier(args[i]))
 		{
-			write(2, "minishell: export: `", 20);
+			write(2, "msh: export: `", 20);
 			write(2, args[i], ft_strlen(args[i]));
 			write(2, "': not a valid identifier\n", 27);
 		}
