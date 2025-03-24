@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 01:06:01 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/16 19:42:21 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/23 19:54:18 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,12 @@ t_list	*extract_left(t_list *tok_list, t_list *root)
 
 
 
-static void	free_tok_not_content(void *content)
+static void	free_tok(void *content)
 {
 	t_tok	*tok;
 
 	tok = (t_tok *)content;
+	free(tok->content);
 	free(tok);
 }
 t_ast	*build_ast(t_list *tok_list)
@@ -87,8 +88,8 @@ t_ast	*build_ast(t_list *tok_list)
 		return (NULL);
 	if (ft_lstsize(tok_list) == 1)
 	{
-		save = ((t_tok *)(tok_list->content))->content;
-		ft_lstclear(&tok_list, free_tok_not_content);
+		save = ft_strdup(((t_tok *)(tok_list->content))->content);
+		ft_lstclear(&tok_list, free_tok);
 		return (expand_block(save));
 	}
 	ast = malloc(sizeof(t_ast));

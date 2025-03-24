@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 13:52:40 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/18 10:35:11 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/23 20:20:39 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdbool.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <signal.h>
 
 # include "libft/libft.h"
 # include "ft_func/ft_func.h"
@@ -67,7 +68,7 @@
 // 	int		last_exit;
 // }	t_msh;
 
-t_ast	*process_prompt(char *prompt, t_list *env);
+// t_ast	*process_prompt(char *prompt);
 
 
 /*General Utils*/

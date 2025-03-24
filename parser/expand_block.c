@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 02:42:28 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/19 19:38:28 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/23 19:59:13 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*get_parenthisis_block(char *s)
 	return (ft_substr(s, start, i - start - 1 ));
 }
 
-static char *get_next_cmd(char *s, int *i)
+char *get_next_cmd(char *s, int *i)
 {
 	int start;
 
@@ -134,11 +134,13 @@ char	**get_command_array(char *s)
 t_ast	*get_block(char *s)
 {
 	t_ast	*ast;
+	char	*parenthisis_block;
 
 	if (!s || !*s)
 		return (NULL);
-	if (get_parenthisis_block(s))
-		return (process_prompt(get_parenthisis_block(s), NULL));
+	parenthisis_block = get_parenthisis_block(s);
+	if (parenthisis_block)
+		return (process_prompt(parenthisis_block));
 	ast = malloc(sizeof(t_ast));
 	if (!ast)
 		return (NULL);
