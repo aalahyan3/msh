@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_expand_string.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 19:25:16 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/21 21:44:30 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/24 07:34:22 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void	expand_chunk(char **chunk, t_list *env, bool is_quote, bool end)
 	else if (**chunk == '?')
 	{
 		free(temp);
-		*chunk = ft_itoa(1);
+		*chunk = ft_itoa(0);
 		return ;
 	}
 	else if (!ft_isalnum(**chunk) && **chunk != '_' && **chunk != '?')

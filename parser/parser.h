@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 23:32:47 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/24 01:50:42 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/24 07:13:23 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_l_parse
 	enum e_l_parse	type;
 }	t_l_parse;
 
+
 typedef struct s_reds
 {
 	char		*file;
@@ -85,6 +86,15 @@ typedef struct s_ast
 	struct s_ast		*left;
 	struct s_ast		*right;
 }	t_ast;
+
+typedef struct s_msh
+{
+    t_ast    *ast;
+    t_list    *env;
+    int        last_exit;
+    char    *prompt;
+    bool    is_child;
+}    t_msh;
 
 t_list	*tokenize(char	*prompt);
 t_ast	*process_prompt(char *prompt);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 01:20:23 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/24 01:38:14 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/24 07:20:51 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,5 @@ int ft_env(t_list *env);
 int ft_export(char **args, t_list *env);
 int ft_pwd(t_list *envp);
 int	ft_unset(t_list *env, char **keys);
-
+int ft_exit(t_msh *msh, char **args);
 #endif

@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/24 06:00:00 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/24 07:34:43 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,49 +65,46 @@ int has_unclosed_parenthesis(const char *prompt)
 
 int main(int ac, char **av, char **env)
 {
-	char *prompt;
-	t_ast *ast;
-	t_list	*env_l;
-	char *temp_prompt;
-
+	t_msh    msh;
+	char    *temp_prompt;
 	// atexit(leaks);
 	rl_catch_signals = 0;
-	(void)ac;
-	(void)av;
-	env_l = build_env(env);
+    (void)ac, (void)av;
+    msh.env = build_env(env);
+    msh.is_child = false;
 	draw_ascii_art();
 	while (1)
 	{
 		signal(SIGINT, handle_sig);
 		signal(SIGQUIT, SIG_IGN);
-		prompt = readline("msh$ ");
-		if (!prompt || ft_strncmp(prompt, "exit", 4) == 0)
-		{
-			if (!prompt)
-				write(1, "exit\n", 5);
-			exit(prompt == NULL);
-		}
-		while (prompt && (ends_with_incomplete_command(prompt) || has_unclosed_parenthesis(prompt)))
+		msh.prompt = readline("msh$ ");
+		while (msh.prompt && (ends_with_incomplete_command(msh.prompt) || has_unclosed_parenthesis(msh.prompt)))
 		{
 			temp_prompt = readline("> ");
 			if (temp_prompt)
 			{
-				char *new_prompt = ft_strjoin(prompt, temp_prompt);
-				free(prompt);
+				char *new_prompt = ft_strjoin(msh.prompt, temp_prompt);
+				free(msh.prompt);
 				free(temp_prompt);
-				prompt = new_prompt;
+				msh.prompt = new_prompt;
 			}
 			else
 				break;
 		}
-		add_history(prompt);
-		ast = parse(prompt);
-		if (!ast)
-			continue ;
-		process_heredocs(ast, env_l);
-		execute_ast(ast, env_l);
-		free_ast(ast);
-	}
-	clear_env(env_l);
-	rl_clear_history();
+		if (!msh.prompt)
+            ft_exit(&msh, NULL);
+        if (!*msh.prompt)
+        {
+            free(msh.prompt);
+            continue ;
+        }
+		add_history(msh.prompt);
+       	msh.ast = parse(msh.prompt);
+        if (!msh.ast)
+            continue ;
+        process_heredocs(msh.ast, msh.env);
+        free_ast(msh.ast);
+    }
+    clear_env(msh.env);
+    rl_clear_history();
 }
