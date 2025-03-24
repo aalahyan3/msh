@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
+#    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/23 17:31:03 by aaitabde         ###   ########.fr        #
+#    Updated: 2025/03/24 01:40:42 by aalahyan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,13 +54,13 @@ SRCS = 	minishell.c \
 		executor/redirections_heredoc.c\
 		executor/redirections_error_display.c\
 		parser/asstes.c\
-		executor/builtins_echo.c\
 		free_utils/free_env_list.c\
-		executor/builtins_pwd.c\
-		executor/builtins_cd.c\
-		executor/builtins_env.c\
-		executor/builtins_unset.c\
-		executor/builtins_export.c\
+		builtins/echo.c\
+		builtins/cd.c\
+		builtins/env.c\
+		builtins/unset.c\
+		builtins/export.c\
+		builtins/pwd.c\
 
 READLINE_COMPILE = -I$(shell brew --prefix readline)/include
 READLINE_LINK = -lreadline -L$(shell brew --prefix readline)/lib
@@ -91,6 +91,8 @@ $(BIN)/%.o: env/%.c
 $(BIN)/%.o: free_utils/%.c
 	$(CC) $(READLINE_COMPILE) $(CFLAGS) -c $< -o $@
 $(BIN)/%.o: expansion/%.c
+	$(CC) $(READLINE_COMPILE) $(CFLAGS) -c $< -o $@
+$(BIN)/%.o: builtins/%.c
 	$(CC) $(READLINE_COMPILE) $(CFLAGS) -c $< -o $@
 clean:
 	make clean -C libft

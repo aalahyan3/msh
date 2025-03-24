@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 11:09:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/24 00:57:12 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/24 01:29:33 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include "../parser/parser.h"
 # include "../env/env.h"
 # include "../libft/libft.h"
-
+# include "../builtins/builtins.h"
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -37,13 +37,7 @@ char	**get_args(t_ast *ast);
 
 void	free_arr(char **arr);
 void    free_env_list(t_list *env);
-// builtins
-int		ft_echo(char **args, t_list *env);
-int		ft_pwd(t_list *env);
-int		ft_cd(char *path);
-int     ft_env(t_list *env);
-int     ft_unset(t_list *env, char **keys);
-int     ft_export(char **args, t_list *env);
+
 //signals
 
 void	handle_sig(int sig);
