@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:43:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/19 15:32:23 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/23 20:56:08 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,7 @@ int	ft_cd(char *path)
 	if (!path)
 	{
 		printf("home = %s\n", home);
-		int ret = chdir(home);
-		printf("chdir return value: %d\n", ret);
-		if (ret == -1)
+		if (chdir(home) == -1)
 			perror("minishell");
 		return (1);
 	}

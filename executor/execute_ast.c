@@ -6,11 +6,12 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/23 17:13:48 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/24 00:57:17 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
+
 
 int is_builtin(char **args)
 {
@@ -75,6 +76,8 @@ char	**make_env(t_list *ev)
 	env[i] = NULL;
 	return (env);
 }
+
+void do_nothing(int sig);
 
 int	execute_word(t_ast *ast, t_list *ev)
 {
@@ -209,6 +212,8 @@ int	execute_block(t_ast *ast, t_list *env)
 		return (1);
 	if (pid == 0)
 	{
+		signal(SIGINT, handle_sig);
+		signal(SIGQUIT, donothing);
 		if (handle_redirections(ast->left, env) == 1)
 			exit(1);
 		status = execute_ast(ast->right, env);
@@ -218,8 +223,10 @@ int	execute_block(t_ast *ast, t_list *env)
 	return (WEXITSTATUS(status));
 }
 
+
 int	execute_ast(t_ast *ast, t_list *env)
 {
+	signal(SIGINT, donothing);
 	if (!ast)
 		return (1);
 	if (ast->type == BLOCK)

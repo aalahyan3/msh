@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 11:09:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/22 16:32:37 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/24 00:57:12 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,13 @@ int     ft_unset(t_list *env, char **keys);
 int     ft_export(char **args, t_list *env);
 //signals
 
-void	handle_signals(void);
+void	handle_sig(int sig);
 
 //redirections
 int 	check_syntax(t_reds **reds);
 void	process_heredocs(t_ast *ast, t_list *env);
+void    donothing(int sig);
+
+
+
 # endif

@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/23 16:43:21 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/24 00:56:43 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@ static void draw_ascii_art(void)
 }
 
 // void	leaks(void) __attribute__((destructor));
-void leaks(void)
-{
-	system("leaks minishell");
-}
+// void leaks(void)
+// {
+// 	system("leaks minishell");
+// }
+
 
 int main(int ac, char **av, char **env)
 {
@@ -35,16 +36,16 @@ int main(int ac, char **av, char **env)
 	t_ast *ast;
 	t_list	*env_l;
 
-	atexit(leaks);
-
+	// atexit(leaks);
 	rl_catch_signals = 0;
 	(void)ac;
 	(void)av;
 	env_l = build_env(env);
 	draw_ascii_art();
-	handle_signals();
 	while (1)
 	{
+		signal(SIGINT, handle_sig);
+		signal(SIGQUIT, SIG_IGN);
 		prompt = readline("msh$ ");
 		if (!prompt || ft_strncmp(prompt, "exit", 4) == 0)
 		{

@@ -20,6 +20,7 @@
         "vector": "c",
         "parser.h": "c",
         "expansion.h": "c",
-        "free_utils.h": "c"
+        "free_utils.h": "c",
+        "minishell.h": "c"
     }
 }

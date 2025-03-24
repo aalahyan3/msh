@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:27:31 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/23 18:08:18 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/24 01:11:11 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char	*gen_name()
 	}
 	return (NULL);
 }
+
 void handle_heredoc(t_reds *red, t_list *ev)
 {
 	char	*line;
@@ -79,8 +80,7 @@ void handle_heredoc(t_reds *red, t_list *ev)
 		if (expand)
 		{
 			tmp = line;
-			line = expand_here_doc(tmp, ev);
-			printf("line: %s\n", line);
+			line = expand_here_doc(line, ev);
 			free(tmp);
 			tmp = NULL;
 		}
@@ -89,7 +89,7 @@ void handle_heredoc(t_reds *red, t_list *ev)
 		free(line);
 		line = NULL;
 	}
-	
+	free(line);
 	free(red->file);
 	red->file = ft_strdup(filename);
 	free(filename);
