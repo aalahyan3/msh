@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 11:09:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/24 01:29:33 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/24 04:57:19 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,9 @@ void    free_env_list(t_list *env);
 void	handle_sig(int sig);
 
 //redirections
-int 	check_syntax(t_reds **reds);
 void	process_heredocs(t_ast *ast, t_list *env);
 void    donothing(int sig);
-
+char	*gen_name();
 
 
 # endif

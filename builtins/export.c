@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 00:36:07 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/24 01:31:32 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/24 03:51:11 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,14 +298,11 @@ int ft_export(char **args, t_list *env)
 {
 	int i;
 
-	if (args[1] == NULL)
-	{
-		ft_env_sorted(env);
-		return (0);
-	}
 	proper_export_expansion(args, env);
 	i = 1;
 	args = expand(args, env);
+	if (args[1] == NULL)
+		ft_env_sorted(env);
 	while (args[i] != NULL)
 	{
 		if (!valid_identifier(args[i]))

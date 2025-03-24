@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 07:57:43 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/18 10:21:18 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/24 04:01:18 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*get_cmd_path(char *full_cmd, char **env, int *i)
 		{
 			if (S_ISDIR(st.st_mode))
 			{
-				printf("minishell: %s: is a directory\n", full_cmd);
+				printf("msh: %s: is a directory\n", full_cmd);
 				*i = 0;
 				return(NULL);
 			}
@@ -91,12 +91,12 @@ char	*get_cmd_path(char *full_cmd, char **env, int *i)
 			}
 			if (access(full_cmd, F_OK) == 0)
 			{
-				printf("minishell: %s: Permission denied\n", full_cmd);
+				printf("msh: %s: Permission denied\n", full_cmd);
 				*i = 0;
 				return(NULL);
 			}
 		}
-		write(2, "minishell: ", 11);
+		write(2, "msh: ", 5);
 		write(2, full_cmd, ft_strlen(full_cmd));
 		write(2, ": No such file or directory\n", 28);
 		*i = 0;

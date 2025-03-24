@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 21:27:43 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/22 23:14:46 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/24 05:55:18 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,17 @@ char	**expand_filename(char *name, t_list *env)
 	char	***triple;
 	int		i;
 
+	if (!*name)
+	{
+		vars_expanded = malloc(sizeof(char *) * 2);
+		if (!vars_expanded)
+			return (NULL);
+		vars_expanded[0] = ft_strdup("");
+		if (!vars_expanded[0])
+			return (free(vars_expanded), NULL);
+		vars_expanded[1] = NULL;
+		return (vars_expanded);
+	}
 	vars_expanded = expand_string(name, env);
 	if (!vars_expanded)
 		return (NULL);

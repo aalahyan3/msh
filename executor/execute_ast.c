@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_ast.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/03/24 02:08:10 by aaitabde         ###   ########.fr       */
-=======
-/*   Updated: 2025/03/24 01:38:34 by aalahyan         ###   ########.fr       */
->>>>>>> e4f834e1775c02b45b0fed61d2b78b2c0ef4b19f
+/*   Updated: 2025/03/24 05:34:04 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +76,7 @@ char	**make_env(t_list *ev)
 	return (env);
 }
 
-void do_nothing(int sig);
+void donothing(int sig);
 
 int	execute_word(t_ast *ast, t_list *ev)
 {
@@ -97,9 +93,9 @@ int	execute_word(t_ast *ast, t_list *ev)
 		return (1);
 	if (args[0] && !args[0][0])
 	{
-		write(2, "minishell: ", 11);
+		write(2, "msh: ", 5);
 		write(2, ":command not found\n", 19);
-		return (1);
+		return (127);
 	}
 	path = get_cmd_path(args[0], env, &i);
 	if (path)
@@ -108,7 +104,7 @@ int	execute_word(t_ast *ast, t_list *ev)
 	{
 		if (i)
 		{
-			write(2, "minishell: ", 11);
+			write(2, "msh: ", 5);
 			write(2, args[0], ft_strlen(args[0]));
 			write(2, ": command not found\n", 21);
 		}
@@ -130,9 +126,34 @@ int	execute_logic(t_ast *ast, t_list *env)
 
 void	file_open_error(char *filename)
 {
-	write(2, "minishell: ", 11);
+	write(2, "msh: ", 5);
 	write(2, filename, ft_strlen(filename));
 	write(2, ": No such file or directory\n", 28);	
+}
+
+
+int	expand_heredoc(int fd, t_list *env)
+{
+	char *line;
+	char *filename = gen_name();
+
+	int new_fd = open(filename, O_RDWR | O_CREAT , 0644);
+	int new_fd_read = open(filename, O_RDONLY | O_CREAT , 0640);
+	unlink(filename);
+	free(filename);
+	while(1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break;
+		char *tmp = line;
+		line = expand_here_doc(tmp, env);
+		write(new_fd, line, ft_strlen(line));
+		free(tmp);
+		free(line);
+	}
+	close(fd);
+	return(new_fd_read);
 }
 
 int handle_redirections(t_ast *ast, t_list *env)
@@ -148,7 +169,7 @@ int handle_redirections(t_ast *ast, t_list *env)
 	while (reds[red_count])
 	{
 		args = expand_filename(reds[red_count]->file, env);
-		if (!args || (args[0] && args[1] ) || !args[0][0])
+		if (!args || (args[0] && args[1]))
 		{
 			ft_putstr_fd("msh: ", 2);
 			ft_putstr_fd(reds[red_count]->file, 2);
@@ -162,9 +183,11 @@ int handle_redirections(t_ast *ast, t_list *env)
 		{
 			if (reds[red_count]->fd == -1)
 				reds[red_count]->fd = open(reds[red_count]->file, O_RDONLY);
+			else
+				reds[red_count]->fd = expand_heredoc(reds[red_count]->fd, env);
 			if (reds[red_count]->fd < 0)
 			{
-				write(2, "minishell: ", 11);
+				write(2, "msh: ", 5);
 				return (perror(reds[red_count]->file), 1);
 			}
 			dup2(reds[red_count]->fd, STDIN_FILENO);
@@ -175,7 +198,7 @@ int handle_redirections(t_ast *ast, t_list *env)
 			reds[red_count]->fd = open(reds[red_count]->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			if (reds[red_count]->fd < 0)
 			{
-				write(2, "minishell: ", 11);
+				write(2, "msh: ", 5);
 				perror(reds[red_count]->file);
 				return (1);
 			}
@@ -187,7 +210,7 @@ int handle_redirections(t_ast *ast, t_list *env)
 			reds[red_count]->fd = open(reds[red_count]->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 			if (reds[red_count]->fd < 0)
 			{
-				write(2, "minishell: ", 11);
+				write(2, "msh: ", 11);
 				perror(reds[red_count]->file);
 				return (1);
 			}

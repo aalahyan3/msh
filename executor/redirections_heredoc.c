@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:27:31 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/24 01:11:11 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/24 05:56:37 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void handle_heredoc(t_reds *red, t_list *ev)
 	fd_read = open(filename, O_RDONLY);
 	if (fd == -1)
 	{
-		perror("minishell: open");
+		perror("msh: open");
 		if (fd_read != -1)
 			close(fd_read);
 		free(filename);
@@ -59,7 +59,7 @@ void handle_heredoc(t_reds *red, t_list *ev)
 		tmp = red->file;
 		red->file = ft_substr(red->file, 1, ft_strlen(red->file) - 2);
 		free(tmp);
-		expand = 0;
+		red->is_hd = 1;
 	}
 	while (1)
 	{
@@ -76,13 +76,6 @@ void handle_heredoc(t_reds *red, t_list *ev)
 			free(line);
 			line = NULL;
 			continue ;
-		}
-		if (expand)
-		{
-			tmp = line;
-			line = expand_here_doc(line, ev);
-			free(tmp);
-			tmp = NULL;
 		}
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
@@ -109,11 +102,10 @@ void process_heredocs(t_ast *ast, t_list *env)
 	if (ast->type == REDIRECTIONS && ast->data)
 	{
 		reds = (t_reds **)ast->data;
-		if (check_syntax(reds))
-			return ;
 		i = 0;
 		while (reds[i])
 		{
+			reds[i]->is_hd = 0;
 			if (reds[i]->type == HEREDOC)
 				handle_heredoc(reds[i], env);
 			i++;

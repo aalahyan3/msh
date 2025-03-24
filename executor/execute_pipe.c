@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 11:00:29 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/14 09:00:41 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/24 04:01:28 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int execute_pipe(t_ast *ast, t_list *env)
 	pid1 = fork();
 	if (pid1 == -1)
 	{
-		perror("minishell : fork");
+		perror("msh : fork");
 		return (1);
 	}
 	if (pid1 == 0)

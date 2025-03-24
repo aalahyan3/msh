@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/24 01:17:53 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/24 06:00:00 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,46 @@ static void draw_ascii_art(void)
 // 	system("leaks minishell");
 // }
 
+int	ends_with_incomplete_command(const char *prompt)
+{
+	size_t len;
+
+	len = strlen(prompt);
+	if (len == 0)
+		return (0);
+	if (prompt[len - 1] == '|' || prompt[len - 1] == '&')
+		return (1);
+	if (len >= 2 && prompt[len - 1] == '&' && prompt[len - 2] == '&')
+		return (1);
+	if (len >= 2 && prompt[len - 1] == '|' && prompt[len - 2] == '|')
+		return (1);
+	return (0);
+}
+
+int has_unclosed_parenthesis(const char *prompt)
+{
+	int open_count;
+	int close_count;
+
+	close_count = 0;
+	open_count = 0;
+	while (*prompt)
+	{
+		if (*prompt == '(')
+			open_count++;
+		else if (*prompt == ')')
+			close_count++;
+		prompt++;
+	}
+	return (open_count > close_count);
+}
 
 int main(int ac, char **av, char **env)
 {
 	char *prompt;
 	t_ast *ast;
 	t_list	*env_l;
+	char *temp_prompt;
 
 	// atexit(leaks);
 	rl_catch_signals = 0;
@@ -52,6 +86,19 @@ int main(int ac, char **av, char **env)
 			if (!prompt)
 				write(1, "exit\n", 5);
 			exit(prompt == NULL);
+		}
+		while (prompt && (ends_with_incomplete_command(prompt) || has_unclosed_parenthesis(prompt)))
+		{
+			temp_prompt = readline("> ");
+			if (temp_prompt)
+			{
+				char *new_prompt = ft_strjoin(prompt, temp_prompt);
+				free(prompt);
+				free(temp_prompt);
+				prompt = new_prompt;
+			}
+			else
+				break;
 		}
 		add_history(prompt);
 		ast = parse(prompt);

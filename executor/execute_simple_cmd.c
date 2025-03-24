@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 15:16:58 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/24 01:06:41 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/24 04:00:23 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	execute_simple_cmd(char *path, char **args, char **env)
 		execve(path, args, env);
 		free(path);
 		free_arr(args);
-		perror("minishell");
+		perror("msh: ");
 		exit(127);
 	}
 	else

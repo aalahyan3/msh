@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:43:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/24 01:31:24 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/24 04:02:47 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_cd(char *path)
 	{
 		printf("home = %s\n", home);
 		if (chdir(home) == -1)
-			perror("minishell");
+			perror("msh : cd");
 		return (1);
 	}
 	if (!*path)
@@ -51,12 +51,12 @@ int	ft_cd(char *path)
 	{
 		if (S_ISDIR(st.st_mode) == 0)
 		{
-			printf("minishell: %s: Not a directory\n", path);//old pwd
+			printf("msh: %s: Not a directory\n", path);//old pwd
 			return (1);//old pwd
 		}//old pwd
 		else//old pwd
 			return (chdir(path));//old pwd
 	}//old pwd
-	ft_printf("minishell: cd: %s: : No such file or directory\n", path);
+	ft_printf("msh : cd: %s: : No such file or directory\n", path);
 	return (1);
 }
