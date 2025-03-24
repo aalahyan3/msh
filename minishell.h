@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 13:52:40 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/23 20:20:39 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/24 01:34:55 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 # include "executor/executor.h"
 # include "env/env.h"
 # include "expansion/expansion.h"
+# include "builtins/builtins.h"
+
+
 # define BLUE   "\033[1m\033[36m"
 # define RESET  "\033[0m"
 

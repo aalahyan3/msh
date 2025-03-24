@@ -21,6 +21,7 @@
         "parser.h": "c",
         "expansion.h": "c",
         "free_utils.h": "c",
-        "minishell.h": "c"
+        "minishell.h": "c",
+        "builtins.h": "c"
     }
 }

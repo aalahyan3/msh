@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 21:03:19 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/23 19:37:57 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/24 02:12:37 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,11 @@ bool	valid_blocks(char *s)
 			cmd = get_next_cmd(s, &i);
 			if (cmd)
 			{
+				if (*cmd == '|' ||*cmd ==  '&' || *cmd == ';')
+				{
+					free(cmd);
+					continue ;
+				}
 				ft_putstr_fd("msh: syntax error near unexpected token `", 2);
 				ft_putstr_fd(cmd, 2);
 				ft_putendl_fd("'", 2);
