@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/24 20:03:27 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/24 23:26:15 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,36 +63,114 @@ int has_unclosed_parenthesis(const char *prompt)
 	return (open_count > close_count);
 }
 
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
+
+void	restore_terminal(int fd)
+{
+	if (fd != -1)
+	{
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+	}
+}
+
+char	*read_prompt(t_msh *msh)
+{
+	char	*prompt;
+	char	*temp_prompt;
+	char	*new_prompt;
+	int		orig_stdout;
+	int		orig_stdin;
+	int		orig_stderr;
+
+	signal(SIGINT, handle_sig);
+	signal(SIGQUIT, SIG_IGN);
+
+	// Save the original file descriptors
+	orig_stdout = dup(STDOUT_FILENO);
+	orig_stdin = dup(STDIN_FILENO);
+	orig_stderr = dup(STDERR_FILENO);
+
+	// Redirect stdout to stderr
+	dup2(STDERR_FILENO, STDOUT_FILENO); 
+
+	// Display the prompt always to stderr
+	if (isatty(STDIN_FILENO))
+		write(2, "msh$ ", 5); 
+	else
+		write(2, "msh$ ", 5); 
+
+	// Read input
+	if (!isatty(STDIN_FILENO))
+	{
+		prompt = get_next_line(STDIN_FILENO);
+	}
+	else
+	{
+		prompt = readline(""); 
+	}
+
+	while (prompt && (ends_with_incomplete_command(prompt) || has_unclosed_parenthesis(prompt)))
+	{
+		if (!isatty(STDIN_FILENO))
+			temp_prompt = get_next_line(STDIN_FILENO);
+		else
+			temp_prompt = readline("> "); 
+
+		if (temp_prompt)
+		{
+			new_prompt = ft_strjoin(prompt, temp_prompt);
+			free(prompt);
+			free(temp_prompt);
+			prompt = new_prompt;
+		}
+		else
+			break;
+	}
+
+	if (!prompt)
+		ft_exit(msh, NULL);
+
+	// Trim extra spaces
+	new_prompt = ft_strtrim(prompt, " \t\n");
+	free(prompt);
+
+	// Restore original stdout, stderr, and stdin
+	dup2(orig_stdout, STDOUT_FILENO);
+	dup2(orig_stderr, STDERR_FILENO);
+	dup2(orig_stdin, STDIN_FILENO);
+
+	// Close the saved file descriptors
+	close(orig_stdout);
+	close(orig_stderr);
+	close(orig_stdin);
+
+	return (new_prompt);
+}
+
+
+
+
 int main(int ac, char **av, char **env)
 {
 	t_msh    msh;
 	char    *temp_prompt;
+	struct termios	terminal;
 	// atexit(leaks);
 	rl_catch_signals = 0;
     (void)ac, (void)av;
     msh.env = build_env(env);
     msh.is_child = false;
+	msh.ast = NULL;
 	draw_ascii_art();
+	tcgetattr(0, &terminal);
 	while (1)
 	{
 		signal(SIGINT, handle_sig);
 		signal(SIGQUIT, SIG_IGN);
-		msh.prompt = readline("msh$ ");
-		while (msh.prompt && (ends_with_incomplete_command(msh.prompt) || has_unclosed_parenthesis(msh.prompt)))
-		{
-			temp_prompt = readline("> ");
-			if (temp_prompt)
-			{
-				char *new_prompt = ft_strjoin(msh.prompt, temp_prompt);
-				free(msh.prompt);
-				free(temp_prompt);
-				msh.prompt = new_prompt;
-			}
-			else
-				break;
-		}
-		if (!msh.prompt)
-            ft_exit(&msh, NULL);
+		msh.prompt = read_prompt(&msh);
         if (!*msh.prompt)
         {
             free(msh.prompt);
@@ -104,7 +182,8 @@ int main(int ac, char **av, char **env)
             continue ;
         process_heredocs(msh.ast, msh.env);
 		execute_ast(&msh, msh.ast);
-        free_ast(msh.ast);
+        free_ast(&msh.ast);
+		// tcsetattr(0, TCSANOW, &terminal);
     }
     clear_env(msh.env);
     rl_clear_history();
