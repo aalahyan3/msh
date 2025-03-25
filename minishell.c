@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/25 20:34:43 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/25 21:08:28 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ static void draw_ascii_art(void)
 	ft_printf("| | | | | || || | | || |\\__ \\| | | ||  __/| || |\n");
 	ft_printf("|_| |_| |_||_||_| |_||_||___/|_| |_| \\___||_||_| by aalahyan and aaitabde\n\n"RESET);
 }
-
+static void handle_ctrl_l()
+{
+     write(STDOUT_FILENO, "\033[H\033[J", 6);
+    write(STDOUT_FILENO, "msh$ ", 5);
+}
 int main(int ac, char **av, char **env)
 {
 	t_msh    msh;
@@ -36,6 +40,7 @@ int main(int ac, char **av, char **env)
 	msh.ast = NULL;
 	draw_ascii_art();
 	tcgetattr(0, &terminal);
+
 	while (1)
 	{
 		signal(SIGINT, handle_sig);

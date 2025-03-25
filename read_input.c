@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 19:42:23 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/25 20:33:38 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/25 21:11:08 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,16 +81,14 @@ char	*interacive_mode(void)
 	int		std_out;
 
 	std_out = dup(STDOUT_FILENO);
-	ft_putstr_fd("msh$ ", 2);
 	if (!isatty(STDOUT_FILENO))
 	{
 		dup2(STDERR_FILENO, STDOUT_FILENO);
 	}
-	prompt = readline("");
+	prompt = readline("msh$ ");
 	while (prompt && (ends_with_incomplete_command(prompt) || has_unclosed_parenthesis(prompt)))
 	{
-		ft_putstr_fd("> ", 2);
-		new = readline("");
+		new = readline("> ");
 		if (new)
 		{
 			tmp = ft_strjoin(prompt, new);
@@ -106,6 +104,7 @@ char	*interacive_mode(void)
 	free(prompt);
 	return (tmp);
 }
+
 
 char	*read_input(t_msh	*msh)
 {
