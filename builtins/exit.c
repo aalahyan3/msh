@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 01:41:17 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/24 23:09:00 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/25 20:34:58 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void    clear_msh(t_msh *msh)
 {
     clear_env(msh->env);
     free_ast(&msh->ast);
-    clear_history();
+    rl_clear_history();
 }
 
 int    array_size(char **s)

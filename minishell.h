@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 13:52:40 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/24 21:33:39 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/25 20:09:32 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@
 
 /*General Utils*/
 
-void	*ft_malloc(size_t size);
+char	*read_input(t_msh	*msh);
+
 
 #endif

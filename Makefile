@@ -6,7 +6,7 @@
 #    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/24 22:56:17 by aalahyan         ###   ########.fr        #
+#    Updated: 2025/03/25 20:10:21 by aalahyan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ CFLAGS = -fsanitize=address -g3#-Wall -Wextra -Werror
 NAME = minishell
 
 SRCS = 	minishell.c \
+		read_input.c \
 		ft_func/ft_fork.c\
 		ft_func/ft_isspace.c\
 		env/build_env.c\
