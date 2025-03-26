@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 01:20:23 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/24 07:20:51 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/26 04:25:22 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,15 @@
 #include "../executor/executor.h"
 # include "../libft/libft.h"
 
-int	ft_cd(char *path);
+int	ft_cd(char *path, t_msh *msh);
 int ft_echo(char **arg, t_list *env);
 int ft_env(t_list *env);
 int ft_export(char **args, t_list *env);
 int ft_pwd(t_list *envp);
 int	ft_unset(t_list *env, char **keys);
 int ft_exit(t_msh *msh, char **args);
+//utils
+void    ft_setenv(char *var, char *value, int defined, t_list **env);
+char	*get_from_env(char *var, t_list *env);
+
 #endif

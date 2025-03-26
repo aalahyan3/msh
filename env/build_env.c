@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 21:22:40 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/18 13:07:42 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/26 02:49:06 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ t_list	*build_env(char **env_array)
 	env = NULL;
 	while (env_array[i])
 	{
+		if (ft_strncmp(env_array[i], "OLDPWD=", 7) == 0)
+		{
+			i++;
+			continue ;
+		}
 		ft_lstadd_back(&env, ft_lstnew(make_env_node(env_array[i])));
 		i++;
 	}

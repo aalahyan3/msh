@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/24 21:11:42 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/26 04:29:15 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	run_builting (t_msh *msh, char **args)
 	else if (args && args[0] && ft_strncmp(args[0], "pwd", 3) == 0)
 		return (ft_pwd(msh->env));
 	else if (args && args[0] && ft_strncmp(args[0], "cd", 2) == 0)
-		return (ft_cd(args[1]));
+		return (ft_cd(args[1], msh));
 	else if (args && args[0] && ft_strncmp(args[0], "env", 3) == 0)
 		return (ft_env(msh->env));
 	else if (args && args[0] && ft_strncmp(args[0], "unset", 5) == 0)
@@ -93,11 +93,12 @@ int	execute_word(t_msh *msh, t_ast *ast)
 		return (1);
 	env = make_env(msh->env);
 	args = expand((char **)ast->data, msh->env);
+	i = 0;
 	if(!args)
 		return (1);
 	if (args[0] && !args[0][0])
 	{
-		write(2, "msh: ", 11);
+		write(2, "msh: ", 6);
 		write(2, ":command not found\n", 19);
 		return (1);
 	}
@@ -108,7 +109,7 @@ int	execute_word(t_msh *msh, t_ast *ast)
 	{
 		if (i)
 		{
-			write(2, "msh: ", 11);
+			write(2, "msh: ", 6);
 			write(2, args[0], ft_strlen(args[0]));
 			write(2, ": command not found\n", 21);
 		}
@@ -130,7 +131,7 @@ int	execute_logic(t_msh *msh, t_ast *ast)
 
 void	file_open_error(char *filename)
 {
-	write(2, "msh: ", 11);
+	write(2, "msh: ", 6);
 	write(2, filename, ft_strlen(filename));
 	write(2, ": No such file or directory\n", 28);	
 }
@@ -159,7 +160,7 @@ void	file_open_error(char *filename)
 	return(new_fd_read);
  }
 
-int handle_redirections(t_ast *ast, t_list *env)
+int handle_redirections(t_ast *ast, t_list *env, int *saved_stdin, int *saved_stdout)
 {
 	t_reds	**reds;
 	int		red_count;
@@ -167,6 +168,8 @@ int handle_redirections(t_ast *ast, t_list *env)
 
 	if (!ast || !ast->data)
 		return (0);
+	*saved_stdin = dup(STDIN_FILENO);
+	*saved_stdout = dup(STDOUT_FILENO);
 	reds = (t_reds **)ast->data;
 	red_count = 0;
 	while (reds[red_count])
@@ -190,8 +193,9 @@ int handle_redirections(t_ast *ast, t_list *env)
  				reds[red_count]->fd = expand_heredoc(reds[red_count]->fd, env);
 			if (reds[red_count]->fd < 0)
 			{
-				write(2, "msh: ", 11);
-				return (perror(reds[red_count]->file), 1);
+				write(2, "msh: ", 6);
+				perror(reds[red_count]->file);
+				return (1);
 			}
 			dup2(reds[red_count]->fd, STDIN_FILENO);
 			close(reds[red_count]->fd);
@@ -201,7 +205,7 @@ int handle_redirections(t_ast *ast, t_list *env)
 			reds[red_count]->fd = open(reds[red_count]->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			if (reds[red_count]->fd < 0)
 			{
-				write(2, "msh: ", 11);
+				write(2, "msh: ", 6);
 				perror(reds[red_count]->file);
 				return (1);
 			}
@@ -213,7 +217,7 @@ int handle_redirections(t_ast *ast, t_list *env)
 			reds[red_count]->fd = open(reds[red_count]->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 			if (reds[red_count]->fd < 0)
 			{
-				write(2, "msh: ", 11);
+				write(2, "msh: ", 6);
 				perror(reds[red_count]->file);
 				return (1);
 			}
@@ -225,37 +229,36 @@ int handle_redirections(t_ast *ast, t_list *env)
 	return (0);
 }
 
+void reset_fd(int saved_stdin, int saved_stdout)
+{
+	dup2(saved_stdin, STDIN_FILENO);
+	dup2(saved_stdout, STDOUT_FILENO);
+	close(saved_stdin);
+	close(saved_stdout);
+}
+
 int	execute_block(t_msh *msh, t_ast *ast)
 {
-	pid_t	pid;
 	int		status;
 	char	**args;
 	int		is_builtin_command;
+	int		saved_stdin;
+	int		saved_stdout;
 
-	if(!ast || !ast->left)
+	if (!ast || !ast->left)
 		return (1);
 	args = (char **)ast->right->data;
-	is_builtin_command = is_builtin(args);
-	if (is_builtin_command == 0 && !ast->left->data)
-		return (run_builting(msh, args));
-	pid = fork();
-	if (pid < 0)
+	if (handle_redirections(ast->left, msh->env, &saved_stdin, &saved_stdout) == 1)
 		return (1);
-	if (pid == 0)
-	{
-		signal(SIGINT, handle_sig);
-		signal(SIGQUIT, donothing);
-		msh->is_child = true;
-		if (handle_redirections(ast->left, msh->env) == 1)
-			exit(1);
-		if (is_builtin_command == 0)
-			exit(run_builting(msh, args));
+	is_builtin_command = is_builtin(args);
+	if (is_builtin_command == 0)
+		status = run_builting(msh, args);
+	else
 		status = execute_ast(msh, ast->right);
-		exit(status);
-	}
-	waitpid(pid, &status, 0);
-	return (WEXITSTATUS(status));
+	reset_fd(saved_stdin, saved_stdout);
+	return (status);
 }
+
 int	execute_ast(t_msh *msh, t_ast *node)
 {
 	signal(SIGINT, donothing);

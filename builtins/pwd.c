@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:43:45 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/24 01:31:34 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/26 04:25:46 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,11 @@ int ft_pwd(t_list *envp)
 
 	env = make_env(envp);
 	i = 0;
-	cwd = getcwd(NULL, 0);
+	cwd = get_from_env("PWD", envp);
 	if (cwd)
 	{
 		write(1, cwd, ft_strlen(cwd));
 		write(1, "\n", 1);
-		free(cwd);
 		free_arr(env);
 		return (0);
 	}

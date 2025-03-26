@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 00:36:07 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/24 20:10:51 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/26 04:29:31 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void print_sorted_env(struct s_env **env_array, int count)
 	i = 0;
 	while (i < count)
 	{
-		write(1, "declare -x ", 11);
+		write(1, "declare -x ", 12);
 		write(1, env_array[i]->key, ft_strlen(env_array[i]->key));
 		if (env_array[i]->defined)
 		{
@@ -188,7 +188,6 @@ void append_to_var(char *var_name, char *value, t_list *env)
 		ft_setenv(var_name, value, 1, &env);
 }
 
-
 void parse_export_arg(char *arg, t_list *env)
 {
 	char	*var;
@@ -277,7 +276,6 @@ int	valid_identifier(char *key)
 	}
 	return (1);
 }
-
 
 void	proper_export_expansion(char **args, t_list *env)
 {
