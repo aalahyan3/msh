@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 21:19:14 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/18 11:21:33 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/26 05:56:58 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <stdbool.h>
 # include "../libft/libft.h"
-
+# include "../executor/executor.h"
 struct s_env
 {
 	char	*key;
