@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 11:09:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/26 05:34:15 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/26 20:11:00 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 
 
 /*Executor*/
+
+// volatile	sig_atomic_t	g_signal_recieved = 0;
 
 int     execute_ast(t_msh *msh, t_ast *node);
 pid_t   execute_simple_cmd(char *path, char **args, char **env);

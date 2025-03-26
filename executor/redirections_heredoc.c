@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_heredoc.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:27:31 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/24 06:02:55 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/26 20:07:04 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void handle_heredoc(t_reds *red, t_list *ev)
 	char	*tmp;
 
 	expand = 1;
-	filename = gen_name();	
+	filename = gen_name();
 	fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0600);
 	fd_read = open(filename, O_RDONLY);
 	if (fd == -1)

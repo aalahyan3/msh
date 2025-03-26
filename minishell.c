@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/26 05:54:14 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/26 20:10:30 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
+
+
 
 static void draw_ascii_art(void)
 {
@@ -43,8 +45,6 @@ int main(int ac, char **av, char **env)
 	tcgetattr(0, &terminal);
 	while (1)
 	{
-		signal(SIGINT, handle_sig);
-		signal(SIGQUIT, SIG_IGN);
 		msh.prompt = read_input(&msh);
         if (!*msh.prompt)
         {

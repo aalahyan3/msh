@@ -3,17 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 00:36:07 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/26 04:29:31 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/26 20:03:20 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
+bool	alter_existing_var(char *var, char *val, int defined, t_list **env)
+{
+	t_list			*curr;
+	struct s_env	*node;
+	int				varlen;
+
+	curr = *env;
+	varlen = ft_strlen(var);
+	while (curr)
+	{
+		node = curr->content;
+		if (!ft_strncmp(var, node->key, varlen) && varlen == ft_strlen(node->key))
+		{
+			free(node->value);
+			node->value = ft_strdup(val);
+			return (true);
+		}
+		curr = curr->next;
+	}
+	return (false);
+}
+
 void ft_setenv(char *var, char *value, int defined, t_list **env)
 {
+	/*
+		the funstion looks for exiting variable and change it's value, if it doesn't exist it
+		will proceed to the next steps you coded:
+	*/
+	if (alter_existing_var(var, value, defined, env))
+		return ;
 	t_list *node = malloc(sizeof(t_list));
 	if (!node)
 		return;

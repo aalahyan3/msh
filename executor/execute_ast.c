@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_ast.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/26 06:10:57 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/26 19:42:39 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,6 +263,7 @@ int	execute_block(t_msh *msh, t_ast *ast)
 
 int	execute_ast(t_msh *msh, t_ast *node)
 {
+	signal(SIGQUIT, donothing);
 	signal(SIGINT, donothing);
 	if (!node)
 		return (1);
