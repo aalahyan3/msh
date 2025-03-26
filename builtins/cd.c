@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:43:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/26 04:48:07 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/26 05:17:48 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ char	*trim_last_dir(char *cwd)
 	len = ft_strlen(cwd);
 	while (len >= 0)
 	{
-		printf("len = %d\n", len);
-		printf("cwd[len] = %c\n", cwd[len]);
 		if (cwd[len] == '/')
 			break ;
 		cwd[len] = '\0';
@@ -41,7 +39,7 @@ char	*get_from_env(char *var, t_list *env)
 	return (NULL);
 }
 
-void	update_old_pwd(t_msh *msh)
+void	update_old_and_new_pwd(t_msh *msh)
 {
 	struct s_env	*env_tmp;
 	struct s_env	*new_env;
@@ -57,8 +55,13 @@ void	update_old_pwd(t_msh *msh)
 		if (ft_strncmp(env_tmp->key, "OLDPWD\0", 7) == 0)
 		{
 			free(env_tmp->value);
-			env_tmp->value = get_from_env("PWD", msh->env);
+			env_tmp->value = ft_strdup (get_from_env("PWD", msh->env));
 			found = 1;
+		}
+		if (ft_strncmp(env_tmp->key, "PWD\0", 4) == 0)
+		{
+			free(env_tmp->value);
+			env_tmp->value = getcwd(NULL, 0);
 		}
 		env = env->next;
 	}
@@ -75,8 +78,8 @@ int	ft_cd(char *path, t_msh *msh)
 	struct	stat st;
 	char	*home;
 	char	*old_pwd;
+	int		ret;
 
-	printf("path = %s\n", path);
 	home = get_from_env("HOME", msh->env);
 	if (!path)
 	{
@@ -85,34 +88,46 @@ int	ft_cd(char *path, t_msh *msh)
 		return (1);
 	}
 	if (!*path)
-		return (update_old_pwd(msh), 1);
+		return (update_old_and_new_pwd(msh), 1);
 	if (ft_strncmp(path, "-\0", 2) == 0)
 	{
 		old_pwd = get_from_env("OLDPWD", msh->env);
-		if (chdir(old_pwd) == -1)
+		ret = chdir(old_pwd);
+		if (ret == -1)
 			write(2, "msh: cd: OLDPWD not set\n", 24);
+		else
+			update_old_and_new_pwd(msh);
 		if (old_pwd)
 			ft_printf("%s\n", old_pwd);
 		return (0);
 	}
 	if (ft_strncmp(path, ".\0", 2) == 0)
 	{
-		update_old_pwd(msh);
+		update_old_and_new_pwd(msh);
 		return (0);
 	}
 	if (ft_strncmp(path, "..\0", 3) == 0)
-		return (update_old_pwd(msh), chdir(trim_last_dir(getcwd(NULL, 0))));
+	{
+		ret = chdir(trim_last_dir(get_from_env("PWD", msh->env)));
+		return (update_old_and_new_pwd(msh), ret);
+	}
 	if (ft_strncmp(path, "--\0", 3) == 0 || ft_strncmp(path, "~\0", 2) == 0)
-		return (update_old_pwd(msh), chdir(getenv("HOME")));
+	{
+		ret = chdir(home);
+		return (update_old_and_new_pwd(msh), ret);
+	}
 	if (stat(path, &st) == 0)
 	{
 		if (S_ISDIR(st.st_mode) == 0)
 		{
 			printf("msh: %s: Not a directory\n", path);
-			return (update_old_pwd(msh), 1);
+			return (update_old_and_new_pwd(msh), 1);
 		}
 		else
-			return (update_old_pwd(msh), chdir(path));
+		{
+			ret = chdir(path);
+			return (update_old_and_new_pwd(msh), ret);
+		}
 	}
 	ft_printf("msh : cd: %s: : No such file or directory\n", path);
 	return (1);

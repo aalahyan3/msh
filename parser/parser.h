@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 23:32:47 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/24 07:13:23 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/24 22:53:40 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ t_ast	*get_redirections(char *s);
 t_ast	*expand_block(char *s);
 void	free_red_structs(t_reds **reds);
 t_ast	*parse(char *prompt);
-void    free_ast(t_ast *ast);
+void free_ast(t_ast **ast);
+
 bool	initial_checks(char *s);
 bool	linear_parsing(char *s);
 char *get_next_cmd(char *s, int *i);

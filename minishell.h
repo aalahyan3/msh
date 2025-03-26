@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 13:52:40 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/24 20:33:58 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/25 20:09:32 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include "env/env.h"
 # include "expansion/expansion.h"
 # include "builtins/builtins.h"
-
+# include <termios.h>
 
 
 # define BLUE   "\033[1m\033[36m"
@@ -77,6 +77,7 @@
 
 /*General Utils*/
 
-void	*ft_malloc(size_t size);
+char	*read_input(t_msh	*msh);
+
 
 #endif

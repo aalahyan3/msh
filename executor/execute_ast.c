@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/26 04:29:15 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/26 05:03:33 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +248,8 @@ int	execute_block(t_msh *msh, t_ast *ast)
 	if (!ast || !ast->left)
 		return (1);
 	args = (char **)ast->right->data;
+	if (!args)
+		return (1);
 	if (handle_redirections(ast->left, msh->env, &saved_stdin, &saved_stdout) == 1)
 		return (1);
 	is_builtin_command = is_builtin(args);
