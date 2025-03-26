@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 11:09:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/24 07:23:30 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/26 05:34:15 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 int     execute_ast(t_msh *msh, t_ast *node);
 pid_t   execute_simple_cmd(char *path, char **args, char **env);
 int     execute_pipe(t_msh *msh, t_ast *ast);
+void    increment_shlvl(t_list *env);
+
 // cmd path utils
 
 char	*get_cmd_path(char *full_cmd, char **env, int *i);

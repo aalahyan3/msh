@@ -3,4 +3,4 @@
 ls
 ls
 ls -la
-pw[d
+pwd
