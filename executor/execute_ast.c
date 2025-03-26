@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/26 05:03:33 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/26 06:10:57 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int is_builtin(char **args)
 		return(1);
 	if (args && args[0] && ft_strncmp(args[0], "echo\0", 5) == 0)
 		return (0);
-	else if (args && args[0] && ft_strncmp(args[0], "pwd", 3) == 0)
+	else if (args && args[0] && ft_strncmp(args[0], "pwd\0", 4) == 0)
 		return (0);
 	else if (args && args[0] && ft_strncmp(args[0], "cd\0", 3) == 0)
 		return (0);

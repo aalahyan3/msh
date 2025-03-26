@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 21:19:14 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/26 05:56:58 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/26 06:10:22 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <stdbool.h>
 # include "../libft/libft.h"
-# include "../executor/executor.h"
 struct s_env
 {
 	char	*key;
@@ -23,6 +22,8 @@ struct s_env
 	bool	defined;
 };
 
+
+void ft_setenv(char *var, char *value, int defined, t_list **env);
 t_list	*build_env(char **env_array);
 void	clear_env(t_list *env_l);
 char	**make_env(t_list *ev);
