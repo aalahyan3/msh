@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:43:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/26 04:22:00 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/26 04:48:07 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	ft_cd(char *path, t_msh *msh)
 	char	*home;
 	char	*old_pwd;
 
+	printf("path = %s\n", path);
 	home = get_from_env("HOME", msh->env);
 	if (!path)
 	{
