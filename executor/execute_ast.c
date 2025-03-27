@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/26 19:42:39 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:03:09 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	execute_word(t_msh *msh, t_ast *ast)
 	if (!ast || !ast->data)
 		return (1);
 	env = make_env(msh->env);
-	args = expand((char **)ast->data, msh->env);
+	args = expand((char **)ast->data, msh);
 	i = 0;
 	if(!args)
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/26 20:10:30 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:05:09 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "minishell.h"
 
 
+volatile	sig_atomic_t	g_signal_recieved;
 
 static void draw_ascii_art(void)
 {
@@ -23,11 +24,6 @@ static void draw_ascii_art(void)
 	ft_printf("| '_ ` _ \\ | || '_ \\ | |/ __|| '_ \\  / _ \\| || |\n");
 	ft_printf("| | | | | || || | | || |\\__ \\| | | ||  __/| || |\n");
 	ft_printf("|_| |_| |_||_||_| |_||_||___/|_| |_| \\___||_||_| by aalahyan and aaitabde\n\n"RESET);
-}
-static void handle_ctrl_l()
-{
-    write(STDOUT_FILENO, "\033[H\033[J", 6);
-    write(STDOUT_FILENO, "msh$ ", 5);
 }
 int main(int ac, char **av, char **env)
 {
@@ -41,6 +37,7 @@ int main(int ac, char **av, char **env)
 	increment_shlvl(msh.env);
     msh.is_child = false;
 	msh.ast = NULL;
+	msh.last_exit = 0;
 	draw_ascii_art();
 	tcgetattr(0, &terminal);
 	while (1)
@@ -55,10 +52,9 @@ int main(int ac, char **av, char **env)
        	msh.ast = parse(msh.prompt);
         if (!msh.ast)
             continue ;
-        process_heredocs(msh.ast, msh.env);
-		execute_ast(&msh, msh.ast);
-        free_ast(&msh.ast);
+		msh.last_exit = execute(&msh);
 		tcsetattr(0, TCSANOW, &terminal);
+        free_ast(&msh.ast);
     }
     clear_env(msh.env);
     rl_clear_history();

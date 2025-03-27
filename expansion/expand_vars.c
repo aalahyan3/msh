@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_vars.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 21:52:33 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/22 22:00:40 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/27 13:47:34 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	**triple_to_double(char ***triple)
 	return (new);
 }
 
-char	**expand_vars(char **old, t_list *env_l)
+char	**expand_vars(char **old, t_msh *msh)
 {
 	char	***triple;
 	char	**expanded_string;
@@ -94,7 +94,7 @@ char	**expand_vars(char **old, t_list *env_l)
 	j = 0;
 	while (old[++i])
 	{
-		expanded_string = expand_string(old[i], env_l);
+		expanded_string = expand_string(old[i], msh);
 		if (!expanded_string)
 			continue ;
 		triple[j++] = expanded_string;

@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:27:31 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/26 20:07:04 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/27 13:41:54 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,15 @@ char	*gen_name()
 	return (NULL);
 }
 
-void handle_heredoc(t_reds *red, t_list *ev)
+void	hd_sig_handler(int sig)
+{
+	(void)sig;
+	g_signal_recieved = 1;
+	write(1, "\n", 1);
+	close(0);
+}
+
+int handle_heredoc(t_reds *red, t_list *ev)
 {
 	char	*line;
 	char	*filename;
@@ -50,7 +58,7 @@ void handle_heredoc(t_reds *red, t_list *ev)
 		if (fd_read != -1)
 			close(fd_read);
 		free(filename);
-		return ;
+		return 1;
 	}
 	unlink(filename);
 	if (red->file && red->file[0] && (red->file[0] == '\'' && red->file[ft_strlen(red->file) - 1] == '\'') || \
@@ -61,9 +69,21 @@ void handle_heredoc(t_reds *red, t_list *ev)
 		free(tmp);
 		red->is_hd = 1;
 	}
+	signal(SIGINT, hd_sig_handler);
+	g_signal_recieved = 0;
 	while (1)
 	{
-		line = readline("> ");
+		ft_putstr_fd("> ", 2);
+		tmp = get_next_line(0);
+		line = ft_strtrim(tmp, "\n \t");
+		free(tmp);
+		if (g_signal_recieved)
+		{
+			free(line);
+			close(fd);
+			close(fd_read);
+			return (1);
+		}
 		if (!line || ((ft_strncmp(line, red->file, ft_strlen(red->file)) == 0) && ft_strlen(red->file) == ft_strlen(line)))
 		{
 			free(line);
@@ -91,14 +111,16 @@ void handle_heredoc(t_reds *red, t_list *ev)
 	red->type = INPUT;
 }
 
-void process_heredocs(t_ast *ast, t_list *env)
+int process_heredocs(t_ast *ast, t_list *env)
 {
 	t_reds **reds;
 	int i;
+	int	left;
+	int	right;
 
 	i = 0;
 	if (!ast)
-		return;
+		return 0;
 	if (ast->type == REDIRECTIONS && ast->data)
 	{
 		reds = (t_reds **)ast->data;
@@ -107,11 +129,15 @@ void process_heredocs(t_ast *ast, t_list *env)
 		{
 			reds[i]->is_hd = 0;
 			if (reds[i]->type == HEREDOC)
-				handle_heredoc(reds[i], env);
+			{
+				if (handle_heredoc(reds[i], env))
+					return (1);
+			}
 			i++;
 		}
 	}
-	process_heredocs(ast->left, env);
-	process_heredocs(ast->right, env);
+	left = process_heredocs(ast->left, env);
+	right = process_heredocs(ast->right, env);
+	return (left || right);
 }
 

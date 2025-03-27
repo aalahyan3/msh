@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 13:52:40 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/25 20:09:32 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/27 13:50:20 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include "expansion/expansion.h"
 # include "builtins/builtins.h"
 # include <termios.h>
+# include "signal_variable.h"
 
 
 # define BLUE   "\033[1m\033[36m"

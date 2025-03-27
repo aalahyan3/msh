@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
+#    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/26 05:30:33 by aaitabde         ###   ########.fr        #
+#    Updated: 2025/03/27 12:50:35 by aalahyan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ SRCS = 	minishell.c \
 		executor/signals_handeling.c\
 		executor/redirections_heredoc.c\
 		executor/increment_shlvl.c\
+		executor/execute.c\
 		parser/asstes.c\
 		free_utils/free_env_list.c\
 		builtins/echo.c\

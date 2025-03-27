@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 11:09:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/26 20:11:00 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/27 13:52:56 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <sys/stat.h>
-
-
+# include "../signal_variable.h"
+# include "../expansion/expansion.h"
+#include <termios.h>
 /*Executor*/
 
 // volatile	sig_atomic_t	g_signal_recieved = 0;
@@ -46,9 +47,10 @@ void    free_env_list(t_list *env);
 void	handle_sig(int sig);
 
 //redirections
-void	process_heredocs(t_ast *ast, t_list *env);
+int process_heredocs(t_ast *ast, t_list *env);
 void    donothing(int sig);
 char	*gen_name();
 
+int	execute(t_msh *msh);
 
 # endif
