@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/28 14:53:15 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 17:40:01 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,6 +236,7 @@ void reset_fd(int saved_stdin, int saved_stdout)
 	close(saved_stdin);
 	close(saved_stdout);
 }
+
 
 int	execute_block(t_msh *msh, t_ast *ast)
 {

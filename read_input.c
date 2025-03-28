@@ -6,13 +6,13 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 19:42:23 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/25 21:11:08 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:02:19 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
-
+/*
 int	ends_with_incomplete_command(const char *prompt)
 {
 	size_t len;
@@ -47,32 +47,6 @@ int has_unclosed_parenthesis(const char *prompt)
 	return (open_count > close_count);
 }
 
-char	*non_interactive_mode(void)
-{
-	char	*line;
-	char	*tmp;
-	char	*new;
-
-
-	line = get_next_line(STDIN_FILENO);
-	while (line && (ends_with_incomplete_command(line) || has_unclosed_parenthesis(line)))
-	{
-		new = get_next_line(STDIN_FILENO);
-		if (new)
-		{
-			tmp = ft_strjoin(line, new);
-			free(line);
-			free(new);
-			line = tmp;
-		}
-		else
-			break;
-	}
-	tmp = ft_strtrim(line, "\n \t");
-	free(line);
-	return (tmp);
-}
-
 char	*interacive_mode(void)
 {
 	char	*prompt;
@@ -82,11 +56,10 @@ char	*interacive_mode(void)
 
 	std_out = dup(STDOUT_FILENO);
 	if (!isatty(STDOUT_FILENO))
-	{
 		dup2(STDERR_FILENO, STDOUT_FILENO);
-	}
 	prompt = readline("msh$ ");
-	while (prompt && (ends_with_incomplete_command(prompt) || has_unclosed_parenthesis(prompt)))
+	while (prompt && (ends_with_incomplete_command(prompt) || \
+	has_unclosed_parenthesis(prompt)))
 	{
 		new = readline("> ");
 		if (new)
@@ -104,6 +77,34 @@ char	*interacive_mode(void)
 	free(prompt);
 	return (tmp);
 }
+*/
+char	*non_interactive_mode(void)
+{
+	char	*line;
+	char	*tmp;
+	char	*new;
+
+	line = get_next_line(STDIN_FILENO);
+	tmp = ft_strtrim(line, "\n \t");
+	free(line);
+	return (tmp);
+}
+
+char	*interactive_mode(void)
+{
+	char	*line;
+	char	*trimmed;
+	int		saved_stdout;
+
+	saved_stdout = dup(STDOUT_FILENO);
+	if (!isatty(STDOUT_FILENO))
+		dup2(STDERR_FILENO, STDOUT_FILENO);
+	line = readline("msh$ ");
+	dup2(saved_stdout, STDOUT_FILENO);
+	trimmed = ft_strtrim(line, "\n \t");
+	free(line);
+	return (trimmed);
+}
 
 
 char	*read_input(t_msh	*msh)
@@ -115,7 +116,7 @@ char	*read_input(t_msh	*msh)
 	if (!isatty(STDIN_FILENO))
 		prompt = non_interactive_mode();
 	else
-		prompt = interacive_mode();
+		prompt = interactive_mode();
 	if (!prompt)
 		ft_exit(msh, NULL);
 	return (prompt);

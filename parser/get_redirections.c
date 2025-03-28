@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 02:15:57 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/16 20:47:59 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 17:21:32 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ char	*get_next_red(char *s, int *i)
 		if (s[*i] == '(')
 		{
 			skip_parentheses(s, i);
-			continue;
+			continue ;
 		}
-		if (s[*i]  && s[*i] == '>' || s[*i] == '<')
+		if (s[*i] && s[*i] == '>' || s[*i] == '<')
 		{
 			start = *i;
 			while (s[*i] && (s[*i] == '>' || s[*i] == '<'))
@@ -41,7 +41,7 @@ char	*get_next_red(char *s, int *i)
 	return (NULL);
 }
 
-static int get_size(char *s)
+static int	get_size(char *s)
 {
 	int		size;
 	int		i;
@@ -59,6 +59,33 @@ static int get_size(char *s)
 	return (size);
 }
 
+enum e_red_type	assign_type(char **s)
+{
+	if (**s == '<')
+	{
+		(*s)++;
+		if (**s == '<')
+		{
+			(*s)++;
+			return (HEREDOC);
+		}
+		else
+			return (INPUT);
+	}
+	else if (**s == '>')
+	{
+		(*s)++;
+		if (**s == '>')
+		{
+			(*s)++;
+			return (APPEND);
+		}
+		else
+			return (OUTPUT);
+	}
+	return (INPUT);
+}
+
 t_reds	*get_red_struct(char *s)
 {
 	t_reds	*red;
@@ -66,28 +93,7 @@ t_reds	*get_red_struct(char *s)
 	red = malloc(sizeof(t_reds));
 	if (!red)
 		return (NULL);
-	if (*s == '<')
-	{
-		s++;
-		if (*s == '<')
-		{
-			red->type = HEREDOC;
-			s++;
-		}
-		else
-			red->type = INPUT;
-	}
-	else if (*s == '>')
-	{
-		s++;
-		if (*s == '>')
-		{
-			red->type = APPEND;
-			s++;
-		}
-		else
-			red->type = OUTPUT;
-	}
+	red->type = assign_type(&s);
 	while (*s && ft_isspace(*s))
 		s++;
 	red->file = ft_strdup(s);
@@ -111,8 +117,7 @@ t_reds	**get_reds(char *s)
 	reds = malloc(sizeof(t_reds *) * (size + 1));
 	if (!reds)
 		return (NULL);
-	i = 0;
-	j = 0;
+	1 && (i = 0, j = 0);
 	red = get_next_red(s, &i);
 	while (red)
 	{

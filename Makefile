@@ -6,7 +6,7 @@
 #    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/28 15:27:40 by aalahyan         ###   ########.fr        #
+#    Updated: 2025/03/28 17:30:19 by aalahyan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,9 +43,9 @@ SRCS = 	minishell.c \
 		parser/ast_vis.c\
 		parser/get_redirections.c\
 		parser/expand_block.c\
-		parser/free_red_structs.c\
 		parser/initial_checks.c\
 		parser/linear_parsing.c\
+		parser/get_next_cmd.c\
 		executor/execute_ast.c\
 		executor/execute_pipe.c\
 		executor/execute_simple_cmd.c\
@@ -56,6 +56,7 @@ SRCS = 	minishell.c \
 		executor/increment_shlvl.c\
 		executor/execute.c\
 		parser/asstes.c\
+		parser/valid_blocks.c\
 		free_utils/free_env_list.c\
 		builtins/echo.c\
 		builtins/cd.c\

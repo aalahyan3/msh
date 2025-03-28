@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 23:32:47 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/27 13:52:24 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 17:30:01 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,8 @@ void free_ast(t_ast **ast);
 
 bool	initial_checks(char *s);
 bool	linear_parsing(char *s);
-char *get_next_cmd(char *s, int *i);
+char	*get_next_cmd(char *s, int *i);
+bool	valid_blocks(char *s);
 
 
 #endif

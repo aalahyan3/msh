@@ -6,30 +6,19 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 02:42:28 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/23 19:59:13 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:32:44 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-
-char	*get_parenthisis_block(char *s)
+char	*get_inside_parenthisis(char *s, int i)
 {
 	int	start;
-	int	i;
 	int	expected;
 
-	i = 0;
-	while (s[i] && s[i] != '(')
-	{
-		if (s[i] == '\'' || s[i] == '"')
-			skip_quotes(s, &i, s[i]);
-		else
-			i++;
-	}
 	if (!s[i])
 		return (NULL);
-	i++;
 	start = i;
 	expected = 1;
 	while (s[i] && expected)
@@ -44,51 +33,31 @@ char	*get_parenthisis_block(char *s)
 	}
 	if (expected)
 		return (NULL);
-	return (ft_substr(s, start, i - start - 1 ));
+	return (ft_substr(s, start, i - start - 1));
 }
 
-char *get_next_cmd(char *s, int *i)
+char	*get_parenthisis_block(char *s)
 {
-	int start;
+	int	i;
 
-	while (s[*i])
+	i = 0;
+	while (s[i] && s[i] != '(')
 	{
-
-		while (s[*i] && (s[*i] == ' ' || s[*i] == '\t' || s[*i] == '<' || s[*i] == '>'))
-		{
-			if (s[*i] == '<' || s[*i] == '>')
-			{
-				(*i)++;
-				while (s[*i] && (s[*i] == ' ' || s[*i] == '\t'))
-					(*i)++;
-				if (s[*i] == '\'' || s[*i] == '"')
-					skip_quotes(s, i, s[*i]);
-				else
-					while (s[*i] && s[*i] != ' ' && s[*i] != '\t' && s[*i] != '<' && s[*i] != '>')
-						(*i)++;
-			}
-			else
-				(*i)++;
-		}
-		if (s[*i] && s[*i] != '<' && s[*i] != '>')
-		{
-			start = *i;
-			while (s[*i] && s[*i] != ' ' && s[*i] != '\t' && s[*i] != '<' && s[*i] != '>')
-			{
-				if (s[*i] == '\'' || s[*i] == '"')
-					skip_quotes(s, i, s[*i]);
-				else
-					(*i)++;
-			}
-			return (ft_substr(s, start, *i - start));
-		}
+		if (s[i] == '\'' || s[i] == '"')
+			skip_quotes(s, &i, s[i]);
+		else
+			i++;
 	}
-	return NULL;
+	if (!s[i])
+		return (NULL);
+	i++;
+	return (get_inside_parenthisis(s, i));
 }
 
-int get_size(char *s)
+
+int	get_size(char *s)
 {
-	int 	i;
+	int		i;
 	int		size;
 	char	*cmd;
 
@@ -101,23 +70,23 @@ int get_size(char *s)
 		free(cmd);
 		cmd = get_next_cmd(s, &i);
 	}
-	return size;
+	return (size);
 }
 
 char	**get_command_array(char *s)
 {
-	int	i;
-	int	j;
-	int	size;
+	int		i;
+	int		j;
+	int		size;
 	char	**array;
 	char	*cmd;
 
 	size = get_size(s);
 	if (!size)
-		return NULL;
+		return (NULL);
 	array = malloc(sizeof(char *) * (size + 1));
 	if (!array)
-		return NULL;
+		return (NULL);
 	i = 0;
 	j = 0;
 	cmd = get_next_cmd(s, &i);
@@ -127,8 +96,8 @@ char	**get_command_array(char *s)
 		j++;
 		cmd = get_next_cmd(s, &i);
 	}
-	array[j] = NULL;
-	return array;
+	array[j] = (NULL);
+	return (array);
 }
 
 t_ast	*get_block(char *s)
