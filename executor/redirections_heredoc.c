@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:27:31 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/27 13:41:54 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 15:00:08 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int handle_heredoc(t_reds *red, t_list *ev)
 	close(fd);
 	red->fd = fd_read;
 	red->type = INPUT;
+	return (0);
 }
 
 int process_heredocs(t_ast *ast, t_list *env)

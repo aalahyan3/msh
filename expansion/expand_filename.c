@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_filename.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 21:27:43 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/24 05:55:18 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/28 14:46:11 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	get_size(char **s)
 	return (i + 1);
 }
 
-char	**expand_filename(char *name, t_list *env)
+char	**expand_filename(char *name, t_msh *msh)
 {
 	char	**vars_expanded;
 	char	***triple;
@@ -39,7 +39,7 @@ char	**expand_filename(char *name, t_list *env)
 		vars_expanded[1] = NULL;
 		return (vars_expanded);
 	}
-	vars_expanded = expand_string(name, env);
+	vars_expanded = expand_string(name, msh);
 	if (!vars_expanded)
 		return (NULL);
 	triple = malloc(sizeof(char **) * get_size(vars_expanded));

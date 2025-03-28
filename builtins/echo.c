@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 10:34:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/24 01:31:27 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 14:49:23 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ int	check_for_n_flag(char **arg)
 	return (i);
 }
 
-int ft_echo(char **arg, t_list *env)
+int ft_echo(char **arg, t_msh *msh)
 {
 	int i;
 	int index;
 	char **args;
 
-	args = expand(arg, env);
+	args = expand(arg, msh);
 	i = 1;
 	if (!args[i])
 	{

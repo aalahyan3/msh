@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 01:41:17 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/26 04:38:34 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/28 14:59:19 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int    ft_exit(t_msh *msh, char **args)
     }
     if (msh->is_child)
         exit(0);
-    expanded = expand(args, msh->env);
+    expanded = expand(args, msh);
     if (!expanded || !*expanded[0])
         ft_exit(msh, NULL);
     status = 0;

@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 00:36:07 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/26 20:03:20 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 14:58:51 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,7 +305,7 @@ int	valid_identifier(char *key)
 	return (1);
 }
 
-void	proper_export_expansion(char **args, t_list *env)
+void	proper_export_expansion(char **args)
 {
 	int		i;
 
@@ -320,15 +320,15 @@ void	proper_export_expansion(char **args, t_list *env)
 	}
 }
 
-int ft_export(char **args, t_list *env)
+int ft_export(char **args, t_msh *msh)
 {
 	int i;
 
-	proper_export_expansion(args, env);
+	proper_export_expansion(args);
 	i = 1;
-	args = expand(args, env);
+	args = expand(args, msh);
 	if (args[1] == NULL)
-		ft_env_sorted(env);
+		ft_env_sorted(msh->env);
 	while (args[i] != NULL)
 	{
 		if (!valid_identifier(args[i]))
@@ -338,7 +338,7 @@ int ft_export(char **args, t_list *env)
 			write(2, "': not a valid identifier\n", 27);
 		}
 		else
-			parse_export_arg(args[i], env);
+			parse_export_arg(args[i], msh->env);
 		i++;
 	}
 	free_arr(args);

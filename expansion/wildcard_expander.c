@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 17:12:46 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/22 02:43:34 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 15:39:14 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,11 @@ static int	get_size(char *exp)
 	entry = readdir(dir);
 	while (entry)
 	{
+		if(*entry->d_name == '.' && *exp == *entry->d_name)
+		{
+			entry = readdir(dir);
+			continue ;
+		}
 		if (is_match(exp, entry->d_name))
 			size++;
 		entry = readdir(dir);
@@ -73,15 +78,19 @@ static int	get_size(char *exp)
 	return (size);
 }
 
-char	*get_next_match(DIR	*dir, char *exp)
+char	*get_next_match(DIR	*dir, char *exp, bool include_hidden)
 {
 	struct dirent	*entry;
-	entry = readdir(dir);
+	entry = (void *)0x1;
 	while (entry)
 	{
+		entry = readdir(dir);
+		if (!entry)
+			break ;
+		if (*entry->d_name == '.' && !include_hidden)
+			continue ;
 		if (is_match(exp, entry->d_name))
 			return (ft_strdup(entry->d_name));
-		entry = readdir(dir);
 	}
 	return (NULL);
 }
@@ -97,6 +106,30 @@ static void	optimize_wildcard_exp(char **exp)
 		new = ft_strdup(ptr + 1);
 		free(*exp);
 		*exp = new;
+	}
+}
+
+void	sort_array(char **arr)
+{
+	int		i;
+	int		j;
+	char	*temp;
+
+	i = 0;
+	while (arr[i])
+	{
+		j = i + 1;
+		while (arr[j])
+		{
+			if (ft_strcmp(arr[i], arr[j]) > 0)
+			{
+				temp = arr[i];
+				arr[i] = arr[j];
+				arr[j] = temp;
+			}
+			j++;
+		}
+		i++;
 	}
 }
 
@@ -121,16 +154,17 @@ char	**wildcard_expander(char *exp)
 	arr = malloc((i + 1) * (sizeof(char *)));
 	if (!arr)
 		return (closedir(dir), free(no_quotes), NULL);
-	match = get_next_match(dir, no_quotes);
+	match = get_next_match(dir, no_quotes, *no_quotes == '.');
 	i = 0;
 	while (match)
 	{
 		arr[i] = match;
 		i++;
-		match = get_next_match(dir, no_quotes);
+		match = get_next_match(dir, no_quotes, *no_quotes == '.');
 	}
 	arr[i] = NULL;
 	closedir(dir);
 	free(no_quotes);
+	sort_array(arr);
 	return (arr);
 }

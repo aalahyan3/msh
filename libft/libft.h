@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:28:57 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/01/24 18:27:50 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 15:36:17 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,4 +109,6 @@ void	manage_flags_2(t_flags *flags, char *format);
 void	manage_format_bonus(va_list args, t_flags *flags, char *\
 format, int *counter);
 int		ft_printf(const char *format, ...);
+int	ft_strcmp(const char *s1, const char *s2);
+
 #endif

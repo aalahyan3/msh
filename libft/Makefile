@@ -6,7 +6,7 @@
 #    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/24 16:23:56 by aalahyan          #+#    #+#              #
-#    Updated: 2025/01/25 17:42:00 by aalahyan         ###   ########.fr        #
+#    Updated: 2025/03/28 15:36:46 by aalahyan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ CFILES=		ft_atoi.c\
 			ft_strlcpy.c\
 			ft_strlen.c\
 			ft_strncmp.c\
+			ft_strcmp.c\
 			ft_strnstr.c\
 			ft_strrchr.c\
 			ft_tolower.c\

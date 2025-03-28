@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_here_doc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 12:52:06 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/18 10:37:56 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/28 14:51:24 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,16 @@ static char	*get_next_chunk(char *s, int *i)
 	return (NULL);
 }
 
-static char	*expander(char *s, t_list *env_l)
+static char	*expander(char *s, t_msh *msh)
 {
 	char	*var;
 
-	var = ft_strdup(find_in_env(s + 1, env_l));
+	var = ft_strdup(find_in_env(s + 1, msh->env));
 	free(s);
 	return (var);
 }
 
-char	*expand_here_doc(char *line, t_list *env_l)
+char	*expand_here_doc(char *line, t_msh *msh)
 {
 	char	*final;
 	char	*chunk;
@@ -57,7 +57,7 @@ char	*expand_here_doc(char *line, t_list *env_l)
 	while (chunk)
 	{
 		if (*chunk == '$')
-			chunk = expander(chunk, env_l);
+			chunk = expander(chunk, msh);
 		temp = ft_strjoin(final, chunk);
 		free(final);
 		final = temp;

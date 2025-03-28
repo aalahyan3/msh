@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:53:51 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/27 13:51:56 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 14:50:33 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	**split_and_join(char **arr);
 char	**expand_wildcards(char	**arr);
 char	*expand_quotes(char *s);
 char	*find_in_env(char *key, t_list *env);
-char	*expand_here_doc(char *line, t_list *env_l);
+char	*expand_here_doc(char *line, t_msh *msh);
 char	**expand_string(char *str, t_msh *msh);
 char	**join_and_split(char **arr);
 char	**wildcard_expander(char *exp);
@@ -44,6 +44,5 @@ char	**no_match_case(char *s);
 char	**expand_string_2(char *str);
 char	**triple_to_double(char ***triple);
 void	free_triple_array(char ***ar);
-char	**expand_filename(char *name, t_list *env);
-
+char	**expand_filename(char *name, t_msh *msh);
 #endif

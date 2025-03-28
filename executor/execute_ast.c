@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/27 14:03:09 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 14:53:15 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int is_builtin(char **args)
 int	run_builting (t_msh *msh, char **args)
 {
 	if (args && args[0] && ft_strncmp(args[0], "echo", 5) == 0)
- 		return (ft_echo(args, msh->env));
+ 		return (ft_echo(args, msh));
 	else if (args && args[0] && ft_strncmp(args[0], "pwd", 3) == 0)
 		return (ft_pwd(msh->env));
 	else if (args && args[0] && ft_strncmp(args[0], "cd", 2) == 0)
@@ -46,7 +46,7 @@ int	run_builting (t_msh *msh, char **args)
 	else if (args && args[0] && ft_strncmp(args[0], "unset", 5) == 0)
 		return (ft_unset(msh->env, args));
 	else if (args && args[0] && ft_strncmp(args[0], "export", 6) == 0)
-		return (ft_export(args, msh->env));
+		return (ft_export(args, msh));
 	else if (args && args[0] && ft_strncmp(args[0], "exit", 4) == 0)
 		ft_exit(msh, args);
 	return (1);
@@ -136,7 +136,7 @@ void	file_open_error(char *filename)
 	write(2, ": No such file or directory\n", 28);	
 }
 
- int	expand_heredoc(int fd, t_list *env)
+ int	expand_heredoc(int fd, t_msh *msh)
  {
 	char *line;
 	char *filename = gen_name();
@@ -151,7 +151,7 @@ void	file_open_error(char *filename)
 		if (!line)
 			break;
 		char *tmp = line;
-		line = expand_here_doc(tmp, env);
+		line = expand_here_doc(tmp, msh);
 		write(new_fd, line, ft_strlen(line));
 		free(tmp);
 		free(line);
@@ -160,7 +160,7 @@ void	file_open_error(char *filename)
 	return(new_fd_read);
  }
 
-int handle_redirections(t_ast *ast, t_list *env, int *saved_stdin, int *saved_stdout)
+int handle_redirections(t_ast *ast, t_msh *msh, int *saved_stdin, int *saved_stdout)
 {
 	t_reds	**reds;
 	int		red_count;
@@ -174,7 +174,7 @@ int handle_redirections(t_ast *ast, t_list *env, int *saved_stdin, int *saved_st
 	red_count = 0;
 	while (reds[red_count])
 	{
-		args = expand_filename(reds[red_count]->file, env);
+		args = expand_filename(reds[red_count]->file, msh);
 		if (!args || (args[0] && args[1] ))
 		{
 			ft_putstr_fd("msh: ", 2);
@@ -190,7 +190,7 @@ int handle_redirections(t_ast *ast, t_list *env, int *saved_stdin, int *saved_st
 			if (reds[red_count]->fd == -1)
 				reds[red_count]->fd = open(reds[red_count]->file, O_RDONLY);
 			else
- 				reds[red_count]->fd = expand_heredoc(reds[red_count]->fd, env);
+ 				reds[red_count]->fd = expand_heredoc(reds[red_count]->fd, msh);
 			if (reds[red_count]->fd < 0)
 			{
 				write(2, "msh: ", 6);
@@ -250,7 +250,7 @@ int	execute_block(t_msh *msh, t_ast *ast)
 	args = (char **)ast->right->data;
 	if (!args)
 		return (1);
-	if (handle_redirections(ast->left, msh->env, &saved_stdin, &saved_stdout) == 1)
+	if (handle_redirections(ast->left, msh, &saved_stdin, &saved_stdout) == 1)
 		return (1);
 	is_builtin_command = is_builtin(args);
 	if (is_builtin_command == 0)
