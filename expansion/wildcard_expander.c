@@ -6,50 +6,34 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 17:12:46 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/28 15:39:14 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 20:52:23 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "expansion.h"
+#include "expansion.h"
 
-# include "expansion.h"
-
-int is_match(char *exp, char *name)
+int	is_match(char *exp, char *name)
 {
-    // Base case: both strings are empty, match
-    if (*exp == '\0' && *name == '\0')
-        return 1;
-
-    // Base case: pattern is empty but string is not, no match
-    if (*exp == '\0')
-        return 0;
-
-    // Base case: string is empty but pattern still has parts, no match
-    if (*name == '\0')
-    {
-        // Only a trailing '*' in the pattern can match the remaining string
-        while (*exp == WILDCARD_PACEHOLDER) 
-            exp++;  // Skip over '*' characters
-        return (*exp == '\0');  // If we reached the end of the pattern, it matches
-    }
-    // If the current character in the pattern is '*', we try two possibilities:
-    if (*exp == WILDCARD_PACEHOLDER)
-    {
-        // Case 1: Match zero characters (skip '*' and move to the next part of the pattern)
-        if (is_match(exp + 1, name)) 
-            return 1;
-
-        // Case 2: Match one or more characters (move to the next character in the string)
-        if (is_match(exp, name + 1))
-            return 1;
-    }
-
-    // If the characters match, continue recursively
-    if (*exp == *name)
-        return is_match(exp + 1, name + 1);
-
-    // No match found
-    return 0;
+	if (*exp == '\0' && *name == '\0')
+		return (1);
+	if (*exp == '\0')
+		return (0);
+	if (*name == '\0')
+	{
+		while (*exp == WILDCARD_PACEHOLDER)
+			exp++;
+		return (*exp == '\0');
+	}
+	if (*exp == WILDCARD_PACEHOLDER)
+	{
+		if (is_match(exp + 1, name))
+			return (1);
+		if (is_match(exp, name + 1))
+			return (1);
+	}
+	if (*exp == *name)
+		return (is_match(exp + 1, name + 1));
+	return (0);
 }
 
 static int	get_size(char *exp)
@@ -65,7 +49,7 @@ static int	get_size(char *exp)
 	entry = readdir(dir);
 	while (entry)
 	{
-		if(*entry->d_name == '.' && *exp == *entry->d_name)
+		if (*entry->d_name == '.' && *exp == *entry->d_name)
 		{
 			entry = readdir(dir);
 			continue ;
@@ -81,6 +65,7 @@ static int	get_size(char *exp)
 char	*get_next_match(DIR	*dir, char *exp, bool include_hidden)
 {
 	struct dirent	*entry;
+
 	entry = (void *)0x1;
 	while (entry)
 	{
@@ -95,76 +80,45 @@ char	*get_next_match(DIR	*dir, char *exp, bool include_hidden)
 	return (NULL);
 }
 
-static void	optimize_wildcard_exp(char **exp)
+static char	**fill_match_array(char	*exp, int size)
 {
-	char			*ptr;
-	char			*new;
-
-	ptr = ft_strrchr(*exp, '/');
-	if (ptr)
-	{
-		new = ft_strdup(ptr + 1);
-		free(*exp);
-		*exp = new;
-	}
-}
-
-void	sort_array(char **arr)
-{
+	char	**arr;
 	int		i;
-	int		j;
-	char	*temp;
+	char	*match;
+	DIR		*dir;
 
+	dir = opendir(".");
+	if (!dir)
+		return (free(exp), NULL);
+	arr = malloc(sizeof(char *) * size);
+	if (!arr)
+		return (closedir(dir), free(exp), NULL);
 	i = 0;
-	while (arr[i])
+	match = get_next_match(dir, exp, *exp == '.');
+	while (match)
 	{
-		j = i + 1;
-		while (arr[j])
-		{
-			if (ft_strcmp(arr[i], arr[j]) > 0)
-			{
-				temp = arr[i];
-				arr[i] = arr[j];
-				arr[j] = temp;
-			}
-			j++;
-		}
+		arr[i] = match;
 		i++;
+		match = get_next_match(dir, exp, *exp == '.');
 	}
+	arr[i] = NULL;
+	closedir(dir);
+	free(exp);
+	sort_array(arr);
+	return (arr);
 }
 
 char	**wildcard_expander(char *exp)
 {
 	char	*no_quotes;
-	char	**arr;
-	DIR		*dir;
-	int		i;
-	char	*match;
+	int		size;
 
 	no_quotes = expand_quotes(exp);
 	if (!no_quotes)
 		return (NULL);
 	optimize_wildcard_exp(&no_quotes);
-	dir = opendir(".");
-	if (!dir)
-		return (free(no_quotes),NULL);
-	i = get_size(no_quotes);
-	if (!i)
-		return (closedir(dir), free(no_quotes), no_match_case(exp));
-	arr = malloc((i + 1) * (sizeof(char *)));
-	if (!arr)
-		return (closedir(dir), free(no_quotes), NULL);
-	match = get_next_match(dir, no_quotes, *no_quotes == '.');
-	i = 0;
-	while (match)
-	{
-		arr[i] = match;
-		i++;
-		match = get_next_match(dir, no_quotes, *no_quotes == '.');
-	}
-	arr[i] = NULL;
-	closedir(dir);
-	free(no_quotes);
-	sort_array(arr);
-	return (arr);
+	size = get_size(no_quotes);
+	if (!size)
+		return (free(no_quotes), no_match_case(exp));
+	return (fill_match_array(no_quotes, size + 1));
 }

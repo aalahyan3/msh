@@ -6,25 +6,12 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 19:25:16 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/27 14:06:13 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 20:19:15 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expansion.h"
 
-char	*find_in_env(char *key, t_list *env)
-{
-	t_list	*curr;
-
-	curr = env;
-	while (curr)
-	{
-		if (ft_strncmp(key, ((struct s_env *)(curr->content))->key, ft_strlen(key)) == 0 && ft_strlen(key) == ft_strlen(((struct s_env *)(curr->content))->key))
-			return ( ((struct s_env *)(curr->content))->value);
-		curr = curr->next;
-	}
-	return ("");
-}
 static char	*get_next_chunk(char *s, int *i)
 {
 	int		start;
@@ -33,23 +20,7 @@ static char	*get_next_chunk(char *s, int *i)
 	if (!s[*i])
 		return (NULL);
 	if (s[*i] == '$')
-	{
-		*i += 1;
-		if (s[*i] == '?')
-		{
-			*i += 1;
-			return (ft_strdup("$?"));
-		}
-		while (s[*i] && !ft_isalnum(s[*i]) && s[*i] != '_' && s[*i] != '$')
-			*i += 1;
-		while (s[*i] && (ft_isalnum(s[*i]) || s[*i] == '_'))
-		{
-			*i += 1;
-			if (s[*i] == '?')
-				break ;
-		}
-		return (ft_substr(s, start, *i - start));
-	}
+		return (get_var_name(s, i));
 	else
 	{
 		while (s[*i] && s[*i] != '$')
@@ -63,23 +34,19 @@ static void	expand_chunk(char **chunk, t_msh *msh, bool is_quote, bool end)
 {
 	char	*temp;
 
-	temp = *chunk;
-	(*chunk)++;
+	1 && (temp = *chunk, (*chunk)++);
 	if (!(**chunk))
 	{
 		free(temp);
 		if (is_quote || end)
-		{
 			*chunk = ft_strdup("$");
-		}
 		else
 			*chunk = ft_strdup("");
-	return ;
+		return ;
 	}
 	else if (**chunk == '?')
 	{
 		free(temp);
-		
 		*chunk = ft_itoa(msh->last_exit);
 		return ;
 	}
@@ -130,11 +97,13 @@ static int	get_last(char **s)
 		i++;
 	return (i - 1);
 }
+
 char	**expand_string(char *str, t_msh *msh)
 {
 	char	**splited;
 	int		i;
 	int		last;
+
 	splited = split_by_quotes(str);
 	if (!splited)
 		return (NULL);

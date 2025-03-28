@@ -6,11 +6,11 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 12:52:06 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/28 14:51:24 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 20:03:46 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "expansion.h"
+#include "expansion.h"
 
 static char	*get_next_chunk(char *s, int *i)
 {

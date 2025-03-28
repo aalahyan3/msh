@@ -6,7 +6,7 @@
 #    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/28 17:30:19 by aalahyan         ###   ########.fr        #
+#    Updated: 2025/03/28 20:14:58 by aalahyan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRCS = 	minishell.c \
 		expansion/expand_string_2.c\
 		expansion/wildcard_expander.c\
 		expansion/expand_filename.c\
+		expansion/utils.c\
 		parser/process_prompt.c\
 		parser/tokenize.c\
 		parser/parsing.c\
@@ -42,10 +43,13 @@ SRCS = 	minishell.c \
 		parser/build_ast.c\
 		parser/ast_vis.c\
 		parser/get_redirections.c\
+		parser/asstes.c\
+		parser/valid_blocks.c\
 		parser/expand_block.c\
 		parser/initial_checks.c\
 		parser/linear_parsing.c\
 		parser/get_next_cmd.c\
+		parser/get_next_red.c\
 		executor/execute_ast.c\
 		executor/execute_pipe.c\
 		executor/execute_simple_cmd.c\
@@ -55,8 +59,7 @@ SRCS = 	minishell.c \
 		executor/redirections_heredoc.c\
 		executor/increment_shlvl.c\
 		executor/execute.c\
-		parser/asstes.c\
-		parser/valid_blocks.c\
+		parser/get_next_token.c\
 		free_utils/free_env_list.c\
 		builtins/echo.c\
 		builtins/cd.c\

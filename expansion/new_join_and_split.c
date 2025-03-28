@@ -6,11 +6,11 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 22:12:47 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/21 21:45:38 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 20:20:30 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "expansion.h"
+#include "expansion.h"
 
 static char	*join_array(char **arr)
 {

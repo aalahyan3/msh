@@ -6,35 +6,11 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 02:42:28 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/28 16:32:44 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 19:47:35 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
-char	*get_inside_parenthisis(char *s, int i)
-{
-	int	start;
-	int	expected;
-
-	if (!s[i])
-		return (NULL);
-	start = i;
-	expected = 1;
-	while (s[i] && expected)
-	{
-		if (s[i] == '\'' || s[i] == '\"')
-			skip_quotes(s, &i, s[i]);
-		if (s[i] == '(')
-			expected++;
-		if (s[i] == ')')
-			expected--;
-		i++;
-	}
-	if (expected)
-		return (NULL);
-	return (ft_substr(s, start, i - start - 1));
-}
 
 char	*get_parenthisis_block(char *s)
 {
@@ -53,7 +29,6 @@ char	*get_parenthisis_block(char *s)
 	i++;
 	return (get_inside_parenthisis(s, i));
 }
-
 
 int	get_size(char *s)
 {

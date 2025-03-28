@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 19:53:26 by aalahyan          #+#    #+#             */
-/*   Updated: 2024/11/11 21:00:03 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 18:48:11 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_strdup(const char *s1)
 	char	*ptr;
 	int		i;
 
+	if (!s1)
+		return (NULL);
 	ptr = malloc(sizeof(char) * (ft_strlen(s1) + 1));
 	if (!ptr)
 		return (NULL);

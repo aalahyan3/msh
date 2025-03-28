@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 21:27:43 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/28 14:46:11 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 20:03:22 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,20 @@ static int	get_size(char **s)
 	return (i + 1);
 }
 
+static char	**empty_filename(void)
+{
+	char	**arr;
+
+	arr = malloc(2 * sizeof(char *));
+	if (!arr)
+		return (NULL);
+	arr[0] = ft_strdup("");
+	if (!arr[0])
+		return (free(arr), NULL);
+	arr[1] = NULL;
+	return (arr);
+}
+
 char	**expand_filename(char *name, t_msh *msh)
 {
 	char	**vars_expanded;
@@ -29,16 +43,7 @@ char	**expand_filename(char *name, t_msh *msh)
 	int		i;
 
 	if (!*name)
-	{
-		vars_expanded = malloc(sizeof(char *) * 2);
-		if (!vars_expanded)
-			return (NULL);
-		vars_expanded[0] = ft_strdup("");
-		if (!vars_expanded[0])
-			return (free(vars_expanded), NULL);
-		vars_expanded[1] = NULL;
-		return (vars_expanded);
-	}
+		return (empty_filename());
 	vars_expanded = expand_string(name, msh);
 	if (!vars_expanded)
 		return (NULL);
@@ -50,7 +55,8 @@ char	**expand_filename(char *name, t_msh *msh)
 	{
 		triple[i] = expand_string_2(vars_expanded[i]);
 		if (!triple[i])
-			return (free_2d_array(vars_expanded), free_triple_array(triple), NULL);
+			return (free_2d_array(vars_expanded), \
+			free_triple_array(triple), NULL);
 		i++;
 	}
 	triple[i] = NULL;

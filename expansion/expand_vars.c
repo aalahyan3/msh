@@ -6,21 +6,22 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 21:52:33 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/27 13:47:34 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 20:51:42 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expansion.h"
 
-static int get_size(char **a)
+static int	get_size(char **a)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (a[i])
 		i++;
 	return (i + 1);
 }
+
 static	int	get_size_2(char ***tr)
 {
 	int	size;
@@ -55,7 +56,6 @@ void	free_triple_array(char ***ar)
 	free(ar);
 	ar = NULL;
 }
-
 
 char	**triple_to_double(char ***triple)
 {

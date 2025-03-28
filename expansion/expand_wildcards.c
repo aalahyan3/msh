@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   expand_wildcards.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 06:30:30 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/22 22:00:43 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/28 20:51:50 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expansion.h"
 
-static int get_size(char **arr)
+static int	get_size(char **arr)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (arr[i])
@@ -41,4 +41,3 @@ char	**expand_wildcards(char **arr)
 	triple[i] = NULL;
 	return (triple_to_double(triple));
 }
-

@@ -6,28 +6,11 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 23:32:16 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/23 19:58:55 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 18:31:49 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
-static void	free_tok(void *content)
-{
-	t_tok	*tok;
-
-	tok = (t_tok *)content;
-	free(tok->content);
-	free(tok);
-}
-
-static void	free_tok_not_content(void *content)
-{
-	t_tok	*tok;
-
-	tok = (t_tok *)content;
-	free(tok);
-}
 
 t_ast	*process_prompt(char *prompt)
 {

@@ -3,28 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   expand_string_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:40:50 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/22 16:00:59 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/03/28 20:51:32 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "expansion.h"
+#include "expansion.h"
 
-int	alter_string(char *s)
+static int	alter_string(char *s)
 {
 	int	res;
 	int	i;
 
 	i = 0;
 	res = 0;
-	
 	while (s[i])
 	{
 		if (s[i] == '\'' || s[i] == '"')
 		{
-			skip_quotes(s,&i, s[i]);
+			skip_quotes(s, &i, s[i]);
 			continue ;
 		}
 		if (s[i] == '*')
@@ -37,9 +36,9 @@ int	alter_string(char *s)
 	return (res);
 }
 
-char	**no_wildcard_case(char *s)
+static char	**no_wildcard_case(char *s)
 {
-	char **arr;
+	char	**arr;
 
 	arr = malloc(sizeof(char *) * 2);
 	if (!arr)
@@ -64,7 +63,8 @@ char	**no_match_case(char *s)
 	}
 	return (no_wildcard_case(s));
 }
-char	**expand_wildcard(char *s)
+
+static char	**expand_wildcard(char *s)
 {
 	int		alter_res;
 
@@ -74,7 +74,6 @@ char	**expand_wildcard(char *s)
 	else
 		return (wildcard_expander(s));
 }
-
 
 char	**expand_string_2(char *str)
 {

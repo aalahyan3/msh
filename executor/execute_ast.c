@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/28 17:40:01 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 17:47:48 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,22 +242,24 @@ int	execute_block(t_msh *msh, t_ast *ast)
 {
 	int		status;
 	char	**args;
-	int		is_builtin_command;
 	int		saved_stdin;
 	int		saved_stdout;
 
 	if (!ast || !ast->left)
 		return (1);
-	args = (char **)ast->right->data;
-	if (!args)
-		return (1);
 	if (handle_redirections(ast->left, msh, &saved_stdin, &saved_stdout) == 1)
 		return (1);
-	is_builtin_command = is_builtin(args);
-	if (is_builtin_command == 0)
-		status = run_builting(msh, args);
-	else
-		status = execute_ast(msh, ast->right);
+	args = (char **)ast->right->data;
+	if (args)
+	{
+		if (!is_builtin(args))
+		{
+			status = run_builting(msh, args);
+			reset_fd(saved_stdin, saved_stdout);
+			return (status);
+		}
+	}
+	status = execute_ast(msh, ast->right);
 	reset_fd(saved_stdin, saved_stdout);
 	return (status);
 }

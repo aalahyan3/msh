@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 21:03:19 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/28 17:29:31 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 19:57:33 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ static bool	valid_quote(char *s, int *i, char c)
 	*i += 1;
 	return (true);
 }
-
-
 
 static bool	valid_quotes(char *s)
 {
@@ -79,8 +77,8 @@ static bool	is_parenthisis(char *s)
 	int		i;
 	int		before;
 
-	i = 0;
-	while (s[i])
+	i = -1;
+	while (s[++i])
 	{
 		if (s[i] == '\'' || s[i] == '"')
 		{
@@ -91,9 +89,7 @@ static bool	is_parenthisis(char *s)
 		{
 			before = i;
 			if (!valid_parentheses(s, &i))
-			{
 				return (false);
-			}
 			continue ;
 		}
 		if (s[i] == ')')
@@ -101,12 +97,9 @@ static bool	is_parenthisis(char *s)
 			ft_putstr_fd("msh: syntax error near unexpected token `)'\n", 2);
 			return (false);
 		}
-		i++;
 	}
 	return (true);
 }
-
-
 
 bool	initial_checks(char *s)
 {
@@ -118,4 +111,3 @@ bool	initial_checks(char *s)
 		return (false);
 	return (true);
 }
-

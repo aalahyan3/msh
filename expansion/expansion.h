@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:53:51 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/28 14:50:33 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 20:49:43 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 typedef struct s_args
 {
-	char 	*arg;
+	char	*arg;
 	bool	*quoted;
 }	t_args;
 
@@ -45,4 +45,8 @@ char	**expand_string_2(char *str);
 char	**triple_to_double(char ***triple);
 void	free_triple_array(char ***ar);
 char	**expand_filename(char *name, t_msh *msh);
+char	*get_var_name(char *s, int *i);
+void	optimize_wildcard_exp(char **exp);
+void	sort_array(char **arr);
+
 #endif

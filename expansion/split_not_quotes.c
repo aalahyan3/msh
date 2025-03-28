@@ -6,11 +6,11 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 03:02:29 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/21 21:45:52 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 20:52:07 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "expansion.h"
+#include "expansion.h"
 
 static void	defernciate_command(char *str)
 {
@@ -38,23 +38,6 @@ static void	defernciate_command(char *str)
 	}
 }
 
-// static void	trim_single_quotes(char **arr)
-// {
-// 	int		i;
-// 	char	*new;
-
-// 	i = 0;
-// 	while (arr[i])
-// 	{
-// 		new = ft_strtrim(arr[i], "'");
-// 		if (!new)
-// 			return (free_splited_array(arr));
-// 		free(arr[i]);
-// 		arr[i] = new;
-// 		i++;
-// 	}
-// }
-
 static void	redefernciate_command(char	**array)
 {
 	int	i;
@@ -79,6 +62,7 @@ static void	redefernciate_command(char	**array)
 char	**split_not_quotes(char *cmd)
 {
 	char	**array;
+
 	defernciate_command(cmd);
 	array = split_msh(cmd);
 	if (!array)

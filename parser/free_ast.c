@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 01:28:02 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/28 16:35:50 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 19:47:53 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	free_red_structs(t_reds **reds)
 
 void	free_ast(t_ast **ast)
 {
-
 	if (!ast || !*ast)
 		return ;
 	free_ast(&(*ast)->left);

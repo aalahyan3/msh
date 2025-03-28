@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:02:17 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/17 08:10:26 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 20:03:54 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	remove_quotes(char **s)
 	while (s[i])
 	{
 		len = ft_strlen(s[i]);
-		if (len >= 2 && (*s[i] == '"' || *s[i] == '\'') && s[i][len - 1] == *s[i])
+		if (len >= 2 && (*s[i] == '"' \
+		|| *s[i] == '\'') && s[i][len - 1] == *s[i])
 		{
 			temp = ft_substr(s[i], 1, len - 2);
 			free(s[i]);
