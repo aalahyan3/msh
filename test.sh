@@ -28,9 +28,7 @@ static t_tok	*separator_token(char	*s, int *i)
 			tok->content = ft_strdup("&&");
 			tok->type = AND;
 		}
-		return (tok);
-	}
-	return (NULL);
+		return (tok); } return (NULL);
 }
 
 static char	*get_tok_content(char *s, int *i)

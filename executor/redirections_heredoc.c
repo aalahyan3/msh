@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:27:31 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/28 15:00:08 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/28 21:59:41 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,21 @@ char	*gen_name()
 
 void	hd_sig_handler(int sig)
 {
-	(void)sig;
-	g_signal_recieved = 1;
-	write(1, "\n", 1);
-	close(0);
+	struct termios	t;
+
+	if (sig == SIGINT)
+	{
+		g_signal_recieved = 1;
+		write(1, "\n", 1);
+		close(0);
+	}
+	else if (sig == SIGQUIT)
+	{
+		tcgetattr(0, &t);
+		t.c_lflag &= ~ECHOCTL;
+		tcsetattr(0, TCSANOW, &t);
+		signal(SIGQUIT, SIG_IGN);
+	}
 }
 
 int handle_heredoc(t_reds *red, t_list *ev)
@@ -70,6 +81,7 @@ int handle_heredoc(t_reds *red, t_list *ev)
 		red->is_hd = 1;
 	}
 	signal(SIGINT, hd_sig_handler);
+	signal(SIGQUIT, SIG_IGN);
 	g_signal_recieved = 0;
 	while (1)
 	{

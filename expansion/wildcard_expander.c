@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 17:12:46 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/28 20:52:23 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/03/29 20:24:44 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	get_size(char *exp)
 	entry = readdir(dir);
 	while (entry)
 	{
-		if (*entry->d_name == '.' && *exp == *entry->d_name)
+		if (*entry->d_name == '.' && *exp != *entry->d_name)
 		{
 			entry = readdir(dir);
 			continue ;
