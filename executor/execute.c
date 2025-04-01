@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 12:34:24 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/28 21:59:27 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/01 13:54:31 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,7 @@ int	heredoc_handler(t_msh *msh)
 	int	std_in;
 	int	status;
 
-	std_in = dup(STDIN_FILENO);
-	if (std_in < 0)
-		return (1);
 	status = process_heredocs(msh->ast, msh->env);
-	if (status)
-		dup2(std_in, STDIN_FILENO);
-	close(std_in);
 	return (status);
 }
 

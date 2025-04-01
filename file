@@ -1,24 +1,18 @@
-total 280
-drwxr-xr-x  23 aalahyan  2024_khouribga     782 Mar 29 19:41 .
-drwxr-xr-x  15 aalahyan  2024_khouribga     510 Mar 22 00:39 ..
-drwxr-xr-x  15 aalahyan  2024_khouribga     510 Mar 28 20:53 .git
--rw-r--r--   1 aalahyan  2024_khouribga      26 Mar 22 02:11 .gitignore
-drwxr-xr-x   3 aalahyan  2024_khouribga     102 Mar 26 19:28 .vscode
--rw-r--r--   1 aalahyan  2024_khouribga    3451 Mar 28 20:14 Makefile
--rw-r--r--   1 aalahyan  2024_khouribga       0 Mar 14 09:44 README.md
-drwxr-xr-x  55 aalahyan  2024_khouribga    1870 Mar 29 19:41 bin
-drwxr-xr-x  10 aalahyan  2024_khouribga     340 Mar 28 14:57 builtins
-drwxr-xr-x   5 aalahyan  2024_khouribga     170 Mar 26 19:28 env
-drwxr-xr-x  12 aalahyan  2024_khouribga     408 Mar 27 12:34 executor
-drwxr-xr-x  17 aalahyan  2024_khouribga     578 Mar 28 20:37 expansion
--rw-r--r--   1 aalahyan  2024_khouribga       0 Mar 29 19:42 file
-drwxr-xr-x   8 aalahyan  2024_khouribga     272 Mar 23 19:24 free_utils
-drwxr-xr-x   6 aalahyan  2024_khouribga     204 Mar 14 09:40 ft_func
-drwxr-xr-x  64 aalahyan  2024_khouribga    2176 Mar 29 19:41 libft
--rwxr-xr-x   1 aalahyan  2024_khouribga  111384 Mar 29 19:41 minishell
--rw-r--r--   1 aalahyan  2024_khouribga    2143 Mar 28 19:40 minishell.c
--rw-r--r--   1 aalahyan  2024_khouribga    1367 Mar 28 15:53 minishell.h
-drwxr-xr-x  18 aalahyan  2024_khouribga     612 Mar 28 19:54 parser
--rw-r--r--   1 aalahyan  2024_khouribga    3320 Mar 28 21:30 read_input.c
--rw-r--r--   1 aalahyan  2024_khouribga    1023 Mar 28 16:01 signal_variable.h
--rwxr-xr-x   1 aalahyan  2024_khouribga    1488 Mar 28 18:50 test.sh
+Makefile
+README.md
+bin
+builtins
+env
+executor
+expansion
+file
+free_utils
+ft_func
+libft
+minishell
+minishell.c
+minishell.h
+parser
+read_input.c
+signal_variable.h
+test.sh

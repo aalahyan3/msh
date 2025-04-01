@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/28 17:47:48 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:27:37 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,13 @@ int handle_redirections(t_ast *ast, t_msh *msh, int *saved_stdin, int *saved_std
 	red_count = 0;
 	while (reds[red_count])
 	{
+		if (reds[red_count]->is_hd)
+		{
+			dup2(reds[red_count]->fd, STDIN_FILENO);
+			// printf("%s\n", get_next_line(reds[red_count]->fd));
+			red_count++;
+			continue ;
+		}
 		args = expand_filename(reds[red_count]->file, msh);
 		if (!args || (args[0] && args[1] ))
 		{

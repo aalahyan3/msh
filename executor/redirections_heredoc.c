@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:27:31 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/28 21:59:41 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:29:23 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	hd_sig_handler(int sig)
 	{
 		g_signal_recieved = 1;
 		write(1, "\n", 1);
-		close(0);
+		exit(0);
 	}
 	else if (sig == SIGQUIT)
 	{
@@ -50,79 +50,77 @@ void	hd_sig_handler(int sig)
 	}
 }
 
-int handle_heredoc(t_reds *red, t_list *ev)
+void	start_reading(int fd, char *del)
 {
 	char	*line;
-	char	*filename;
-	int		fd;
-	int		expand;
-	int		fd_read;
-	char	*tmp;
 
-	expand = 1;
-	filename = gen_name();
-	fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0600);
-	fd_read = open(filename, O_RDONLY);
-	if (fd == -1)
-	{
-		perror("msh: open");
-		if (fd_read != -1)
-			close(fd_read);
-		free(filename);
-		return 1;
-	}
-	unlink(filename);
-	if (red->file && red->file[0] && (red->file[0] == '\'' && red->file[ft_strlen(red->file) - 1] == '\'') || \
-	(red->file[0] == '\"' && red->file[ft_strlen(red->file) - 1] == '\"'))
-	{
-		tmp = red->file;
-		red->file = ft_substr(red->file, 1, ft_strlen(red->file) - 2);
-		free(tmp);
-		red->is_hd = 1;
-	}
 	signal(SIGINT, hd_sig_handler);
 	signal(SIGQUIT, SIG_IGN);
-	g_signal_recieved = 0;
 	while (1)
 	{
-		ft_putstr_fd("> ", 2);
-		tmp = get_next_line(0);
-		line = ft_strtrim(tmp, "\n \t");
-		free(tmp);
-		if (g_signal_recieved)
-		{
-			free(line);
-			close(fd);
-			close(fd_read);
-			return (1);
-		}
-		if (!line || ((ft_strncmp(line, red->file, ft_strlen(red->file)) == 0) && ft_strlen(red->file) == ft_strlen(line)))
-		{
-			free(line);
-			line = NULL;
+		line = readline("> ");
+		if (!line)
 			break ;
-		}
-		if (!*line)
+		if (ft_strcmp(line, del) == 0)
 		{
-			write(fd, "\n", 1);
 			free(line);
-			line = NULL;
-			continue ;
+			break ;
 		}
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		free(line);
-		line = NULL;
 	}
-	free(line);
-	free(red->file);
-	red->file = ft_strdup(filename);
-	free(filename);
 	close(fd);
+	exit(0);
+}
+
+int	handle_heredoc(t_reds *red, t_list *ev)
+{
+	char	*filename;
+	int		fd;
+	int		fd_read;
+	int		pid;
+	int		status;
+
+	filename = gen_name();
+	fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0600);
+	if (fd == -1)
+	{
+		perror("msh: open");
+		free(filename);
+		return (1);
+	}
+	fd_read = open(filename, O_RDONLY);
+	if (fd_read == -1)
+	{
+		perror("msh: open");
+		close(fd);
+		free(filename);
+		return (1);
+	}
+	signal(SIGINT, SIG_IGN);
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("msh: fork");
+		close(fd);
+		close(fd_read);
+		free(filename);
+		return (1);
+	}
+	if (pid == 0)
+	{
+		start_reading(fd, red->file);
+		exit(0);
+	}
+	close(fd);
+	waitpid(pid, &status, 0);
+	unlink(filename);
 	red->fd = fd_read;
-	red->type = INPUT;
+	free(filename);
 	return (0);
 }
+
 
 int process_heredocs(t_ast *ast, t_list *env)
 {
@@ -140,9 +138,9 @@ int process_heredocs(t_ast *ast, t_list *env)
 		i = 0;
 		while (reds[i])
 		{
-			reds[i]->is_hd = 0;
 			if (reds[i]->type == HEREDOC)
 			{
+				reds[i]->is_hd = 1;
 				if (handle_heredoc(reds[i], env))
 					return (1);
 			}
