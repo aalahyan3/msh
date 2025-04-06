@@ -6,18 +6,20 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 23:32:47 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/28 19:57:48 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/06 19:12:56 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
+# include <string.h>
+# include <errno.h>
 # include "../libft/libft.h"
 # include "../ft_func/ft_func.h"
 # include "../env/env.h"
 # include "../free_utils/free_utils.h"
-
+# include <readline/readline.h>
 enum e_tok_type
 {
 	NONE,
@@ -102,7 +104,7 @@ void		ast_vis(t_ast *node, int depth, char *prefix);//testing only
 t_ast		*get_redirections(char *s);
 t_ast		*expand_block(char *s);
 void		free_red_structs(t_reds **reds);
-t_ast		*parse(char *prompt);
+t_ast		*parse(char *prompt, t_list *env);
 void		free_ast(t_ast **ast);
 bool		initial_checks(char *s);
 bool		linear_parsing(char *s);
@@ -111,4 +113,6 @@ bool		valid_blocks(char *s);
 t_l_parse	*get_next_token(char *s, int *i);
 char		*get_inside_parenthisis(char *s, int i);
 char		*get_next_red(char *s, int *i);
+void		ft_printf_error(char *s1, char *s2, char *s3, char *s4, char *s5);
+bool	 	max_heredoc_check(t_ast *root);
 #endif

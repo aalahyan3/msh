@@ -1,35 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   error_buff.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/14 08:57:28 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/06 18:59:09 by aalahyan         ###   ########.fr       */
+/*   Created: 2025/04/06 17:59:23 by aalahyan          #+#    #+#             */
+/*   Updated: 2025/04/06 18:29:08 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-t_ast	*parse(char *prompt, t_list *env)
+void	ft_printf_error(char *s1, char *s2, char *s3, char *s4, char *s5)
 {
-	t_ast	*ast;
+	int	saved_stdout;
 
-	if (!initial_checks(prompt))
-		return (free(prompt), NULL);
-	if (!linear_parsing(prompt))
-		return (free(prompt), NULL);
-	ast = process_prompt(prompt);
-	if (!ast)
-		return (NULL);
-	if (!max_heredoc_check(ast))
-	{
-		free_ast(&ast);
-		clear_env(env);
-		rl_clear_history();
-		exit(2);
-	}
-	ast_vis(ast, 0, "");
-	return (ast);
+	saved_stdout = dup(STDOUT_FILENO);
+	if (saved_stdout < 0)
+		return ;
+	dup2(STDERR_FILENO, STDOUT_FILENO);
+	if (s1)
+		printf("%s", s1);
+	if (s2)
+		printf("%s", s2);
+	if (s3)
+		printf("%s", s3);
+	if (s4)
+		printf("%s", s4);
+	if (s5)
+		printf("%s", s5);
+	dup2(saved_stdout, STDOUT_FILENO);
 }

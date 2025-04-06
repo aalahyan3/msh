@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 21:03:19 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/28 19:57:33 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/06 18:21:26 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 static bool	valid_quote(char *s, int *i, char c)
 {
+	char	b[2];
+
+	b[0] = c;
+	b[1] = '\0';
 	*i += 1;
 	while (s[*i] && s[*i] != c)
 		*i += 1;
 	if (!s[*i])
 	{
-		ft_putstr_fd("msh: syntax error near unclosed quote ", 2);
-		ft_putchar_fd('`', 2);
-		ft_putchar_fd(c, 2);
-		ft_putchar_fd('`', 2);
-		ft_putchar_fd('\n', 2);
+		ft_printf_error("msh: syntax error near unclosed quote `", b, "`\n", NULL, NULL);
 		return (false);
 	}
 	*i += 1;
@@ -66,7 +66,7 @@ bool	valid_parentheses(char *s, int *i)
 	}
 	if (expect)
 	{
-		ft_putstr_fd("msh: syntax error near unclosed parenthisis `)`\n", 2);
+		ft_printf_error("msh: syntax error near unclosed parenthisis `)`\n", NULL, NULL, NULL, NULL);
 		return (false);
 	}
 	return (true);
@@ -94,7 +94,7 @@ static bool	is_parenthisis(char *s)
 		}
 		if (s[i] == ')')
 		{
-			ft_putstr_fd("msh: syntax error near unexpected token `)'\n", 2);
+			ft_printf_error("msh: syntax error near unexpected token `)\n", NULL, NULL, NULL, NULL);
 			return (false);
 		}
 	}

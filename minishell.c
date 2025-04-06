@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/06 17:07:21 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/06 18:58:06 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		}
 		add_history(msh.prompt);
-		msh.ast = parse(msh.prompt);
+		msh.ast = parse(msh.prompt, msh.env);
 		if (!msh.ast)
 			continue ;
 		msh.last_exit = execute(&msh);

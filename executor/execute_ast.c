@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/06 17:42:36 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/06 18:32:42 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void	file_open_error(char *filename)
 {
 	write(2, "msh: ", 6);
 	write(2, filename, ft_strlen(filename));
-	write(2, ": No such file or directory\n", 28);	
+	write(2, ": No such file or directory\n", 28);
 }
 
  int	expand_heredoc(int fd, t_msh *msh)
@@ -326,15 +326,20 @@ int	handle_redirections(t_ast *ast, t_msh *msh)
 			ft_close(&in_fd);
 			in_fd = open(reds[i]->file, O_RDONLY);
 			if (in_fd < 0)
+			{
+				ft_printf_error("msh: ", reds[i]->file, ": ", strerror(errno), "\n");
 				return (1);
+			}
 		}
 		else if (reds[i]->type == OUTPUT)
 		{
 			ft_close(&out_fd);
 			out_fd = open(reds[i]->file, O_CREAT | O_RDWR | O_TRUNC, 0644);
-			printf("fd = %d\n", out_fd);
 			if (out_fd < 0)
+			{
+				ft_printf_error("msh: ", reds[i]->file, ": ", strerror(errno), "\n");
 				return (1);
+			}
 		}
 		else if (reds[i]->type == APPEND)
 		{
