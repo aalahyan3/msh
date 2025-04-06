@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/06 16:37:44 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/06 17:31:33 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,7 +305,7 @@ int	handle_redirections(t_ast *ast, t_msh *msh)
 	out_fd = -1;
 	while (reds[i])
 	{
-		if (reds[i]->is_hd)
+		if (reds[i]->type == HEREDOC)
 		{
 			ft_close(&in_fd);
 			in_fd = was_hd(reds[i], msh);
@@ -325,6 +325,7 @@ int	handle_redirections(t_ast *ast, t_msh *msh)
 		{
 			ft_close(&out_fd);
 			out_fd = open(reds[i]->file, O_CREAT | O_RDWR | O_TRUNC, 0644);
+			printf("fd = %d\n", out_fd);
 			if (out_fd < 0)
 				return (1);
 		}

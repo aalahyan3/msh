@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 12:52:06 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/28 20:03:46 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/06 17:37:01 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	*get_next_chunk(char *s, int *i)
 	else
 	{
 		*i += 1;
-		while (s[*i] && (ft_isalnum(s[*i]) || s[*i] == '_'))
+		while (s[*i] && (ft_isalnum(s[*i]) || s[*i] == '_' || s[*i] == '?'))
 			*i += 1;
 		return (ft_substr(s, start, *i - start));
 	}
@@ -39,6 +39,8 @@ static char	*expander(char *s, t_msh *msh)
 {
 	char	*var;
 
+	if (*(s + 1) == '?')
+		return (ft_itoa(msh->last_exit));
 	var = ft_strdup(find_in_env(s + 1, msh->env));
 	free(s);
 	return (var);
