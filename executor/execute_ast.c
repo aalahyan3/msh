@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/01 14:27:37 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/06 16:37:44 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,81 +160,81 @@ void	file_open_error(char *filename)
 	return(new_fd_read);
  }
 
-int handle_redirections(t_ast *ast, t_msh *msh, int *saved_stdin, int *saved_stdout)
-{
-	t_reds	**reds;
-	int		red_count;
-	char	**args;
+// int handle_redirections(t_ast *ast, t_msh *msh, int *saved_stdin, int *saved_stdout)
+// {
+// 	t_reds	**reds;
+// 	int		red_count;
+// 	char	**args;
 
-	if (!ast || !ast->data)
-		return (0);
-	*saved_stdin = dup(STDIN_FILENO);
-	*saved_stdout = dup(STDOUT_FILENO);
-	reds = (t_reds **)ast->data;
-	red_count = 0;
-	while (reds[red_count])
-	{
-		if (reds[red_count]->is_hd)
-		{
-			dup2(reds[red_count]->fd, STDIN_FILENO);
-			// printf("%s\n", get_next_line(reds[red_count]->fd));
-			red_count++;
-			continue ;
-		}
-		args = expand_filename(reds[red_count]->file, msh);
-		if (!args || (args[0] && args[1] ))
-		{
-			ft_putstr_fd("msh: ", 2);
-			ft_putstr_fd(reds[red_count]->file, 2);
-			ft_putstr_fd(": ambiguous redirect\n", 2);
-			free_arr(args);
-			return (1);
-		}
-		reds[red_count]->file = ft_strdup(args[0]);
-		free_arr(args);
-		if (reds[red_count]->type == INPUT)
-		{
-			if (reds[red_count]->fd == -1)
-				reds[red_count]->fd = open(reds[red_count]->file, O_RDONLY);
-			else
- 				reds[red_count]->fd = expand_heredoc(reds[red_count]->fd, msh);
-			if (reds[red_count]->fd < 0)
-			{
-				write(2, "msh: ", 6);
-				perror(reds[red_count]->file);
-				return (1);
-			}
-			dup2(reds[red_count]->fd, STDIN_FILENO);
-			close(reds[red_count]->fd);
-		}
-		else if (reds[red_count]->type == OUTPUT)
-		{
-			reds[red_count]->fd = open(reds[red_count]->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			if (reds[red_count]->fd < 0)
-			{
-				write(2, "msh: ", 6);
-				perror(reds[red_count]->file);
-				return (1);
-			}
-			dup2(reds[red_count]->fd, STDOUT_FILENO);
-			close(reds[red_count]->fd);
-		}
-		else if (reds[red_count]->type == APPEND)
-		{
-			reds[red_count]->fd = open(reds[red_count]->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-			if (reds[red_count]->fd < 0)
-			{
-				write(2, "msh: ", 6);
-				perror(reds[red_count]->file);
-				return (1);
-			}
-			dup2(reds[red_count]->fd, STDOUT_FILENO);
-			close(reds[red_count]->fd);
-		}
-		red_count++;
-	}
-	return (0);
-}
+// 	if (!ast || !ast->data)
+// 		return (0);
+// 	*saved_stdin = dup(STDIN_FILENO);
+// 	*saved_stdout = dup(STDOUT_FILENO);
+// 	reds = (t_reds **)ast->data;
+// 	red_count = 0;
+// 	while (reds[red_count])
+// 	{
+// 		if (reds[red_count]->is_hd)
+// 		{
+// 			dup2(reds[red_count]->fd, STDIN_FILENO);
+// 			// printf("%s\n", get_next_line(reds[red_count]->fd));
+// 			red_count++;
+// 			continue ;
+// 		}
+// 		args = expand_filename(reds[red_count]->file, msh);
+// 		if (!args || (args[0] && args[1] ))
+// 		{
+// 			ft_putstr_fd("msh: ", 2);
+// 			ft_putstr_fd(reds[red_count]->file, 2);
+// 			ft_putstr_fd(": ambiguous redirect\n", 2);
+// 			free_arr(args);
+// 			return (1);
+// 		}
+// 		reds[red_count]->file = ft_strdup(args[0]);
+// 		free_arr(args);
+// 		if (reds[red_count]->type == INPUT)
+// 		{
+// 			if (reds[red_count]->fd == -1)
+// 				reds[red_count]->fd = open(reds[red_count]->file, O_RDONLY);
+// 			else
+//  				reds[red_count]->fd = expand_heredoc(reds[red_count]->fd, msh);
+// 			if (reds[red_count]->fd < 0)
+// 			{
+// 				write(2, "msh: ", 6);
+// 				perror(reds[red_count]->file);
+// 				return (1);
+// 			}
+// 			dup2(reds[red_count]->fd, STDIN_FILENO);
+// 			close(reds[red_count]->fd);
+// 		}
+// 		else if (reds[red_count]->type == OUTPUT)
+// 		{
+// 			reds[red_count]->fd = open(reds[red_count]->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+// 			if (reds[red_count]->fd < 0)
+// 			{
+// 				write(2, "msh: ", 6);
+// 				perror(reds[red_count]->file);
+// 				return (1);
+// 			}
+// 			dup2(reds[red_count]->fd, STDOUT_FILENO);
+// 			close(reds[red_count]->fd);
+// 		}
+// 		else if (reds[red_count]->type == APPEND)
+// 		{
+// 			reds[red_count]->fd = open(reds[red_count]->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+// 			if (reds[red_count]->fd < 0)
+// 			{
+// 				write(2, "msh: ", 6);
+// 				perror(reds[red_count]->file);
+// 				return (1);
+// 			}
+// 			dup2(reds[red_count]->fd, STDOUT_FILENO);
+// 			close(reds[red_count]->fd);
+// 		}
+// 		red_count++;
+// 	}
+// 	return (0);
+// }
 
 void reset_fd(int saved_stdin, int saved_stdout)
 {
@@ -244,6 +244,105 @@ void reset_fd(int saved_stdin, int saved_stdout)
 	close(saved_stdout);
 }
 
+int	was_hd(t_reds *red, t_msh *msh)
+{
+	int	expand;
+	char	*line;
+	char	*expanded;
+	int		fd;
+	char	*name;
+
+	expand = 1;
+	if (ft_strchr(red->file, '\'') || ft_strchr(red->file, '"'))
+		expand = 0;
+	if (!expand)
+		return (red->fd);
+	name = gen_name();
+	fd = open(name, O_CREAT | O_RDWR, 0644);
+	if (fd < 0)
+		return (-1);
+	line = get_next_line(red->fd);
+	while (line)
+	{
+		expanded = expand_here_doc(line, msh);
+		if (!expanded)
+		{
+			free(line);
+			return (-1);
+		}
+		write(fd, expanded, ft_strlen(expanded));
+		free(expanded);
+		free(line);
+		line = get_next_line(red->fd);
+	}
+	close(fd);
+	fd = open(name, O_RDONLY);
+	close(red->fd);
+	return (fd);
+}
+
+void	ft_close(int *fd)
+{
+	if (*fd > 0)
+	{
+		close(*fd);
+		*fd = -1;
+	}
+}
+
+int	handle_redirections(t_ast *ast, t_msh *msh)
+{
+	int	in_fd;
+	int	out_fd;
+	int	i;
+	t_reds	**reds;
+
+	if (!ast->data)
+		return (0);
+	reds = (t_reds **)(ast->data);
+	i = 0;
+	in_fd = -1;
+	out_fd = -1;
+	while (reds[i])
+	{
+		if (reds[i]->is_hd)
+		{
+			ft_close(&in_fd);
+			in_fd = was_hd(reds[i], msh);
+			if (in_fd < 0)
+			{
+				return (1);
+			}
+		}
+		else if (reds[i]->type == INPUT)
+		{
+			ft_close(&in_fd);
+			in_fd = open(reds[i]->file, O_RDONLY);
+			if (in_fd < 0)
+				return (1);
+		}
+		else if (reds[i]->type == OUTPUT)
+		{
+			ft_close(&out_fd);
+			out_fd = open(reds[i]->file, O_CREAT | O_RDWR | O_TRUNC, 0644);
+			if (out_fd < 0)
+				return (1);
+		}
+		else if (reds[i]->type == APPEND)
+		{
+			ft_close(&out_fd);
+			out_fd = open(reds[i]->file, O_CREAT | O_RDWR | O_APPEND, 0644);
+			if (out_fd < 0)
+				return (1);
+		}
+		i++;
+	}
+	dup2(in_fd, STDIN_FILENO);
+	dup2(out_fd, STDOUT_FILENO);
+	ft_close(&in_fd);
+	ft_close(&out_fd);
+	return (0);
+}
 
 int	execute_block(t_msh *msh, t_ast *ast)
 {
@@ -254,7 +353,9 @@ int	execute_block(t_msh *msh, t_ast *ast)
 
 	if (!ast || !ast->left)
 		return (1);
-	if (handle_redirections(ast->left, msh, &saved_stdin, &saved_stdout) == 1)
+	saved_stdin = dup(STDIN_FILENO);
+	saved_stdout = dup(STDOUT_FILENO);
+	if (handle_redirections(ast->left, msh) == 1)
 		return (1);
 	args = (char **)ast->right->data;
 	if (args)
