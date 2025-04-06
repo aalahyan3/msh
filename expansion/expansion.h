@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:53:51 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/28 20:49:43 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/06 16:59:22 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ char	**expand(char **arr, t_msh *msh);
 char	**split_by_quotes(char *s);
 char	**split_not_quotes(char *cmd);
 char	**split_msh(char const *s);
-char	**split_and_join(char **arr);
 char	**expand_wildcards(char	**arr);
 char	*expand_quotes(char *s);
 char	*find_in_env(char *key, t_list *env);
@@ -48,5 +47,7 @@ char	**expand_filename(char *name, t_msh *msh);
 char	*get_var_name(char *s, int *i);
 void	optimize_wildcard_exp(char **exp);
 void	sort_array(char **arr);
+char	*expand_quotes_str(char *str);
+
 
 #endif

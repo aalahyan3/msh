@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:27:31 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/01 14:29:23 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/06 17:07:55 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,17 @@ void	hd_sig_handler(int sig)
 void	start_reading(int fd, char *del)
 {
 	char	*line;
+	char	*expanded_del;
 
 	signal(SIGINT, hd_sig_handler);
 	signal(SIGQUIT, SIG_IGN);
+	expanded_del = expand_quotes_str(del);
 	while (1)
 	{
 		line = readline("> ");
 		if (!line)
 			break ;
-		if (ft_strcmp(line, del) == 0)
+		if (ft_strcmp(line, expanded_del) == 0)
 		{
 			free(line);
 			break ;
@@ -70,6 +72,7 @@ void	start_reading(int fd, char *del)
 		write(fd, "\n", 1);
 		free(line);
 	}
+	free(expanded_del);
 	close(fd);
 	exit(0);
 }

@@ -6,7 +6,7 @@
 #    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/03/28 20:14:58 by aalahyan         ###   ########.fr        #
+#    Updated: 2025/04/06 16:57:58 by aalahyan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRCS = 	minishell.c \
 		expansion/wildcard_expander.c\
 		expansion/expand_filename.c\
 		expansion/utils.c\
+		expansion/expand_quotes_str.c\
 		parser/process_prompt.c\
 		parser/tokenize.c\
 		parser/parsing.c\
