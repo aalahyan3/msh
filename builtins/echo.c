@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 10:34:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/28 14:49:23 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/06 17:45:45 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int ft_echo(char **arg, t_msh *msh)
 	i = 1;
 	if (!args[i])
 	{
-		write(1, "\n", 2);
+		printf("\n");
 		free_2d_array(args);
 		return (0);
 	}
@@ -48,13 +48,13 @@ int ft_echo(char **arg, t_msh *msh)
 	index = i;
 	while (args[i])
 	{
-		ft_putstr_fd(args[i], 1);
+		printf("%s", args[i]);
 		if (args[i + 1])
-			write(1, " ", 1);
+			printf(" ");
 		i++;
 	}
 	if(index == 1)
-		write(1, "\n", 2);
+		printf("\n");
 	free_2d_array(args);
 	return (0);
 }

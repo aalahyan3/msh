@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/06 17:31:33 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/06 17:42:36 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,6 +269,13 @@ int	was_hd(t_reds *red, t_msh *msh)
 		{
 			free(line);
 			return (-1);
+		}
+		if (*expanded == '\n')
+		{
+			free(expanded);
+			free(line);
+			line = get_next_line(red->fd);
+			continue ;
 		}
 		write(fd, expanded, ft_strlen(expanded));
 		free(expanded);
