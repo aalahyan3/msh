@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/06 18:58:06 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/07 22:51:55 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ void	setup_msh(t_msh *msh, char **env, char ac, char **av)
 	msh->last_exit = 0;
 	msh->ast = NULL;
 	msh->env = build_env(env);
+	if (!msh->env)
+		exit(1);
+	increment_shlvl(msh->env);
 	(void)ac;
 	(void)av;
 }

@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 21:03:19 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/06 18:21:26 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/07 21:43:56 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static bool	valid_quote(char *s, int *i, char c)
 		*i += 1;
 	if (!s[*i])
 	{
-		ft_printf_error("msh: syntax error near unclosed quote `", b, "`\n", NULL, NULL);
+		ft_printf_error("syntax error near unclosed quote `", b, "`\n", NULL);
 		return (false);
 	}
 	*i += 1;
@@ -66,7 +66,7 @@ bool	valid_parentheses(char *s, int *i)
 	}
 	if (expect)
 	{
-		ft_printf_error("msh: syntax error near unclosed parenthisis `)`\n", NULL, NULL, NULL, NULL);
+		ft_printf_error("syntax error near unclosed parenthisis `)`\n", NULL, NULL, NULL);
 		return (false);
 	}
 	return (true);
@@ -94,7 +94,7 @@ static bool	is_parenthisis(char *s)
 		}
 		if (s[i] == ')')
 		{
-			ft_printf_error("msh: syntax error near unexpected token `)\n", NULL, NULL, NULL, NULL);
+			ft_printf_error("syntax error near unexpected token `)\n", NULL, NULL, NULL);
 			return (false);
 		}
 	}

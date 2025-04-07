@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 18:36:16 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/06 19:14:20 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/07 21:45:11 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ bool max_heredoc_check(t_ast *root)
 	total = count_hd(root);
 	if (total >= 17)
 	{
-		ft_printf_error("msh :", "maximum here-document count exceeded\n", NULL, NULL, NULL);
+		ft_printf_error("maximum here-document count exceeded\n", NULL, NULL, NULL);
 		return (false);
 	}
 	return (true);

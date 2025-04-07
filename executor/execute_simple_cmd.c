@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_simple_cmd.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 15:16:58 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/24 04:00:23 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/07 17:52:57 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,13 @@ void donothing(int sig)
 		write(1, "Quit: 3\0", 8);
 }
 
-static void handle_sigint(int sig)
-{
-	if (sig == SIGINT)
-	{
-		write(1, "bnjnnjn\n", 8);
-		exit(130);
-	}
-}
-
 int	execute_simple_cmd(char *path, char **args, char **env)
 {
-	pid_t	pid;
-	int		status;	
+	const pid_t	pid = fork();
+	int			status;	
 
-	pid = fork();
 	if (pid < 0)
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
+		((void)perror("fork"), exit(EXIT_FAILURE));
 	if (pid == 0)
 	{
 		signal(SIGQUIT, donothing);
@@ -45,7 +32,7 @@ int	execute_simple_cmd(char *path, char **args, char **env)
 		free(path);
 		free_arr(args);
 		perror("msh: ");
-		exit(127);
+		exit(127 - (errno == EACCES));
 	}
 	else
 	{

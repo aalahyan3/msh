@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/06 18:32:42 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/07 21:48:44 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,7 +327,7 @@ int	handle_redirections(t_ast *ast, t_msh *msh)
 			in_fd = open(reds[i]->file, O_RDONLY);
 			if (in_fd < 0)
 			{
-				ft_printf_error("msh: ", reds[i]->file, ": ", strerror(errno), "\n");
+				ft_printf_error(reds[i]->file, ": ", strerror(errno), "\n");
 				return (1);
 			}
 		}
@@ -337,7 +337,7 @@ int	handle_redirections(t_ast *ast, t_msh *msh)
 			out_fd = open(reds[i]->file, O_CREAT | O_RDWR | O_TRUNC, 0644);
 			if (out_fd < 0)
 			{
-				ft_printf_error("msh: ", reds[i]->file, ": ", strerror(errno), "\n");
+				ft_printf_error(reds[i]->file, ": ", strerror(errno), "\n");
 				return (1);
 			}
 		}

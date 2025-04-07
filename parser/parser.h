@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 23:32:47 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/06 19:12:56 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/07 21:42:32 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,6 @@ bool		valid_blocks(char *s);
 t_l_parse	*get_next_token(char *s, int *i);
 char		*get_inside_parenthisis(char *s, int i);
 char		*get_next_red(char *s, int *i);
-void		ft_printf_error(char *s1, char *s2, char *s3, char *s4, char *s5);
+void	ft_printf_error(char *s1, char *s2, char *s3, char *s4);
 bool	 	max_heredoc_check(t_ast *root);
 #endif
