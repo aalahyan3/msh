@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 10:34:30 by aaitabde          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/04/08 22:15:36 by aalahyan         ###   ########.fr       */
-=======
-/*   Updated: 2025/04/08 21:24:08 by aaitabde         ###   ########.fr       */
->>>>>>> 0bc300aea9f680422e1533f20a2b0daf19bd548b
+/*   Updated: 2025/04/08 23:00:07 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +50,6 @@ int ft_echo(char **arg, t_msh *msh)
 	index = i;
 	while (args[i])
 	{
-<<<<<<< HEAD
 		temp = ft_strjoin(buffer, args[i]);
 		free(buffer);
 		buffer = temp;
@@ -74,15 +69,6 @@ int ft_echo(char **arg, t_msh *msh)
 	}
 	ft_putstr_fd(buffer, 1);
 	free(buffer);
-=======
-		write(1, args[i], ft_strlen(args[i]));
-		if (args[i + 1])
-			write(1, " ", 1);
-		i++;
-	}
-	if(index == 1)
-		write(1, "\n", 1);
->>>>>>> 0bc300aea9f680422e1533f20a2b0daf19bd548b
 	free_2d_array(args);
 	return (0);
 }
