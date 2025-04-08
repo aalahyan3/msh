@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 21:03:19 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/07 21:43:56 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/08 21:55:54 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ bool	valid_parentheses(char *s, int *i)
 	while (s[*i] && expect)
 	{
 		if (s[*i] == '\'' || s[*i] == '\"')
+		{
 			skip_quotes(s, i, s[*i]);
+			continue ;
+		}
 		if (s[*i] == '(')
 			expect += 1;
 		if (s[*i] == ')')

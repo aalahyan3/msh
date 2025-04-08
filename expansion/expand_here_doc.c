@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 12:52:06 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/06 17:37:01 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/08 22:40:30 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,19 @@ char	*expand_here_doc(char *line, t_msh *msh)
 	int		i;
 
 	i = 0;
-	chunk = get_next_chunk(line, &i);
 	final = NULL;
-	while (chunk)
+	while ((chunk = get_next_chunk(line, &i)))
 	{
 		if (*chunk == '$')
-			chunk = expander(chunk, msh);
+		{
+			temp = expander(chunk, msh);
+			free(chunk);
+			chunk = temp;
+		}
 		temp = ft_strjoin(final, chunk);
 		free(final);
 		final = temp;
-		chunk = get_next_chunk(line, &i);
+		free(chunk);
 	}
 	return (final);
 }

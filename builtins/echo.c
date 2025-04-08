@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 10:34:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/06 17:45:45 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/08 22:15:36 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,18 @@ int	check_for_n_flag(char **arg)
 
 int ft_echo(char **arg, t_msh *msh)
 {
-	int i;
-	int index;
-	char **args;
+	int 	i;
+	int 	index;
+	char 	**args;
+	char	*buffer;
+	char	*temp;
 
 	args = expand(arg, msh);
 	i = 1;
+	buffer = NULL;
 	if (!args[i])
 	{
-		printf("\n");
+		write(1, "\n", 1);
 		free_2d_array(args);
 		return (0);
 	}
@@ -48,13 +51,25 @@ int ft_echo(char **arg, t_msh *msh)
 	index = i;
 	while (args[i])
 	{
-		printf("%s", args[i]);
+		temp = ft_strjoin(buffer, args[i]);
+		free(buffer);
+		buffer = temp;
 		if (args[i + 1])
-			printf(" ");
+		{
+			temp = ft_strjoin(buffer, " ");
+			free(buffer);
+			buffer = temp;
+		}
 		i++;
 	}
 	if(index == 1)
-		printf("\n");
+	{
+		temp = ft_strjoin(buffer, "\n");
+		free(buffer);
+		buffer = temp;
+	}
+	ft_putstr_fd(buffer, 1);
+	free(buffer);
 	free_2d_array(args);
 	return (0);
 }
