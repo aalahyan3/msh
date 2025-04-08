@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 00:36:07 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/08 16:26:35 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/08 21:26:08 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,7 +291,7 @@ int	valid_identifier(char *key)
 {
 	int i;
 
-	if (!key || key[0] == '\0' || ft_isdigit(key[0]))
+	if (!key || key[0] == '\0' || ft_isdigit(key[0]) || key[0] == '=' || key[0] == '+')
 		return (0);
 	i = 0;
 	while (key[i] && key[i] != '=')
@@ -323,9 +323,11 @@ void	proper_export_expansion(char **args)
 int ft_export(char **args, t_msh *msh)
 {
 	int i;
+	int status;
 
 	proper_export_expansion(args);
 	i = 1;
+	status = 0;
 	args = expand(args, msh);
 	if (args[1] == NULL)
 		ft_env_sorted(msh->env);
@@ -333,14 +335,15 @@ int ft_export(char **args, t_msh *msh)
 	{
 		if (!valid_identifier(args[i]))
 		{
-			write(2, "msh: export: `", 20);
+			write(2, "msh: export: `", 14);
 			write(2, args[i], ft_strlen(args[i]));
 			write(2, "': not a valid identifier\n", 27);
+			status = 1;
 		}
 		else
 			parse_export_arg(args[i], msh->env);
 		i++;
 	}
 	free_arr(args);
-	return (0);
+	return (status);
 }

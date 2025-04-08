@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 10:34:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/06 17:45:45 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/08 21:24:08 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	check_for_n_flag(char **arg)
 	}
 	return (i);
 }
-
 int ft_echo(char **arg, t_msh *msh)
 {
 	int i;
@@ -40,7 +39,7 @@ int ft_echo(char **arg, t_msh *msh)
 	i = 1;
 	if (!args[i])
 	{
-		printf("\n");
+		write(1, "\n", 1);
 		free_2d_array(args);
 		return (0);
 	}
@@ -48,13 +47,13 @@ int ft_echo(char **arg, t_msh *msh)
 	index = i;
 	while (args[i])
 	{
-		printf("%s", args[i]);
+		write(1, args[i], ft_strlen(args[i]));
 		if (args[i + 1])
-			printf(" ");
+			write(1, " ", 1);
 		i++;
 	}
 	if(index == 1)
-		printf("\n");
+		write(1, "\n", 1);
 	free_2d_array(args);
 	return (0);
 }
