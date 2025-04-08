@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/08 17:45:32 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/08 20:37:10 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,15 @@ int	execute_word(t_msh *msh, t_ast *ast)
 		write(2, ":command not found\n", 19);
 		return (1);
 	}
-	path = get_cmd_path(args[0], env, &i);
+	path = get_cmd_path(args[0], env, &i); 
 	if (path)
 		return (execute_simple_cmd(path, args, env));
 	else
 	{
+		if (access(args[0], F_OK) == 0 && i)
+		{
+			return (execute_simple_cmd(ft_strdup(args[0]), args, env));
+		}
 		if (i)
 		{
 			write(2, "msh: ", 6);

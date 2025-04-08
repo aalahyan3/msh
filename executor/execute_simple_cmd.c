@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 15:16:58 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/08 17:11:33 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/08 18:22:19 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ int	execute_simple_cmd(char *path, char **args, char **env)
 	{
 		signal(SIGQUIT, donothing);
 		execve(path, args, env);
-		free(path);
 		free_arr(args);
 		free_2d_array(env);
-		perror("msh: ");
+		ft_printf_error(path,": ", strerror(errno), "\n");
+		free(path);
 		exit(127 - (errno == EACCES));
 	}
 	else

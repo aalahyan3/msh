@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_path_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 07:57:43 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/26 04:30:00 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/08 20:35:57 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,8 @@ char	*get_cmd_path(char *full_cmd, char **env, int *i)
 				printf("msh: %s: is a directory\n", full_cmd);
 				return(NULL);
 			}
-			if (access(full_cmd, X_OK) == 0)
-			{
-				tmp = ft_strdup(full_cmd);
-				return(tmp);
-			}
-			if (access(full_cmd, F_OK) == 0)
-			{
-				printf("msh: %s: Permission denied\n", full_cmd);
-				return(NULL);
-			}
+			else
+				return (ft_strdup(full_cmd));
 		}
 		write(2, "msh: ", 6);
 		write(2, full_cmd, ft_strlen(full_cmd));
