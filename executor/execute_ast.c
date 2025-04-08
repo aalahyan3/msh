@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/08 16:26:35 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/08 17:45:32 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ int	execute_word(t_msh *msh, t_ast *ast)
 			write(2, args[0], ft_strlen(args[0]));
 			write(2, ": command not found\n", 21);
 		}
+		free_2d_array(env);
 		return (free_arr(args), 127);
 	}
 	return (0);
