@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 19:42:23 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/08 16:29:47 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/08 17:38:07 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ char	*non_interactive_mode(void)
 {
 	char	*line;
 	char	*tmp;
-	char	*new;
 
 	line = get_next_line(STDIN_FILENO);
 	tmp = ft_strtrim(line, "\n \t");

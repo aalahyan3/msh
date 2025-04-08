@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:27:31 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/08 16:28:09 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/08 17:40:17 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	start_reading(int fd, char *del)
 	exit(0);
 }
 
-int	handle_heredoc(t_reds *red, t_list *ev)
+int	handle_heredoc(t_reds *red)
 {
 	char	*filename;
 	int		fd;
@@ -143,7 +143,7 @@ int process_heredocs(t_ast *ast, t_list *env)
 			if (reds[i]->type == HEREDOC)
 			{
 				reds[i]->is_hd = 1;
-				if (handle_heredoc(reds[i], env))
+				if (handle_heredoc(reds[i]))
 					return (1);
 			}
 			i++;

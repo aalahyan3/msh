@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:29:20 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/28 19:41:25 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/08 17:39:13 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ bool	check_cmd_existance(char *s, int *i)
 bool	valid_blocks(char *s)
 {
 	int		i;
-	char	*cmd;
 
 	i = 0;
 	while (s[i])

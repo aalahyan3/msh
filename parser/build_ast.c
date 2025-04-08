@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 01:06:01 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/08 16:26:35 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/08 17:39:04 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,6 @@ t_list	*extract_left(t_list *tok_list, t_list *root)
 	if (prev)
 		prev->next = NULL;
 	return (tok_list);
-}
-
-static void	free_tok(void *content)
-{
-	t_tok	*tok;
-
-	tok = (t_tok *)content;
-	free(tok->content);
-	free(tok);
 }
 
 static t_ast	*ast_from_block(t_list *tok_list)

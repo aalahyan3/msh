@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 20:09:55 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/28 20:52:14 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/08 17:38:53 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*find_in_env(char *key, t_list *env)
 {
 	t_list	*curr;
-	int		keylen;
+	size_t		keylen;
 
 	keylen = ft_strlen(key);
 	curr = env;
