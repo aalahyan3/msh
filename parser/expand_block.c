@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 02:42:28 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/28 19:47:35 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:26:35 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,13 @@ t_ast	*expand_block(char *s)
 {
 	t_ast	*ast;
 
-	if (!s || !*s)
+	if (!s)
 		return (NULL);
+	if (!*s)
+		return (free(s), NULL);
 	ast = malloc(sizeof(t_ast));
 	if (!ast)
-		return (NULL);
+		return (free(s), NULL);
 	ast->content = ft_strdup(s);
 	ast->type = BLOCK;
 	ast->data = NULL;

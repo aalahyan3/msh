@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 11:09:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/27 13:52:56 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:27:44 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <sys/stat.h>
-# include "../signal_variable.h"
 # include "../expansion/expansion.h"
 #include <termios.h>
 /*Executor*/

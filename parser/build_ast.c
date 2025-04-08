@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 01:06:01 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/28 19:45:34 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:26:35 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,9 @@ static t_ast	*ast_from_block(t_list *tok_list)
 	char	*s;
 
 	s = ft_strdup(((t_tok *)tok_list->content)->content);
-	ft_lstclear(&tok_list, free_tok);
+	free(((t_tok *)tok_list->content)->content);
+	free(((t_tok *)tok_list->content));
+	free(tok_list);
 	return (expand_block(s));
 }
 

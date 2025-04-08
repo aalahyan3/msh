@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:53:51 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/06 16:59:22 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:14:14 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define EXPANSION_H
 
 # include "../env/env.h"
-# include "../ft_func/ft_func.h"
 # include "../parser/parser.h"
 
 # include <dirent.h>
