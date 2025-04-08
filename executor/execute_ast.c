@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_ast.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/08 20:37:10 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/08 21:11:59 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ int	execute_word(t_msh *msh, t_ast *ast)
 	i = 0;
 	if(!args)
 		return (1);
+	if (args[0] && args[0][0] == '\0')
+		return (0);
 	if (args[0] && !args[0][0])
 	{
 		write(2, "msh: ", 6);
