@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 19:25:16 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/09 21:51:17 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/09 22:16:55 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static char *expand_chunk(char *chunk, t_msh *msh, bool is_quote, bool end)
 {
 
 
-	if (*chunk)
+	if (!*chunk)
 	{
 		if (is_quote || end)
 			return(ft_strdup("$"));
@@ -50,6 +50,7 @@ static char *expand_chunk(char *chunk, t_msh *msh, bool is_quote, bool end)
 	{
 		return (ft_strdup(chunk));
 	}
+
 	return (ft_strdup(find_in_env(chunk, msh->env)));
 }
 

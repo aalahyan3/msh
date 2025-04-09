@@ -1,1 +1,219 @@
-hello how are you aalahyan you are connected on
+
+
+// expand string 
+static char	*get_next_chunk(char *s, int *i)
+{
+	int		start;
+
+	start = *i;
+	if (!s[*i])
+		return (NULL);
+	if (s[*i] == '$')
+		return (get_var_name(s, i));
+	else
+	{
+		while (s[*i] && s[*i] != '$')
+			*i += 1;
+		return (ft_substr(s, start, *i - start));
+	}
+	return (NULL);
+}
+
+static char *expand_chunk(char *chunk, t_msh *msh, bool is_quote, bool end)
+{
+
+
+	if (!*chunk)
+	{
+		if (is_quote || end)
+			return(ft_strdup("$"));
+		else
+			return (ft_strdup(""));
+	}
+	else if (*chunk == '?')
+	{
+		
+		return (ft_itoa(msh->last_exit));
+	}
+	else if (!ft_isalnum(*chunk) && *chunk != '_' && *chunk != '?')
+	{
+		return (ft_strdup(chunk));
+	}
+	return (ft_strdup(find_in_env(chunk, msh->env)));
+}
+
+static char	*expander(char *s, t_msh *msh, bool is_last)
+{
+	char	*chunk;
+	char	*final;
+	char	*temp;
+	int		i;
+
+	i = 0;
+	final = NULL;
+	chunk = get_next_chunk(s, &i);
+	while (chunk)
+	{
+		if (*chunk == '$')
+		{
+			temp = chunk;
+			chunk = expand_chunk(chunk + 1, msh, (*s == '"'), (!(s)[i] && is_last));
+			free(temp);
+		}
+		if (!chunk)
+			return (free(final), NULL);
+		temp = ft_strjoin(final, chunk);
+		free(final);
+		free(chunk);
+		if (!temp)
+			return (NULL);
+		final = temp;
+		chunk = get_next_chunk(s, &i);
+	}
+	return (final);
+}
+static int	get_last(char **s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i - 1);
+}
+
+char	**expand_string(char *str, t_msh *msh)
+{
+	char	**splited;
+	int		i;
+	int		last;
+	char	*expanded;
+
+	splited = split_by_quotes(str);
+	if (!splited)
+		return (NULL);
+	last = get_last(splited);
+	i = 0;
+	while (splited[i])
+	{
+		if (*splited[i] != '\'' && ft_strchr(splited[i], '$'))
+		{
+			expanded = expander(splited[i], msh, i == last);
+			free(splited[i]);
+			splited[i] = expanded;
+			if (!expanded)
+				return (free_2d_array(splited), NULL);
+		}
+		i++;
+	}
+	return (join_and_split(splited));
+}
+//expand vars
+static int	get_size(char **a)
+{
+	int	i;
+
+	i = 0;
+	while (a[i])
+		i++;
+	return (i + 1);
+}
+
+static	int	get_size_2(char ***tr)
+{
+	int	size;
+	int	i;
+	int	j;
+
+	i = 0;
+	size = 0;
+	while (tr[i])
+	{
+		j = 0;
+		while (tr[i][j])
+		{
+			j++;
+			size++;
+		}
+		i++;
+	}
+	return (size + 1);
+}
+
+void	free_triple_array(char ***ar)
+{
+	int	i;
+
+	i = 0;
+	while (ar[i])
+	{
+		free_2d_array(ar[i]);
+		i++;
+	}
+	free(ar);
+	ar = NULL;
+}
+
+char	**triple_to_double(char ***triple)
+{
+	char	**new;
+	int		i;
+	int		j;
+	int		k;
+
+	new = malloc(sizeof(char *) * get_size_2(triple));
+	if (!new)
+		return (free_triple_array(triple), NULL);
+	i = -1;
+	k = 0;
+	while (triple[++i])
+	{
+		j = -1;
+		while (triple[i][++j])
+			new[k++] = ft_strdup(triple[i][j]);
+	}
+	new[k] = NULL;
+	free_triple_array(triple);
+	return (new);
+}
+
+char	**expand_vars(char **old, t_msh *msh)
+{
+	char	***triple;
+	char	**expanded_string;
+	int		i;
+	int		j;
+
+	triple = malloc(sizeof(char **) * get_size(old));
+	if (!triple)
+		return (NULL);
+	i = -1;
+	j = 0;
+	while (old[++i])
+	{
+		expanded_string = expand_string(old[i], msh);
+		if (!expanded_string)
+			continue ;
+		triple[j++] = expanded_string;
+	}
+	triple[j] = NULL;
+	return (triple_to_double(triple));
+}
+
+// expand
+char	**expand(char **arr, t_msh *msh)
+{
+	char	**vars_expanded;
+	char	**wildcards_expanded;
+
+	for (int i = 0; arr[i]; i++)
+		printf("arr []%s\n", arr[i]);
+	if (!arr)
+		return (NULL);
+	vars_expanded = expand_vars(arr, msh);
+	if (!vars_expanded)
+		return (NULL);
+	wildcards_expanded = expand_wildcards(vars_expanded);
+	free_2d_array(vars_expanded);
+	return (wildcards_expanded);
+}

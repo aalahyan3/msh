@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 21:52:33 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/08 16:26:35 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/09 22:18:34 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ char	**expand_vars(char **old, t_msh *msh)
 		expanded_string = expand_string(old[i], msh);
 		if (!expanded_string)
 			continue ;
+
 		triple[j++] = expanded_string;
 	}
 	triple[j] = NULL;

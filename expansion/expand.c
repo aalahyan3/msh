@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 21:44:28 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/09 21:44:25 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/09 22:18:27 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ char	**expand(char **arr, t_msh *msh)
 	char	**vars_expanded;
 	char	**wildcards_expanded;
 
-	for (int i = 0; arr[i]; i++)
-		printf("arr []%s\n", arr[i]);
 	if (!arr)
 		return (NULL);
 	vars_expanded = expand_vars(arr, msh);

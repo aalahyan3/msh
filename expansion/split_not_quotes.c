@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 03:02:29 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/28 20:52:07 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/09 22:18:05 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,13 @@ char	**split_not_quotes(char *cmd)
 {
 	char	**array;
 
+	if (!cmd)
+		return (NULL);
+	if (!*cmd)
+	{
+		free(cmd);
+		return (NULL);
+	}
 	defernciate_command(cmd);
 	array = split_msh(cmd);
 	if (!array)
