@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_heredoc.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:27:31 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/08 17:40:17 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/08 22:55:05 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char	*gen_name()
 		if (access(name, F_OK) == -1)
 			return (free(suffix), name);
 		free(suffix);
+		free(name);
 		i++;
 	}
 	return (NULL);
@@ -38,7 +39,7 @@ void	hd_sig_handler(int sig)
 	if (sig == SIGINT)
 	{
 		write(1, "\n", 1);
-		exit(0);
+		exit(1);
 	}
 	else if (sig == SIGQUIT)
 	{

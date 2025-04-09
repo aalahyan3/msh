@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/08 21:11:59 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/09 15:57:45 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int	execute_word(t_msh *msh, t_ast *ast)
 {
 	char	**args;
 	char	*path;
+	char	*path_var;
 	int		i;
 	char	**env;
 
@@ -104,15 +105,27 @@ int	execute_word(t_msh *msh, t_ast *ast)
 		write(2, ":command not found\n", 19);
 		return (1);
 	}
-	path = get_cmd_path(args[0], env, &i); 
+	path_var = get_from_env("PATH", msh->env);
+	if (!path_var)
+	{
+		if (access(args[0], F_OK) == 0)
+		{
+			if (access(args[0], X_OK) == 0)
+				return (execute_simple_cmd(args[0], args, env));
+			ft_printf_error(args[0], ": ", "Permission denied", "\n");
+			free_2d_array(env);
+			return(126);
+		}
+		ft_printf_error(args[0], ": ", strerror(errno), "\n");
+		free_arr(args);
+		free_2d_array(env);
+		return (127);
+	}
+	path = get_cmd_path(args[0], env, &i);
 	if (path)
 		return (execute_simple_cmd(path, args, env));
 	else
 	{
-		if (access(args[0], F_OK) == 0 && i)
-		{
-			return (execute_simple_cmd(ft_strdup(args[0]), args, env));
-		}
 		if (i)
 		{
 			write(2, "msh: ", 6);
@@ -377,12 +390,13 @@ int	execute_block(t_msh *msh, t_ast *ast)
 	saved_stdout = dup(STDOUT_FILENO);
 	if (handle_redirections(ast->left, msh) == 1)
 		return (1);
-	args = (char **)ast->right->data;
+	args = expand ((char **)ast->right->data, msh);
 	if (args)
 	{
 		if (!is_builtin(args))
 		{
 			status = run_builting(msh, args);
+			free_2d_array(args);
 			reset_fd(saved_stdin, saved_stdout);
 			return (status);
 		}
