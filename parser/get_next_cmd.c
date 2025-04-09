@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 16:18:39 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/06 16:50:57 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:23:52 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	skipper(char *s, int *i)
 			while (s[*i] && s[*i] != ' ' && s[*i] != '\t' \
 			&& s[*i] != '<' && s[*i] != '>')
 			{
-				if (s[*i] == '\'' || s[*i] =='"')
+				if (s[*i] == '\'' || s[*i] == '"')
 				{
 					skip_quotes(s, i, s[*i]);
 					continue ;

@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 00:36:07 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/08 22:02:30 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/09 21:00:22 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,6 @@ bool	alter_existing_var(char *var, char *val, int defined, t_list **env)
 
 void ft_setenv(char *var, char *value, int defined, t_list **env)
 {
-	/*
-		the funstion looks for exiting variable and change it's value, if it doesn't exist it
-		will proceed to the next steps you coded:
-	*/
 	if (alter_existing_var(var, value, defined, env))
 		return ;
 	t_list *node = malloc(sizeof(t_list));
@@ -124,6 +120,8 @@ void print_sorted_env(struct s_env **env_array, int count)
 		write(1, env_array[i]->key, ft_strlen(env_array[i]->key));
 		if (env_array[i]->defined)
 		{
+			if (env_array[i]->key == NULL || env_array[i]->value == NULL)
+    			continue;
 			write(1, "=", 1);
 			write(1, "\"", 1);
 			write(1, env_array[i]->value, ft_strlen(env_array[i]->value));

@@ -6,19 +6,17 @@
 #    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/04/09 16:03:58 by aaitabde         ###   ########.fr        #
+#    Updated: 2025/04/09 16:48:02 by aaitabde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
-CFLAGS = -g -fsanitize=address#-Wall -Wextra -Werror 
+CFLAGS = #-g -fsanitize=address#-Wall -Wextra -Werror 
 NAME = minishell
 
 SRCS = 	minishell.c \
 		read_input.c \
-		ft_func/ft_fork.c\
-		ft_func/ft_isspace.c\
 		env/build_env.c\
 		env/clear_env.c\
 		env/build_default_env.c\

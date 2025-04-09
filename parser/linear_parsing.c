@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linear_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:03:29 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/08 21:52:39 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:23:07 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static void	print_unexpected_newline(t_l_parse *token, bool *no_error)
 	|| token->type == L_SEMICOLON || token->type == L_AMPERCENT \
 	|| token->type == L_REDIRECTION))
 	{
-		ft_printf_error("syntax error near unexpected token `newline'\n", NULL, NULL, NULL);
+		ft_printf_error("syntax error near unexpected token `newline'\n", \
+		NULL, NULL, NULL);
 		*no_error = false;
 	}
 	free(token->content);
@@ -62,7 +63,8 @@ bool	compare_expectations(t_l_parse *prev, t_l_parse *curr)
 {
 	if (curr->type == L_AMPERCENT || curr->type == L_SEMICOLON)
 	{
-		ft_printf_error("syntax error near unsupported token `", curr->content, "'\n", NULL);
+		ft_printf_error("syntax error near unsupported token `", \
+		curr->content, "'\n", NULL);
 		return (false);
 	}
 	if (is_unexpected_token(prev, curr))

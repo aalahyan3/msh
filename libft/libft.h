@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:28:57 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/08 16:26:48 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:27:40 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,6 @@ void	manage_flags_2(t_flags *flags, char *format);
 void	manage_format_bonus(va_list args, t_flags *flags, char *\
 format, int *counter);
 int		ft_printf(const char *format, ...);
-int	ft_strcmp(const char *s1, const char *s2);
-
+int		ft_strcmp(const char *s1, const char *s2);
+int		ft_isspace(int c);
 #endif

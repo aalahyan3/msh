@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/09 16:04:08 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/09 18:28:47 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@ int is_builtin(char **args)
 {
 	if(!args || !*args)
 		return(1);
-	if (args && args[0] && ft_strncmp(args[0], "echo\0", 5) == 0)
+	if (args && args[0] && ft_strncmp(args[0], "echo", 5) == 0)
 		return (0);
-	else if (args && args[0] && ft_strncmp(args[0], "pwd\0", 4) == 0)
+	else if (args && args[0] && ft_strncmp(args[0], "pwd", 4) == 0)
 		return (0);
-	else if (args && args[0] && ft_strncmp(args[0], "cd\0", 3) == 0)
+	else if (args && args[0] && ft_strncmp(args[0], "cd", 3) == 0)
 		return (0);
-	else if (args && args[0] && ft_strncmp(args[0], "export\0", 7) == 0)
+	else if (args && args[0] && ft_strncmp(args[0], "export", 7) == 0)
 		return (0);
-	else if (args && args[0] && ft_strncmp(args[0], "env\0", 4) == 0)
+	else if (args && args[0] && ft_strncmp(args[0], "env", 4) == 0)
 		return (0);
-	else if (args && args[0] && ft_strncmp(args[0], "unset\0", 6) == 0)
+	else if (args && args[0] && ft_strncmp(args[0], "unset", 6) == 0)
 		return (0);
-	else if (args && args[0] && ft_strncmp(args[0], "exit\0", 5) == 0)
+	else if (args && args[0] && ft_strncmp(args[0], "exit", 5) == 0)
 		return (0);
 	return (-1);
 }
@@ -80,7 +80,6 @@ char	**make_env(t_list *ev)
 	return (env);
 }
 
-void do_nothing(int sig);
 
 int	execute_word(t_msh *msh, t_ast *ast)
 {
@@ -93,16 +92,25 @@ int	execute_word(t_msh *msh, t_ast *ast)
 	if (!ast || !ast->data)
 		return (1);
 	env = make_env(msh->env);
-	args = expand((char **)ast->data, msh);
-	i = 0;
+	args = (char **)ast->data;
 	if(!args)
 		return (1);
 	if (args[0] && args[0][0] == '\0')
 		return (0);
+	args = expand((char **)ast->data, msh);
+	if (!args[0])
+	{
+		free_2d_array(args);
+		free_2d_array(env);
+		return(0);
+	}
+	i = 0;
 	if (args[0] && !args[0][0])
 	{
 		write(2, "msh: ", 6);
 		write(2, ":command not found\n", 19);
+		free_2d_array(args);
+		free_2d_array(env);
 		return (1);
 	}
 	path_var = get_from_env("PATH", msh->env);
@@ -111,10 +119,11 @@ int	execute_word(t_msh *msh, t_ast *ast)
 		if (access(args[0], F_OK) == 0)
 		{
 			if (access(args[0], X_OK) == 0)
-				return (execute_simple_cmd(args[0], args, env));
+				return (execute_simple_cmd(ft_strdup(args[0]), args, env));
 			ft_printf_error(args[0], ": ", "Permission denied", "\n");
 			free_2d_array(env);
-			return(126);
+			free_2d_array(args);
+			return (126);
 		}
 		ft_printf_error(args[0], ": ", strerror(errno), "\n");
 		free_arr(args);
@@ -156,8 +165,8 @@ void	file_open_error(char *filename)
 	write(2, ": No such file or directory\n", 28);
 }
 
- int	expand_heredoc(int fd, t_msh *msh)
- {
+int	expand_heredoc(int fd, t_msh *msh)
+{
 	char *line;
 	char *filename = gen_name();
 	
@@ -177,84 +186,8 @@ void	file_open_error(char *filename)
 		free(line);
 	}
 	close(fd);
-	return(new_fd_read);
- }
-
-// int handle_redirections(t_ast *ast, t_msh *msh, int *saved_stdin, int *saved_stdout)
-// {
-// 	t_reds	**reds;
-// 	int		red_count;
-// 	char	**args;
-
-// 	if (!ast || !ast->data)
-// 		return (0);
-// 	*saved_stdin = dup(STDIN_FILENO);
-// 	*saved_stdout = dup(STDOUT_FILENO);
-// 	reds = (t_reds **)ast->data;
-// 	red_count = 0;
-// 	while (reds[red_count])
-// 	{
-// 		if (reds[red_count]->is_hd)
-// 		{
-// 			dup2(reds[red_count]->fd, STDIN_FILENO);
-// 			// printf("%s\n", get_next_line(reds[red_count]->fd));
-// 			red_count++;
-// 			continue ;
-// 		}
-// 		args = expand_filename(reds[red_count]->file, msh);
-// 		if (!args || (args[0] && args[1] ))
-// 		{
-// 			ft_putstr_fd("msh: ", 2);
-// 			ft_putstr_fd(reds[red_count]->file, 2);
-// 			ft_putstr_fd(": ambiguous redirect\n", 2);
-// 			free_arr(args);
-// 			return (1);
-// 		}
-// 		reds[red_count]->file = ft_strdup(args[0]);
-// 		free_arr(args);
-// 		if (reds[red_count]->type == INPUT)
-// 		{
-// 			if (reds[red_count]->fd == -1)
-// 				reds[red_count]->fd = open(reds[red_count]->file, O_RDONLY);
-// 			else
-//  				reds[red_count]->fd = expand_heredoc(reds[red_count]->fd, msh);
-// 			if (reds[red_count]->fd < 0)
-// 			{
-// 				write(2, "msh: ", 6);
-// 				perror(reds[red_count]->file);
-// 				return (1);
-// 			}
-// 			dup2(reds[red_count]->fd, STDIN_FILENO);
-// 			close(reds[red_count]->fd);
-// 		}
-// 		else if (reds[red_count]->type == OUTPUT)
-// 		{
-// 			reds[red_count]->fd = open(reds[red_count]->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-// 			if (reds[red_count]->fd < 0)
-// 			{
-// 				write(2, "msh: ", 6);
-// 				perror(reds[red_count]->file);
-// 				return (1);
-// 			}
-// 			dup2(reds[red_count]->fd, STDOUT_FILENO);
-// 			close(reds[red_count]->fd);
-// 		}
-// 		else if (reds[red_count]->type == APPEND)
-// 		{
-// 			reds[red_count]->fd = open(reds[red_count]->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-// 			if (reds[red_count]->fd < 0)
-// 			{
-// 				write(2, "msh: ", 6);
-// 				perror(reds[red_count]->file);
-// 				return (1);
-// 			}
-// 			dup2(reds[red_count]->fd, STDOUT_FILENO);
-// 			close(reds[red_count]->fd);
-// 		}
-// 		red_count++;
-// 	}
-// 	return (0);
-// }
+	return (new_fd_read);
+}
 
 void reset_fd(int saved_stdin, int saved_stdout)
 {
@@ -304,6 +237,7 @@ int	was_hd(t_reds *red, t_msh *msh)
 	}
 	close(fd);
 	fd = open(name, O_RDONLY);
+	free(name);
 	close(red->fd);
 	return (fd);
 }
@@ -390,10 +324,10 @@ int	execute_block(t_msh *msh, t_ast *ast)
 	saved_stdout = dup(STDOUT_FILENO);
 	if (handle_redirections(ast->left, msh) == 1)
 		return (1);
-	args = expand ((char **)ast->right->data, msh);
+	args = expand((char **)ast->right->data, msh);
 	if (args)
 	{
-		if (!is_builtin(args))
+		if (is_builtin(args) == 0)
 		{
 			status = run_builting(msh, args);
 			free_2d_array(args);
@@ -401,6 +335,7 @@ int	execute_block(t_msh *msh, t_ast *ast)
 			return (status);
 		}
 	}
+	free_2d_array(args);
 	status = execute_ast(msh, ast->right);
 	reset_fd(saved_stdin, saved_stdout);
 	return (status);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initial_checks.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 21:03:19 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/08 21:55:54 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:25:07 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ bool	valid_parentheses(char *s, int *i)
 	}
 	if (expect)
 	{
-		ft_printf_error("syntax error near unclosed parenthisis `)`\n", NULL, NULL, NULL);
+		ft_printf_error("syntax error near unclosed parenthisis `)`\n", \
+		NULL, NULL, NULL);
 		return (false);
 	}
 	return (true);
@@ -96,10 +97,8 @@ static bool	is_parenthisis(char *s)
 			continue ;
 		}
 		if (s[i] == ')')
-		{
-			ft_printf_error("syntax error near unexpected token `)\n", NULL, NULL, NULL);
-			return (false);
-		}
+			return (ft_printf_error("syntax error near unexpected token `)\n", \
+			NULL, NULL, NULL), false);
 	}
 	return (true);
 }

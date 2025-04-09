@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 23:40:10 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/08 16:30:05 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:19:33 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ static t_tok	*separator_token(char	*s, int *i)
 		tok->type = AND;
 		return (tok);
 	}
-	free(tok);
-	return (NULL);
+	return (free(tok), NULL);
 }
 
 static char	*get_tok_content(char *s, int *i)

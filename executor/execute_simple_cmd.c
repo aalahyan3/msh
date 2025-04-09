@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 15:16:58 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/09 16:02:46 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/09 18:05:26 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	execute_simple_cmd(char *path, char **args, char **env)
 	else
 	{
 		free_2d_array(args);
+		free(path);
 		free_2d_array(env);
 		waitpid(pid, &status, 0);
 		if (WIFSIGNALED(status))

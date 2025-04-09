@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_fork.c                                          :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/05 16:39:04 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/05 16:42:56 by aalahyan         ###   ########.fr       */
+/*   Created: 2025/03/13 23:42:45 by aalahyan          #+#    #+#             */
+/*   Updated: 2025/04/09 18:15:48 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_func.h"
+#include "libft.h"
 
-int	ft_fork(void)
+int	ft_isspace(int c)
 {
-	int	pid;
-
-	pid = fork();
-	if (pid < 0)
-		perror("fork");
-	return (pid);
+	return ((c >= 9 && c <= 13) || c == 32);
 }

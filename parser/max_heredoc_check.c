@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   max_heredoc_check.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 18:36:16 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/07 21:45:11 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:22:27 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	count_hd_2(t_ast *root)
 {
-	t_reds **reds;
+	t_reds	**reds;
 	int		total;
 	int		i;
 
@@ -47,14 +47,16 @@ static int	count_hd(t_ast *root)
 	total += count_hd(root->right);
 	return (total);
 }
-bool max_heredoc_check(t_ast *root)
+
+bool	max_heredoc_check(t_ast *root)
 {
 	int	total;
 
 	total = count_hd(root);
 	if (total >= 17)
 	{
-		ft_printf_error("maximum here-document count exceeded\n", NULL, NULL, NULL);
+		ft_printf_error("maximum here-document count exceeded\n", \
+		NULL, NULL, NULL);
 		return (false);
 	}
 	return (true);

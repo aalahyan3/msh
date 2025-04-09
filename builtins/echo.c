@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 10:34:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/08 23:00:07 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/09 17:54:03 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_for_n_flag(char **arg)
 
 	i = 1;
 	n = 1;
-	while(arg[i] && arg[i][0] == '-' && arg[i][1] == 'n')
+	while (arg[i] && arg[i][0] == '-' && arg[i][1] == 'n')
 	{
 		while (arg[i][n] == 'n')
 			n++;
@@ -37,16 +37,16 @@ int ft_echo(char **arg, t_msh *msh)
 	char	*buffer;
 	char	*temp;
 
-	args = expand(arg, msh);
 	i = 1;
 	buffer = NULL;
+	args = arg;
 	if (!args[i])
 	{
 		write(1, "\n", 1);
-		free_2d_array(args);
 		return (0);
 	}
 	i = check_for_n_flag(args);
+	args = expand(arg, msh);
 	index = i;
 	while (args[i])
 	{
