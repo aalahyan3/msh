@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 19:42:23 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/08 17:38:07 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:13:39 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ char	*interactive_mode(void)
 	dup2(STDERR_FILENO, STDOUT_FILENO);
 	line = readline("msh$ ");
 	dup2(saved_stdout, STDOUT_FILENO);
+	close(saved_stdout);
 	trimmed = ft_strtrim(line, "\n \t");
 	free(line);
 	return (trimmed);
