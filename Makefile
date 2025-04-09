@@ -6,7 +6,7 @@
 #    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/04/09 14:51:56 by aaitabde         ###   ########.fr        #
+#    Updated: 2025/04/09 16:03:58 by aaitabde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS = 	minishell.c \
 		ft_func/ft_isspace.c\
 		env/build_env.c\
 		env/clear_env.c\
+		env/build_default_env.c\
 		free_utils/free_2d_array.c\
 		expansion/expand_vars.c\
 		expansion/expand.c\

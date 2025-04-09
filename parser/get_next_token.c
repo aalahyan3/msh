@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:54:47 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/08 16:26:35 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/08 21:44:15 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,6 @@ t_l_parse	*get_next_token(char *s, int *i)
 	tok = malloc(sizeof(t_l_parse));
 	if (!tok)
 		return (NULL);
-	if (s[*i] == '\'' || s[*i] == '"')
-		skip_quotes(s, i, s[*i]);
 	if (s[*i] == '(')
 	{
 		*i += 1;

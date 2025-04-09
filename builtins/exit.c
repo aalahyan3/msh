@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 01:41:17 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/28 14:59:19 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/09 15:20:09 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ bool    valid_arg(char *arg)
 {
     if (*arg == '-' || *arg == '+')
         arg++;
+    if (!*arg)
+        return (false);
     while (*arg)
     {
         if (!ft_isdigit(*arg))
@@ -79,37 +81,32 @@ int    ft_exit(t_msh *msh, char **args)
         clear_msh(msh);
         exit(0);
     }
-    if (msh->is_child)
-        exit(0);
     expanded = expand(args, msh);
     if (!expanded || !*expanded[0])
         ft_exit(msh, NULL);
     status = 0;
     over_flowed = false;
-    ft_putendl_fd("exit", 2);
-    if (args[1])
+    if (!msh->is_child)
+        ft_putendl_fd("exit", 2);
+    if (expanded[1])
     {
-        if (!valid_arg(args[1]))
+        if (!valid_arg(expanded[1]))
         {
-            ft_putstr_fd("msh: exit: ", 2);
-            ft_putstr_fd(args[1], 2);
-            ft_putendl_fd(": numeric argument required", 2);
+            ft_printf_error("exit :", expanded[1], ": numeric argument required\n", NULL);
             clear_msh(msh);
             free_2d_array(expanded);
             exit(255);
         }
-        if (array_size(args) > 2)
+        if (array_size(expanded) > 2)
         {
-            ft_putendl_fd("msh: exit: too many arguments", 2);
+            ft_printf_error("exit: too many arguments\n", NULL, NULL, NULL);
             free_2d_array(expanded);
             return (1);
         }
-        status = get_status(args[1], &over_flowed);
+        status = get_status(expanded[1], &over_flowed);
         if (over_flowed)
         {
-            ft_putstr_fd("msh: exit: ", 2);
-            ft_putstr_fd(args[1], 2);
-            ft_putendl_fd(": numeric argument required", 2);
+            ft_printf_error("exit :", expanded[1], ": numeric argument required\n", NULL);
             clear_msh(msh);
             free_2d_array(expanded);
             exit(255);
@@ -121,6 +118,7 @@ int    ft_exit(t_msh *msh, char **args)
     else
     {
         free_2d_array(expanded);
+        clear_msh(msh);
         exit(0);
     }
     return (0);

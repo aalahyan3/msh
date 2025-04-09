@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 10:34:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/08 21:24:08 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/08 23:00:07 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,15 @@ int	check_for_n_flag(char **arg)
 }
 int ft_echo(char **arg, t_msh *msh)
 {
-	int i;
-	int index;
-	char **args;
+	int 	i;
+	int 	index;
+	char 	**args;
+	char	*buffer;
+	char	*temp;
 
 	args = expand(arg, msh);
 	i = 1;
+	buffer = NULL;
 	if (!args[i])
 	{
 		write(1, "\n", 1);
@@ -47,13 +50,25 @@ int ft_echo(char **arg, t_msh *msh)
 	index = i;
 	while (args[i])
 	{
-		write(1, args[i], ft_strlen(args[i]));
+		temp = ft_strjoin(buffer, args[i]);
+		free(buffer);
+		buffer = temp;
 		if (args[i + 1])
-			write(1, " ", 1);
+		{
+			temp = ft_strjoin(buffer, " ");
+			free(buffer);
+			buffer = temp;
+		}
 		i++;
 	}
 	if(index == 1)
-		write(1, "\n", 1);
+	{
+		temp = ft_strjoin(buffer, "\n");
+		free(buffer);
+		buffer = temp;
+	}
+	ft_putstr_fd(buffer, 1);
+	free(buffer);
 	free_2d_array(args);
 	return (0);
 }

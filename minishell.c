@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/08 18:07:37 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/09 15:59:16 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,11 @@ void	setup_msh(t_msh *msh, char **env, char ac, char **av)
 	msh->ast = NULL;
 	msh->env = build_env(env);
 	if (!msh->env)
-		exit(1);
+		msh->env = build_default_env();
+	if (!*find_in_env("PATH", msh->env))
+		ft_lstadd_back(&msh->env, ft_lstnew(make_env_node("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.")));
+	if (!msh->env)
+		exit (0);
 	increment_shlvl(msh->env);
 	(void)ac;
 	(void)av;
@@ -54,6 +58,9 @@ int	main(int ac, char **av, char **env)
 	struct termios	terminal;
 
 	// atexit(leaks);
+	char **test;
+	char *exp[20] = {"$hhh", NULL};
+
 	rl_catch_signals = 0;
 	setup_msh(&msh, env, ac, av);
 	tcgetattr(0, &terminal);
