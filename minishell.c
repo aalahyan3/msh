@@ -6,26 +6,33 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/09 18:46:04 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/09 21:03:56 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
 
-volatile sig_atomic_t	g_signal_recieved;
 
-static void	draw_ascii_art(void)
-{
-	printf("\033[38;5;214m            _\
-	         _       _            _  _ \n");
-	printf(" _ __ ___  (_) _ __  (_) ___ |\
-	 |__    ___ | || |\n");
-	printf("| '_ ` _ \\ | || '_ \\ | |/ __|| '_ \\  / _ \\| || |\n");
-	printf("| | | | | || || | | || |\\__ \\| | | ||  __/| || |\n");
-	printf("|_| |_| |_||_||_| |_||_||___/|_| |_| \\___|\
-	|_||_| by aalahyan and aaitabde\n\n\033[0m");
+static void draw_ascii_art(void) {
+printf("\033[1;33m\n ███▄ ▄███▓ ██▓ ███▄    █  ██▓  ██████  ██░ ██ \
+▓█████  ██▓     ██▓    \033[0m\n");
+    printf("\033[38;5;220m▓██▒▀█▀ ██▒▓██▒ ██ ▀█   █ ▓██▒▒██    ▒ ▓██░ ██▒\
+▓█   ▀ ▓██▒    ▓██▒    \033[0m\n");
+    printf("\033[38;5;214m▓██    ▓██░▒██▒▓██  ▀█ ██▒▒██▒░ ▓██▄   ▒██▀▀██░\
+▒███   ▒██░    ▒██░    \033[0m\n");
+    printf("\033[38;5;208m▒██    ▒██ ░██░▓██▒  ▐▌██▒░██░  ▒   ██▒░▓█ ░██ \
+▒▓█  ▄ ▒██░    ▒██░    \033[0m\n");
+    printf("\033[38;5;202m▒██▒   ░██▒░██░▒██░   ▓██░░██░▒██████▒▒░▓█▒░██▓\
+░▒████▒░██████▒░██████▒\033[0m\n");
+    printf("\033[38;5;166m░ ▒░   ░  ░░▓  ░ ▒░   ▒ ▒ ░▓  ▒ ▒▓▒ ▒ ░ ▒ ░░▒░▒\
+░░ ▒░ ░░ ▒░▓  ░░ ▒░▓  ░\033[0m\n");
+    printf("\033[38;5;130m░  ░      ░ ▒ ░░ ░░   ░ ▒░ ▒ ░░ ░▒  ░ ░ ▒ ░▒░ ░ \
+░ ░  ░░ ░ ▒  ░░ ░ ▒  ░\033[0m\n");
+    printf("\033[38;5;94m░      ░    ▒ ░   ░   ░ ░  ▒ ░░  ░  ░   ░  ░░ ░  \
+ ░     ░ ░     ░ ░   \033[0m\n");
+    printf("\033[38;5;58m       ░    ░           ░  ░        ░   ░  ░  ░  \
+ ░  ░    ░  ░    ░  ░\033[0m\n");
 }
 
 void	leaks(void)
@@ -56,11 +63,24 @@ int	main(int ac, char **av, char **env)
 {
 	t_msh			msh;
 	struct termios	terminal;
-	char			**test;
-	char			*exp[20] = {"$hhh", NULL};
+
+	// atexit(leaks);
+	char **test;
+	char *exp[20] = {"$PAT", NULL};
 
 	rl_catch_signals = 0;
 	setup_msh(&msh, env, ac, av);
+	// test = expand(exp, &msh);
+	// if (!test)
+	// {
+	// 	clear_env(msh.env);
+	// 	return (1);
+	// }
+	// for (int i = 0; test[i]; i++)
+	// 	printf("|%s\n", test[i]);
+	// clear_env(msh.env);
+	// free_2d_array(test);
+	// return (0);
 	tcgetattr(0, &terminal);
 	while (1)
 	{
