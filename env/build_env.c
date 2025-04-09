@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 21:22:40 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/08 16:26:35 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/09 15:54:24 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,5 @@ t_list	*build_env(char **env_array)
 		ft_lstadd_back(&env, ft_lstnew(make_env_node(env_array[i])));
 		i++;
 	}
-	if (i == 0)
-		ft_setenv("PWD", getcwd(NULL, 0), 1, &env);
 	return (env);
 }

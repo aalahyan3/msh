@@ -6,7 +6,7 @@
 #    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/04/08 17:41:39 by aalahyan         ###   ########.fr        #
+#    Updated: 2025/04/09 15:49:09 by aalahyan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS = 	minishell.c \
 		ft_func/ft_isspace.c\
 		env/build_env.c\
 		env/clear_env.c\
+		env/build_default_env.c\
 		free_utils/free_2d_array.c\
 		expansion/expand_vars.c\
 		expansion/expand.c\
