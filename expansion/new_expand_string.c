@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 19:25:16 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/28 20:19:15 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/09 18:40:10 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	expand_chunk(char **chunk, t_msh *msh, bool is_quote, bool end)
 {
 	char	*temp;
 
-	1 && (temp = *chunk, (*chunk)++);
+	temp = *chunk;
 	if (!(**chunk))
 	{
 		free(temp);
@@ -56,7 +56,7 @@ static void	expand_chunk(char **chunk, t_msh *msh, bool is_quote, bool end)
 		return ;
 	}
 	*chunk = ft_strdup(find_in_env(*chunk, msh->env));
-	free(temp);
+	free(temp);  // Ensure you free temp here to avoid memory leaks
 }
 
 static bool	expander(char **s, t_msh *msh, bool is_last)
@@ -87,7 +87,6 @@ static bool	expander(char **s, t_msh *msh, bool is_last)
 	*s = final;
 	return (true);
 }
-
 static int	get_last(char **s)
 {
 	int	i;
