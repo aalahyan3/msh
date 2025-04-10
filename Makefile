@@ -6,11 +6,10 @@
 #    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/04/10 09:54:15 by aaitabde         ###   ########.fr        #
+#    Updated: 2025/04/10 10:06:19 by aaitabde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = cc
 
 CFLAGS = #-g -fsanitize=address#-Wall -Wextra -Werror 
 NAME = minishell

@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:27:31 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/10 09:10:18 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/10 09:53:39 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,13 @@ int	handle_heredoc(t_reds *red)
 	}
 	close(fd);
 	waitpid(pid, &status, 0);
+	if (WEXITSTATUS(status))
+	{
+		unlink(filename);
+		close(fd_read);
+		free(filename);
+		return (1);
+	}
 	unlink(filename);
 	red->fd = fd_read;
 	free(filename);

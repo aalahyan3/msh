@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 00:36:07 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/09 22:32:40 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/10 15:47:18 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -326,7 +326,11 @@ int ft_export(char **args, t_msh *msh)
 	proper_export_expansion(args);
 	i = 1;
 	status = 0;
+	for(int j = 0; args[j]; j++)
+		printf("before:\narg[%d] == %s\n", j, args[j]);
 	args = expand(args, msh);
+	for(int j = 0; args[j]; j++)
+		printf("after :\narg[%d] == %s\n", j, args[j]);
 	if (args[1] == NULL)
 		ft_env_sorted(msh->env);
 	while (args[i] != NULL)

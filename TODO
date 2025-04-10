@@ -1,1 +1,60 @@
-<< l cat ==> fix it
+/////////////////////////////
+export x="''''''''''''''''''''''''''''ls''''''''''"
+
+////////////////////////////
+msh$ ""
+msh: :command not found
+msh$ $?
+msh: 1: command not found
+msh$
+
+
+///////////////////////////////
+ls > $SDFGHJ
+
+
+
+
+////////////////////////////////
+msh$ pwd
+/mnt/homes/aaitabde/Desktop/current/minishell
+msh$ $OLDPWD
+msh: /mnt/homes/aaitabde/Desktop/current/minishell: is a directory
+msh$ $PWD
+msh: /mnt/homes/aaitabde/Desktop/current/minishell: is a directory
+
+//////////////////////////////////
+
+msh$ cd 1/2/3/
+msh$ pwd
+/mnt/homes/aaitabde/Desktop/current/minishell/1/2/3
+msh$ pwd
+/mnt/homes/aaitabde/Desktop/current/minishell/1/2/3
+msh$ $PWD
+msh: /mnt/homes/aaitabde/Desktop/current/minishell/1/2/3: No such file or directory
+msh$ $OLDPWD
+msh: /mnt/homes/aaitabde/Desktop/current/minishell/1/2/3: No such file or directory
+msh$ cd ..
+msh$ pwd
+
+msh$ cd ..
+[1]    15094 segmentation fault  ./minishell
+╭─aaitabde@e3r10p16 ~/Desktop/current/minishell ‹ex
+
+
+
+//////////////////////////////////////
+
+ctrl C * 3 => $? = 0
+
+//////////////////////////////////
+export ""
+
+
+
+////////////////////////
+unset _  (snat twal )
+
+
+/////////////////////
+unset ''
