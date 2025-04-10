@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 21:04:10 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/09 21:04:16 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/09 22:45:34 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,18 @@ char	*interactive_mode(void)
 	char	*trimmed;
 	int		saved_stdout;
 
-	saved_stdout = dup(STDOUT_FILENO);
+	saved_stdout = -1;
 	if (!isatty(STDOUT_FILENO))
+	{
+		saved_stdout = dup(STDOUT_FILENO);
 		dup2(STDERR_FILENO, STDOUT_FILENO);
+	}
 	line = readline("msh$ ");
-	dup2(saved_stdout, STDOUT_FILENO);
-	close(saved_stdout);
+	if (saved_stdout != -1)
+	{
+		dup2(saved_stdout, STDOUT_FILENO);
+		close(saved_stdout);
+	}
 	trimmed = ft_strtrim(line, "\n \t");
 	free(line);
 	return (trimmed);

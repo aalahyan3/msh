@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 00:36:07 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/09 21:00:22 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/09 22:32:40 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void print_sorted_env(struct s_env **env_array, int count)
 	i = 0;
 	while (i < count)
 	{
-		write(1, "declare -x ", 12);
+		write(1, "declare -x ", 11);
 		write(1, env_array[i]->key, ft_strlen(env_array[i]->key));
 		if (env_array[i]->defined)
 		{

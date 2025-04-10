@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 19:25:16 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/09 18:40:10 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/09 22:16:55 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,36 +30,31 @@ static char	*get_next_chunk(char *s, int *i)
 	return (NULL);
 }
 
-static void	expand_chunk(char **chunk, t_msh *msh, bool is_quote, bool end)
+static char *expand_chunk(char *chunk, t_msh *msh, bool is_quote, bool end)
 {
-	char	*temp;
 
-	temp = *chunk;
-	if (!(**chunk))
+
+	if (!*chunk)
 	{
-		free(temp);
 		if (is_quote || end)
-			*chunk = ft_strdup("$");
+			return(ft_strdup("$"));
 		else
-			*chunk = ft_strdup("");
-		return ;
+			return (ft_strdup(""));
 	}
-	else if (**chunk == '?')
+	else if (*chunk == '?')
 	{
-		free(temp);
-		*chunk = ft_itoa(msh->last_exit);
-		return ;
+		
+		return (ft_itoa(msh->last_exit));
 	}
-	else if (!ft_isalnum(**chunk) && **chunk != '_' && **chunk != '?')
+	else if (!ft_isalnum(*chunk) && *chunk != '_' && *chunk != '?')
 	{
-		*chunk = temp;
-		return ;
+		return (ft_strdup(chunk));
 	}
-	*chunk = ft_strdup(find_in_env(*chunk, msh->env));
-	free(temp);  // Ensure you free temp here to avoid memory leaks
+
+	return (ft_strdup(find_in_env(chunk, msh->env)));
 }
 
-static bool	expander(char **s, t_msh *msh, bool is_last)
+static char	*expander(char *s, t_msh *msh, bool is_last)
 {
 	char	*chunk;
 	char	*final;
@@ -68,24 +63,26 @@ static bool	expander(char **s, t_msh *msh, bool is_last)
 
 	i = 0;
 	final = NULL;
-	chunk = get_next_chunk(*s, &i);
+	chunk = get_next_chunk(s, &i);
 	while (chunk)
 	{
 		if (*chunk == '$')
-			expand_chunk(&chunk, msh, (**s == '"'), (!(*s)[i] && is_last));
+		{
+			temp = chunk;
+			chunk = expand_chunk(chunk + 1, msh, (*s == '"'), (!(s)[i] && is_last));
+			free(temp);
+		}
 		if (!chunk)
-			return (free(final), false);
+			return (free(final), NULL);
 		temp = ft_strjoin(final, chunk);
 		free(final);
 		free(chunk);
 		if (!temp)
-			return (false);
+			return (NULL);
 		final = temp;
-		chunk = get_next_chunk(*s, &i);
+		chunk = get_next_chunk(s, &i);
 	}
-	free(*s);
-	*s = final;
-	return (true);
+	return (final);
 }
 static int	get_last(char **s)
 {
@@ -102,6 +99,7 @@ char	**expand_string(char *str, t_msh *msh)
 	char	**splited;
 	int		i;
 	int		last;
+	char	*expanded;
 
 	splited = split_by_quotes(str);
 	if (!splited)
@@ -112,7 +110,10 @@ char	**expand_string(char *str, t_msh *msh)
 	{
 		if (*splited[i] != '\'' && ft_strchr(splited[i], '$'))
 		{
-			if (!expander(&splited[i], msh, i == last))
+			expanded = expander(splited[i], msh, i == last);
+			free(splited[i]);
+			splited[i] = expanded;
+			if (!expanded)
 				return (free_2d_array(splited), NULL);
 		}
 		i++;

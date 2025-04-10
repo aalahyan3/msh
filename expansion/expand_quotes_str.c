@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 16:56:51 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/08 16:26:35 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/10 09:10:15 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	get_size(char **splited)
 	return (size);
 }
 
-static void	remove_quortes(char **splited)
+static void	remove_quotes(char **splited)
 {
 	int	i;
 
@@ -54,6 +54,7 @@ static char	*join_double(char **splited)
 	if (!joined)
 		return (NULL);
 	i = 0;
+	joined[0] = 0;
 	while (splited[i])
 	{
 		if (*splited[i])
@@ -71,7 +72,7 @@ char	*expand_quotes_str(char *str)
 	splited = split_by_quotes(str);
 	if (!splited)
 		return (NULL);
-	remove_quortes(splited);
+	remove_quotes(splited);
 	joined = join_double(splited);
 	free_2d_array(splited);
 	return (joined);
