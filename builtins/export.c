@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 00:36:07 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/10 15:54:17 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:32:45 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -323,7 +323,6 @@ int ft_export(char **args, t_msh *msh)
 	int i;
 	int status;
 
-	printf("%s\n", args[1]);
 	proper_export_expansion(args);
 	i = 1;
 	status = 0;
