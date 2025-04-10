@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/10 11:53:36 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/10 15:04:24 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,6 +252,16 @@ void	ft_close(int *fd)
 	}
 }
 
+void	close_hds(t_reds **reds)
+{
+	int i = 0;
+	while (reds[i])
+	{
+		if (reds[i]->type == HEREDOC)
+			close(reds[i]->fd);
+		i++;
+	}
+}
 int	handle_redirections(t_ast *ast, t_msh *msh)
 {
 	int	in_fd;
@@ -274,6 +284,8 @@ int	handle_redirections(t_ast *ast, t_msh *msh)
 			in_fd = was_hd(reds[i], msh);
 			if (in_fd < 0)
 			{
+				ft_close(&in_fd);
+				close_hds(reds);
 				return (1);
 			}
 		}
@@ -284,14 +296,18 @@ int	handle_redirections(t_ast *ast, t_msh *msh)
 			if (!filename || !*filename[0] || filename[1])
 			{
 				ft_printf_error(reds[i]->file, ": ", " ambiguous redirect\n", NULL);
+				close_hds(reds);
 				if (filename)
 					free_2d_array(filename);
+				ft_close(&out_fd);
 				return (1);
 			}
 			in_fd = open(filename[0], O_RDONLY);
 			free_2d_array(filename);
 			if (in_fd < 0)
 			{
+				close_hds(reds);
+				ft_close(&out_fd);
 				ft_printf_error(reds[i]->file, ": ", strerror(errno), "\n");
 				return (1);
 			}
@@ -302,6 +318,7 @@ int	handle_redirections(t_ast *ast, t_msh *msh)
 			filename = expand_filename(reds[i]->file, msh);
 			if (!filename || !*filename[0] || filename[1])
 			{
+				close_hds(reds);
 				ft_printf_error(reds[i]->file, ": ", " ambiguous redirect\n", NULL);
 				if (filename)
 					free_2d_array(filename);
@@ -312,6 +329,8 @@ int	handle_redirections(t_ast *ast, t_msh *msh)
 			free_2d_array(filename);
 			if (out_fd < 0)
 			{
+				close_hds(reds);
+				ft_close(&in_fd);
 				ft_printf_error(reds[i]->file, ": ", strerror(errno), "\n");
 				return (1);
 			}
@@ -322,6 +341,8 @@ int	handle_redirections(t_ast *ast, t_msh *msh)
 			filename = expand_filename(reds[i]->file, msh);
 			if (!filename || !*filename[0] || filename[1])
 			{
+				ft_close(&in_fd);
+				close_hds(reds);
 				ft_printf_error(reds[i]->file, ": ", " ambiguous redirect\n", NULL);
 				if (filename)
 					free_2d_array(filename);
@@ -330,7 +351,11 @@ int	handle_redirections(t_ast *ast, t_msh *msh)
 			out_fd = open(filename[0], O_CREAT | O_RDWR | O_APPEND, 0644);
 			free_2d_array(filename);
 			if (out_fd < 0)
+			{
+				close_hds(reds);
+				ft_close(&in_fd);
 				return (1);
+			}
 		}
 		i++;
 	}
