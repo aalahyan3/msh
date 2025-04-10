@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/09 18:28:47 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/09 22:54:15 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ char	**make_env(t_list *ev)
 	env[i] = NULL;
 	return (env);
 }
-
 
 int	execute_word(t_msh *msh, t_ast *ast)
 {
@@ -325,15 +324,12 @@ int	execute_block(t_msh *msh, t_ast *ast)
 	if (handle_redirections(ast->left, msh) == 1)
 		return (1);
 	args = expand((char **)ast->right->data, msh);
-	if (args)
+	if (args && is_builtin(args) == 0)
 	{
-		if (is_builtin(args) == 0)
-		{
-			status = run_builting(msh, args);
-			free_2d_array(args);
-			reset_fd(saved_stdin, saved_stdout);
-			return (status);
-		}
+		status = run_builting(msh, args);
+		free_2d_array(args);
+		reset_fd(saved_stdin, saved_stdout);
+		return (status);
 	}
 	free_2d_array(args);
 	status = execute_ast(msh, ast->right);
