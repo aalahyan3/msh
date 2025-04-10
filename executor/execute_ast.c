@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/10 15:04:24 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:49:49 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,7 +295,10 @@ int	handle_redirections(t_ast *ast, t_msh *msh)
 			filename = expand_filename(reds[i]->file, msh);
 			if (!filename || !*filename[0] || filename[1])
 			{
-				ft_printf_error(reds[i]->file, ": ", " ambiguous redirect\n", NULL);
+				if (filename && !*filename[0])
+					ft_printf_error(reds[i]->file, ": ", "No such file or directory\n", NULL);
+				else
+					ft_printf_error(reds[i]->file, ": ", " ambiguous redirect\n", NULL);
 				close_hds(reds);
 				if (filename)
 					free_2d_array(filename);
@@ -319,7 +322,10 @@ int	handle_redirections(t_ast *ast, t_msh *msh)
 			if (!filename || !*filename[0] || filename[1])
 			{
 				close_hds(reds);
-				ft_printf_error(reds[i]->file, ": ", " ambiguous redirect\n", NULL);
+				if (filename && !*filename[0])
+					ft_printf_error(reds[i]->file, ": ", "No such file or directory\n", NULL);
+				else
+					ft_printf_error(reds[i]->file, ": ", " ambiguous redirect\n", NULL);
 				if (filename)
 					free_2d_array(filename);
 				ft_close(&in_fd);
@@ -343,7 +349,10 @@ int	handle_redirections(t_ast *ast, t_msh *msh)
 			{
 				ft_close(&in_fd);
 				close_hds(reds);
-				ft_printf_error(reds[i]->file, ": ", " ambiguous redirect\n", NULL);
+				if (filename && !*filename[0])
+					ft_printf_error(reds[i]->file, ": ", "No such file or directory\n", NULL);
+				else
+					ft_printf_error(reds[i]->file, ": ", " ambiguous redirect\n", NULL);
 				if (filename)
 					free_2d_array(filename);
 				return (1);
