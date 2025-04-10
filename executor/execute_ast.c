@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/09 22:56:01 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/10 09:56:22 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,7 @@ int	was_hd(t_reds *red, t_msh *msh)
 	name = gen_name();
 	fd = open(name, O_CREAT | O_RDWR, 0644);
 	if (fd < 0)
-		return (-1);
+		return (free(name), -1);
 	line = get_next_line(red->fd);
 	while (line)
 	{
@@ -237,6 +237,7 @@ int	was_hd(t_reds *red, t_msh *msh)
 	}
 	close(fd);
 	fd = open(name, O_RDONLY);
+	unlink(name);
 	free(name);
 	close(red->fd);
 	return (fd);

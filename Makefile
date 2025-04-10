@@ -6,13 +6,13 @@
 #    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/04/09 22:56:21 by aalahyan         ###   ########.fr        #
+#    Updated: 2025/04/10 09:21:40 by aalahyan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
-CFLAGS = -g -fsanitize=address#-Wall -Wextra -Werror 
+CFLAGS = #-g -fsanitize=address#-Wall -Wextra -Werror 
 NAME = minishell
 
 SRCS = 	minishell.c \
