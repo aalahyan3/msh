@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/09 22:48:11 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:25:01 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,25 +64,9 @@ int	main(int ac, char **av, char **env)
 	t_msh			msh;
 	struct termios	terminal;
 
-	// atexit(leaks);
-	char **test;
-	char *exp[20] = {"$PAT", NULL};
-
 	rl_catch_signals = 0;
 	setup_msh(&msh, env, ac, av);
-	// test = expand(exp, &msh);
-	// if (!test)
-	// {
-	// 	clear_env(msh.env);
-	// 	return (1);
-	// }
-	// for (int i = 0; test[i]; i++)
-	// 	printf("|%s\n", test[i]);
-	// clear_env(msh.env);
-	// free_2d_array(test);
-	// return (0);
 	tcgetattr(0, &terminal);
-
 	while (1)
 	{
 		msh.prompt = read_input(&msh);

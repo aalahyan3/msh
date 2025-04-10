@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 11:00:29 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/10 10:46:41 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:09:24 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void    close_fds(t_ast *ast)
     {
         if (reds[i]->fd > 0)
         {
-            printf("close\n");
             close(reds[i]->fd);
         }
         i++;

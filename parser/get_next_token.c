@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:54:47 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/08 21:44:15 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:27:00 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,14 @@ static void	get_next_token_5(t_l_parse **tok, char *s, int *i)
 	while (s[*i] && !ft_isspace(s[*i]) && s[*i] != '(' \
 	&& s[*i] != ')' && s[*i] != '|' && s[*i] != '&' \
 	&& s[*i] != ';' && s[*i] != '>' && s[*i] != '<')
+	{
+		if (s[*i] == '\'' || s[*i] == '\"')
+		{
+			skip_quotes(s, i, s[*i]);
+			continue ;
+		}
 		*i += 1;
+	}
 	(*tok)->content = ft_substr(s, start, *i - start);
 	if (!(*tok)->content)
 	{
