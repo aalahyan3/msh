@@ -3,14 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipe.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 11:00:29 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/24 20:14:19 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/10 10:46:41 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
+
+void    close_fds(t_ast *ast)
+{
+    t_reds **reds;
+
+    if (!ast || !ast->left)
+        return ;
+    reds = (t_reds **)ast->left->data;
+    if (!reds)
+        return ;
+    int i = 0;
+    while (reds[i])
+    {
+        if (reds[i]->fd > 0)
+        {
+            printf("close\n");
+            close(reds[i]->fd);
+        }
+        i++;
+    }
+}
 
 int execute_pipe(t_msh *msh, t_ast *ast)
 {
@@ -52,6 +73,8 @@ int execute_pipe(t_msh *msh, t_ast *ast)
     close(pipefd[1]);
     waitpid(pid1, NULL, 0);
     waitpid(pid2, &status, 0);
+    close_fds(ast->left);
+    close_fds(ast->right);
     if (WTERMSIG(status))
         return (WTERMSIG(status) + 128);
     else

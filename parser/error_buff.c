@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_buff.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:59:23 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/09 16:24:14 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/10 11:52:23 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,5 @@ void	ft_printf_error(char *s1, char *s2, char *s3, char *s4)
 	if (s4)
 		printf("%s", s4);
 	dup2(saved_stdout, STDOUT_FILENO);
+	close(saved_stdout);
 }
