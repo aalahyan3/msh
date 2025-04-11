@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/11 15:47:25 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/11 19:27:44 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -308,9 +308,9 @@ int	handle_redirections(t_ast *ast, t_msh *msh)
 			free_2d_array(filename);
 			if (in_fd < 0)
 			{
+				ft_printf_error(reds[i]->file, ": ", strerror(errno), "\n");
 				close_hds(reds);
 				ft_close(&out_fd);
-				ft_printf_error(reds[i]->file, ": ", strerror(errno), "\n");
 				return (1);
 			}
 		}
@@ -334,9 +334,9 @@ int	handle_redirections(t_ast *ast, t_msh *msh)
 			free_2d_array(filename);
 			if (out_fd < 0)
 			{
+				ft_printf_error(reds[i]->file, ": ", strerror(errno), "\n");
 				close_hds(reds);
 				ft_close(&in_fd);
-				ft_printf_error(reds[i]->file, ": ", strerror(errno), "\n");
 				return (1);
 			}
 		}
@@ -360,6 +360,7 @@ int	handle_redirections(t_ast *ast, t_msh *msh)
 			free_2d_array(filename);
 			if (out_fd < 0)
 			{
+				ft_printf_error(reds[i]->file, ": ", strerror(errno), "\n");
 				close_hds(reds);
 				ft_close(&in_fd);
 				return (1);
