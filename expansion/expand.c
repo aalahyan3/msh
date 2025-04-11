@@ -6,12 +6,33 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 21:44:28 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/09 22:18:27 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:37:34 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expansion.h"
 
+
+static void	restore_var_quotes(char **arr)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	while (arr[i])
+	{
+		j = 0;
+		while (arr[i][j])
+		{
+			if (arr[i][j] == SQUOTE_PACEHOLDER)
+				arr[i][j] = '\'';
+			else if (arr[i][j] == DQUOTE_PACEHOLDER)
+				arr[i][j] = '\"';
+			j++;
+		}
+		i++;
+	}
+}
 char	**expand(char **arr, t_msh *msh)
 {
 	char	**vars_expanded;
@@ -24,5 +45,8 @@ char	**expand(char **arr, t_msh *msh)
 		return (NULL);
 	wildcards_expanded = expand_wildcards(vars_expanded);
 	free_2d_array(vars_expanded);
+	if (!wildcards_expanded)
+		return (NULL);
+	restore_var_quotes(wildcards_expanded);
 	return (wildcards_expanded);
 }

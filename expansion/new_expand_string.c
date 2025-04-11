@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 19:25:16 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/11 15:27:30 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:39:33 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,25 @@ static char	*get_next_chunk(char *s, int *i)
 	return (NULL);
 }
 
+static void	alter_var_value(char *var_value)
+{
+	int		i;
+
+	i = 0;
+	while (var_value[i])
+	{
+		if (var_value[i] == '\'')
+			var_value[i] = SQUOTE_PACEHOLDER;
+		if (var_value[i] == '\"')
+			var_value[i] = DQUOTE_PACEHOLDER;
+		i++;
+	}
+}
+
 static char	*expand_chunk(char *chunk, t_msh *msh, bool is_quote, bool end)
 {
+	char	*var_value;
+
 	if (!*chunk)
 	{
 		if (is_quote || end)
@@ -47,7 +64,11 @@ static char	*expand_chunk(char *chunk, t_msh *msh, bool is_quote, bool end)
 	{
 		return (ft_strdup(chunk));
 	}
-	return (ft_strdup(find_in_env(chunk, msh->env)));
+	var_value = ft_strdup(find_in_env(chunk, msh->env));
+	if (!var_value)
+		return (NULL);
+	alter_var_value(var_value);
+	return (var_value);
 }
 
 static char	*expander(char *s, t_msh *msh, bool is_last)
@@ -57,7 +78,7 @@ static char	*expander(char *s, t_msh *msh, bool is_last)
 	char	*temp;
 	int		i;
 
-	(1) && (i = 0, final = ft_strdup("\""), chunk = get_next_chunk(s, &i));
+	(1) && (i = 0, final = NULL, chunk = get_next_chunk(s, &i));
 	while (chunk)
 	{
 		if (*chunk == '$')
@@ -75,8 +96,7 @@ chunk = expand_chunk(chunk + 1, msh, (*s == '"'), (!(s)[i] && is_last)));
 			return (NULL);
 		1 && (final = temp, chunk = get_next_chunk(s, &i));
 	}
-	temp = ft_strjoin(final, "\"");
-	return (free(final), NULL);
+	return (final);
 }
 
 static int	get_last(char **s)

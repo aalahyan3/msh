@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:53:51 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/11 14:41:37 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:34:33 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include "../parser/parser.h"
 # include <dirent.h>
 # define WILDCARD_PACEHOLDER '\x1'
+# define DQUOTE_PACEHOLDER '\x2'
+# define SQUOTE_PACEHOLDER '\x3'
 
 typedef struct s_args
 {
