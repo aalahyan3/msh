@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initial_checks.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 21:03:19 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/09 16:25:07 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/10 15:49:54 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ static bool	is_parenthisis(char *s)
 		if (s[i] == '\'' || s[i] == '"')
 		{
 			skip_quotes(s, &i, s[i]);
+			i--;
 			continue ;
 		}
 		if (s[i] == '(')

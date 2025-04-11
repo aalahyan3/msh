@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/10 17:53:43 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:16:53 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,17 @@ int	run_builting (t_msh *msh, char **args, char **expanded_args)
 {
 	if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "echo", 5) == 0)
  		return (ft_echo(expanded_args, msh));
-	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "pwd", 3) == 0)
+	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "pwd", 4) == 0)
 		return (ft_pwd(msh->env));
-	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "cd", 2) == 0)
+	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "cd", 3) == 0)
 		return (ft_cd(expanded_args[1], msh));
 	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "env", 3) == 0)
 		return (ft_env(msh->env));
-	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "unset", 5) == 0)
+	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "unset", 6) == 0)
 		return (ft_unset(msh->env, expanded_args));
-	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "export", 6) == 0)
+	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "export", 7) == 0)
 		return (ft_export(args, msh));
-	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "exit", 4) == 0)
+	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "exit", 5) == 0)
 		ft_exit(msh, expanded_args);
 	return (1);
 }
@@ -234,11 +234,11 @@ int	was_hd(t_reds *red, t_msh *msh)
 		free(line);
 		line = get_next_line(red->fd);
 	}
+	close(red->fd);
 	close(fd);
 	fd = open(name, O_RDONLY);
 	unlink(name);
 	free(name);
-	close(red->fd);
 	return (fd);
 }
 
@@ -251,12 +251,23 @@ void	ft_close(int *fd)
 	}
 }
 
+void	close_hds(t_reds **reds)
+{
+	int i = 0;
+	while (reds[i])
+	{
+		if (reds[i]->type == HEREDOC)
+			close(reds[i]->fd);
+		i++;
+	}
+}
 int	handle_redirections(t_ast *ast, t_msh *msh)
 {
 	int	in_fd;
 	int	out_fd;
 	int	i;
 	t_reds	**reds;
+	char	**filename;
 
 	if (!ast->data)
 		return (0);
@@ -272,15 +283,33 @@ int	handle_redirections(t_ast *ast, t_msh *msh)
 			in_fd = was_hd(reds[i], msh);
 			if (in_fd < 0)
 			{
+				ft_close(&in_fd);
+				close_hds(reds);
 				return (1);
 			}
 		}
 		else if (reds[i]->type == INPUT)
 		{
 			ft_close(&in_fd);
-			in_fd = open(reds[i]->file, O_RDONLY);
+			filename = expand_filename(reds[i]->file, msh);
+			if (!filename || !*filename[0] || filename[1])
+			{
+				if (filename && !*filename[0])
+					ft_printf_error(reds[i]->file, ": ", "No such file or directory\n", NULL);
+				else
+					ft_printf_error(reds[i]->file, ": ", " ambiguous redirect\n", NULL);
+				close_hds(reds);
+				if (filename)
+					free_2d_array(filename);
+				ft_close(&out_fd);
+				return (1);
+			}
+			in_fd = open(filename[0], O_RDONLY);
+			free_2d_array(filename);
 			if (in_fd < 0)
 			{
+				close_hds(reds);
+				ft_close(&out_fd);
 				ft_printf_error(reds[i]->file, ": ", strerror(errno), "\n");
 				return (1);
 			}
@@ -288,9 +317,25 @@ int	handle_redirections(t_ast *ast, t_msh *msh)
 		else if (reds[i]->type == OUTPUT)
 		{
 			ft_close(&out_fd);
-			out_fd = open(reds[i]->file, O_CREAT | O_RDWR | O_TRUNC, 0644);
+			filename = expand_filename(reds[i]->file, msh);
+			if (!filename || !*filename[0] || filename[1])
+			{
+				close_hds(reds);
+				if (filename && !*filename[0])
+					ft_printf_error(reds[i]->file, ": ", "No such file or directory\n", NULL);
+				else
+					ft_printf_error(reds[i]->file, ": ", " ambiguous redirect\n", NULL);
+				if (filename)
+					free_2d_array(filename);
+				ft_close(&in_fd);
+				return (1);
+			}
+			out_fd = open(filename[0], O_CREAT | O_RDWR | O_TRUNC, 0644);
+			free_2d_array(filename);
 			if (out_fd < 0)
 			{
+				close_hds(reds);
+				ft_close(&in_fd);
 				ft_printf_error(reds[i]->file, ": ", strerror(errno), "\n");
 				return (1);
 			}
@@ -298,9 +343,27 @@ int	handle_redirections(t_ast *ast, t_msh *msh)
 		else if (reds[i]->type == APPEND)
 		{
 			ft_close(&out_fd);
-			out_fd = open(reds[i]->file, O_CREAT | O_RDWR | O_APPEND, 0644);
-			if (out_fd < 0)
+			filename = expand_filename(reds[i]->file, msh);
+			if (!filename || !*filename[0] || filename[1])
+			{
+				ft_close(&in_fd);
+				close_hds(reds);
+				if (filename && !*filename[0])
+					ft_printf_error(reds[i]->file, ": ", "No such file or directory\n", NULL);
+				else
+					ft_printf_error(reds[i]->file, ": ", " ambiguous redirect\n", NULL);
+				if (filename)
+					free_2d_array(filename);
 				return (1);
+			}
+			out_fd = open(filename[0], O_CREAT | O_RDWR | O_APPEND, 0644);
+			free_2d_array(filename);
+			if (out_fd < 0)
+			{
+				close_hds(reds);
+				ft_close(&in_fd);
+				return (1);
+			}
 		}
 		i++;
 	}
@@ -323,11 +386,22 @@ int	execute_block(t_msh *msh, t_ast *ast)
 		return (1);
 	saved_stdin = dup(STDIN_FILENO);
 	saved_stdout = dup(STDOUT_FILENO);
-	if (handle_redirections(ast->left, msh) == 1)
+	if (handle_redirections(ast->left, msh))
+	{
+		close(saved_stdin);
+		close(saved_stdout);
 		return (1);
+	}
 	args = (char **)ast->right->data;
 	expanded_args = expand(args, msh);
-	if (expanded_args && is_builtin(expanded_args) == 0)
+	if (expanded_args[0] && !expanded_args[0][0])
+	{
+		free_2d_array(expanded_args);
+		close(saved_stdin);
+		close(saved_stdout);
+		return (127);
+	}
+	if (args && is_builtin(args) == 0)
 	{
 		status = run_builting(msh, args, expanded_args);
 		free_2d_array(expanded_args);
