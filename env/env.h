@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 21:19:14 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/09 15:48:43 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/11 14:49:05 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ struct s_env
 	char	*value;
 	bool	defined;
 };
-
 
 void ft_setenv(char *var, char *value, int defined, t_list **env);
 struct s_env	*make_env_node(char *var);
