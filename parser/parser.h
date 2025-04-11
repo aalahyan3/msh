@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 23:32:47 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/09 16:41:56 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:14:12 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 # include <string.h>
 # include <errno.h>
+# include <stdio.h>
+# include <readline/readline.h>
 # include "../libft/libft.h"
 # include "../env/env.h"
-# include "../free_utils/free_utils.h"
-# include <readline/readline.h>
 
 enum e_tok_type
 {
@@ -115,5 +115,6 @@ char		*get_inside_parenthisis(char *s, int i);
 char		*get_next_red(char *s, int *i);
 void		ft_printf_error(char *s1, char *s2, char *s3, char *s4);
 bool		max_heredoc_check(t_ast *root);
+void		free_2d_array(char **arr);
 
 #endif

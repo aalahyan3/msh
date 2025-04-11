@@ -6,7 +6,7 @@
 #    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/04/10 15:29:58 by aalahyan         ###   ########.fr        #
+#    Updated: 2025/04/11 15:39:23 by aalahyan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRCS = 	minishell.c \
 		env/build_env.c\
 		env/clear_env.c\
 		env/build_default_env.c\
-		free_utils/free_2d_array.c\
+		parser/free_2d_array.c\
 		expansion/expand_vars.c\
 		expansion/expand.c\
 		expansion/split_by_quotes.c\
@@ -62,7 +62,6 @@ SRCS = 	minishell.c \
 		executor/execute.c\
 		parser/get_next_token.c\
 		parser/max_heredoc_check.c\
-		free_utils/free_env_list.c\
 		builtins/echo.c\
 		builtins/cd.c\
 		builtins/env.c\
@@ -70,6 +69,7 @@ SRCS = 	minishell.c \
 		builtins/export.c\
 		builtins/pwd.c\
 		builtins/exit.c\
+		builtins/exit_utils.c\
 
 
 READLINE_COMPILE = -I$(shell brew --prefix readline)/include

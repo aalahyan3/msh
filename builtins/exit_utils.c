@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_2d_array.c                                    :+:      :+:    :+:   */
+/*   exit_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/12 21:39:02 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/03/21 21:44:09 by aalahyan         ###   ########.fr       */
+/*   Created: 2025/04/11 15:38:04 by aalahyan          #+#    #+#             */
+/*   Updated: 2025/04/11 15:38:22 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "free_utils.h"
+#include "builtins.h"
 
-void	free_2d_array(char **arr)
+void    clear_msh(t_msh *msh)
 {
-	int	i;
+	clear_env(msh->env);
+	free_ast(&msh->ast);
+	rl_clear_history();
+}
+
+int    array_size(char **s)
+{
+	int    i;
 
 	i = 0;
-	if (!arr)
-		return ;
-	while (arr[i])
-	{
-		free(arr[i]);
-		arr[i] = NULL;
+	while (s[i])
 		i++;
-	}
-	free(arr);
-	arr = NULL;
+	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 19:25:16 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/11 14:58:29 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:27:30 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,11 @@ static char	*expander(char *s, t_msh *msh, bool is_last)
 	while (chunk)
 	{
 		if (*chunk == '$')
-			(1) && (temp = chunk, chunk = \
-expand_chunk(chunk + 1, msh, (*s == '"'), (!(s)[i] && is_last)), free(temp));
+		{
+			1 && (temp = chunk, \
+chunk = expand_chunk(chunk + 1, msh, (*s == '"'), (!(s)[i] && is_last)));
+			free(temp);
+		}
 		if (!chunk)
 			return (free(final), NULL);
 		temp = ft_strjoin(final, chunk);
@@ -70,13 +73,10 @@ expand_chunk(chunk + 1, msh, (*s == '"'), (!(s)[i] && is_last)), free(temp));
 		free(chunk);
 		if (!temp)
 			return (NULL);
-		final = temp;
-		chunk = get_next_chunk(s, &i);
+		1 && (final = temp, chunk = get_next_chunk(s, &i));
 	}
 	temp = ft_strjoin(final, "\"");
-	free(final);
-	final = temp;
-	return (final);
+	return (free(final), NULL);
 }
 
 static int	get_last(char **s)

@@ -6,40 +6,37 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/10 17:03:01 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:04:01 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-
-static void draw_ascii_art(void) {
-	
-	struct winsize w;
-
+static void	draw_ascii_art(void)
+{
+	struct winsize	w;
 
 	ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 	if (w.ws_col <= 75)
-		return;
-printf("\033[1;33m\n ███▄ ▄███▓ ██▓ ███▄    █  ██▓  ██████  ██░ ██ \
-▓█████  ██▓     ██▓    \033[0m\n");
-    printf("\033[38;5;220m▓██▒▀█▀ ██▒▓██▒ ██ ▀█   █ ▓██▒▒██    ▒ ▓██░ ██▒\
-▓█   ▀ ▓██▒    ▓██▒    \033[0m\n");
-    printf("\033[38;5;214m▓██    ▓██░▒██▒▓██  ▀█ ██▒▒██▒░ ▓██▄   ▒██▀▀██░\
-▒███   ▒██░    ▒██░    \033[0m\n");
-    printf("\033[38;5;208m▒██    ▒██ ░██░▓██▒  ▐▌██▒░██░  ▒   ██▒░▓█ ░██ \
-▒▓█  ▄ ▒██░    ▒██░    \033[0m\n");
-    printf("\033[38;5;202m▒██▒   ░██▒░██░▒██░   ▓██░░██░▒██████▒▒░▓█▒░██▓\
-░▒████▒░██████▒░██████▒\033[0m\n");
-    printf("\033[38;5;166m░ ▒░   ░  ░░▓  ░ ▒░   ▒ ▒ ░▓  ▒ ▒▓▒ ▒ ░ ▒ ░░▒░▒\
-░░ ▒░ ░░ ▒░▓  ░░ ▒░▓  ░\033[0m\n");
-    printf("\033[38;5;130m░  ░      ░ ▒ ░░ ░░   ░ ▒░ ▒ ░░ ░▒  ░ ░ ▒ ░▒░ ░ \
-░ ░  ░░ ░ ▒  ░░ ░ ▒  ░\033[0m\n");
-    printf("\033[38;5;94m░      ░    ▒ ░   ░   ░ ░  ▒ ░░  ░  ░   ░  ░░ ░  \
- ░     ░ ░     ░ ░   \033[0m\n");
-    printf("\033[38;5;58m       ░    ░           ░  ░        ░   ░  ░  ░  \
- ░  ░    ░  ░    ░  ░\033[0m\n");
+		return ;
+	printf("\033[1;33m\n ███▄ ▄███▓ ██▓ ███▄    █  ██▓  ██████  ██░ ██ \
+	▓█████  ██▓     ██▓    \033[0m\n");
+	printf("\033[38;5;220m▓██▒▀█▀ ██▒▓██▒ ██ ▀█   █ ▓██▒▒██    ▒ ▓██░ ██▒\
+	▓█   ▀ ▓██▒    ▓██▒    \033[0m\n");
+	printf("\033[38;5;214m▓██    ▓██░▒██▒▓██  ▀█ ██▒▒██▒░ ▓██▄   ▒██▀▀██░\
+	▒███   ▒██░    ▒██░    \033[0m\n");
+	printf("\033[38;5;208m▒██    ▒██ ░██░▓██▒  ▐▌██▒░██░  ▒   ██▒░▓█ ░██ \
+	▒▓█  ▄ ▒██░    ▒██░    \033[0m\n");
+	printf("\033[38;5;202m▒██▒   ░██▒░██░▒██░   ▓██░░██░▒██████▒▒░▓█▒░██▓\
+	░▒████▒░██████▒░██████▒\033[0m\n");
+	printf("\033[38;5;166m░ ▒░   ░  ░░▓  ░ ▒░   ▒ ▒ ░▓  ▒ ▒▓▒ ▒ ░ ▒ ░░▒░▒\
+	░░ ▒░ ░░ ▒░▓  ░░ ▒░▓  ░\033[0m\n");
+	printf("\033[38;5;130m░  ░      ░ ▒ ░░ ░░   ░ ▒░ ▒ ░░ ░▒  ░ ░ ▒ ░▒░ ░ \
+	░ ░  ░░ ░ ▒  ░░ ░ ▒  ░\033[0m\n");
+	printf("\033[38;5;94m░      ░    ▒ ░   ░   ░ ░  ▒ ░░  ░  ░   ░  ░░ ░  \
+	░     ░ ░     ░ ░   \033[0m\n");
+	printf("\033[38;5;58m       ░    ░           ░  ░        ░   ░  ░  ░  \
+	░  ░    ░  ░    ░  ░\033[0m\n");
 }
 
 void	leaks(void)
@@ -47,7 +44,7 @@ void	leaks(void)
 	system("leaks minishell");
 }
 
-void	setup_msh(t_msh *msh, char **env, char ac, char **av)
+static void	setup_msh(t_msh *msh, char **env, char ac, char **av)
 {
 	draw_ascii_art();
 	msh->prompt = NULL;
@@ -58,7 +55,8 @@ void	setup_msh(t_msh *msh, char **env, char ac, char **av)
 	if (!msh->env)
 		msh->env = build_default_env();
 	if (!*find_in_env("PATH", msh->env))
-		ft_lstadd_back(&msh->env, ft_lstnew(make_env_node("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.")));
+		ft_lstadd_back(&msh->env, \
+ft_lstnew(make_env_node("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.")));
 	if (!msh->env)
 		exit (0);
 	increment_shlvl(msh->env);
