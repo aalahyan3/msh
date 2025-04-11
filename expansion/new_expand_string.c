@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 19:25:16 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/09 22:16:55 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/11 10:42:54 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static char	*expander(char *s, t_msh *msh, bool is_last)
 	int		i;
 
 	i = 0;
-	final = NULL;
+	final = ft_strdup("\"");
 	chunk = get_next_chunk(s, &i);
 	while (chunk)
 	{
@@ -82,6 +82,9 @@ static char	*expander(char *s, t_msh *msh, bool is_last)
 		final = temp;
 		chunk = get_next_chunk(s, &i);
 	}
+	temp = ft_strjoin(final, "\"");
+	free(final);
+	final = temp;
 	return (final);
 }
 static int	get_last(char **s)

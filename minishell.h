@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 13:52:40 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/09 16:41:46 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:57:21 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <signal.h>
+# include <sys/ioctl.h>
 
 # include "libft/libft.h"
 # include "parser/parser.h"

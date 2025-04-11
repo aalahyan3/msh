@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/10 16:49:49 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:55:27 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -296,7 +296,7 @@ int	handle_redirections(t_ast *ast, t_msh *msh)
 			if (!filename || !*filename[0] || filename[1])
 			{
 				if (filename && !*filename[0])
-					ft_printf_error(reds[i]->file, ": ", "No such file or directory\n", NULL);
+					ft_printf_error(filename[0], ": ", "No such file or directory\n", NULL);
 				else
 					ft_printf_error(reds[i]->file, ": ", " ambiguous redirect\n", NULL);
 				close_hds(reds);
@@ -323,7 +323,7 @@ int	handle_redirections(t_ast *ast, t_msh *msh)
 			{
 				close_hds(reds);
 				if (filename && !*filename[0])
-					ft_printf_error(reds[i]->file, ": ", "No such file or directory\n", NULL);
+					ft_printf_error(filename[0], ": ", "No such file or directory\n", NULL);
 				else
 					ft_printf_error(reds[i]->file, ": ", " ambiguous redirect\n", NULL);
 				if (filename)
@@ -350,7 +350,7 @@ int	handle_redirections(t_ast *ast, t_msh *msh)
 				ft_close(&in_fd);
 				close_hds(reds);
 				if (filename && !*filename[0])
-					ft_printf_error(reds[i]->file, ": ", "No such file or directory\n", NULL);
+					ft_printf_error(filename[0], ": ", "No such file or directory\n", NULL);
 				else
 					ft_printf_error(reds[i]->file, ": ", " ambiguous redirect\n", NULL);
 				if (filename)

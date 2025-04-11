@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/10 16:25:01 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/10 17:03:01 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 
 
 static void draw_ascii_art(void) {
+	
+	struct winsize w;
+
+
+	ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+	if (w.ws_col <= 75)
+		return;
 printf("\033[1;33m\n ███▄ ▄███▓ ██▓ ███▄    █  ██▓  ██████  ██░ ██ \
 ▓█████  ██▓     ██▓    \033[0m\n");
     printf("\033[38;5;220m▓██▒▀█▀ ██▒▓██▒ ██ ▀█   █ ▓██▒▒██    ▒ ▓██░ ██▒\
