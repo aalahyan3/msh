@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 17:21:46 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/24 01:31:38 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/11 23:18:56 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+
 
 int	ft_unset(t_list *env, char **keys)
 {
@@ -25,6 +26,8 @@ int	ft_unset(t_list *env, char **keys)
 	i = 1;
 	while (keys[i])
 	{
+		if (!valid_identifier(keys[i]))
+			ft_printf_error("unset: `", keys[i], "': not a valid identifier\n", NULL);
 		while(tmp)
 		{
 			if (ft_strncmp(((struct s_env *)tmp->content)->key, keys[i], ft_strlen(keys[i])) == 0)

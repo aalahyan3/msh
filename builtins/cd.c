@@ -6,16 +6,23 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:43:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/11 19:43:09 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/12 00:07:29 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-char	*trim_last_dir(char *cwd)
+char	*trim_last_dir(char *cwd, int *status)
 {
 	int		len;
 
+	if (access(cwd, F_OK) == -1)
+	{
+		// free(cwd);
+		*status = -1;		
+		ft_printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
+		return (NULL);
+	}
 	len = ft_strlen(cwd);
 	while (len >= 0)
 	{
@@ -52,16 +59,11 @@ void	update_old_and_new_pwd(t_msh *msh)
 	while(env)
 	{
 		env_tmp = env->content;
-		if (ft_strncmp(env_tmp->key, "OLDPWD\0", 7) == 0)
+		if (ft_strncmp(env_tmp->key, "OLDPWD", 7) == 0)
 		{
 			free(env_tmp->value);
 			env_tmp->value = ft_strdup(get_from_env("PWD", msh->env));
 			found = 1;
-		}
-		if (ft_strncmp(env_tmp->key, "PWD\0", 4) == 0)
-		{
-			free(env_tmp->value);
-			env_tmp->value = getcwd(NULL, 0);
 		}
 		env = env->next;
 	}
@@ -70,6 +72,18 @@ void	update_old_and_new_pwd(t_msh *msh)
 		old_pwd = ft_strdup(get_from_env("PWD", msh->env));
 		ft_setenv("OLDPWD", old_pwd, 1, &msh->env);
 		free(old_pwd);
+	}
+	env = msh->env;
+	while(env)
+	{
+		env_tmp = env->content;
+		if (ft_strncmp(env_tmp->key, "PWD", 4) == 0)
+		{
+			free(env_tmp->value);
+			env_tmp->value = getcwd(NULL, 0);
+			break ;
+		}
+		env = env->next;
 	}
 }
 
@@ -85,7 +99,7 @@ int	ft_cd(char *path, t_msh *msh)
 	{
 		if (chdir(home) == -1)
 		{
-			write(2, "msh: cd: HOME not set\n", 22);
+			ft_printf_error("cd: HOME not set\n", NULL, NULL, NULL);
 			return (1);
 		}
 		update_old_and_new_pwd(msh);
@@ -98,7 +112,7 @@ int	ft_cd(char *path, t_msh *msh)
 		old_pwd = get_from_env("OLDPWD", msh->env);
 		ret = chdir(old_pwd);
 		if (ret == -1)
-			write(2, "msh: cd: OLDPWD not set\n", 24);
+			ft_printf_error("cd: OLDPWD not set\n", NULL, NULL, NULL);
 		else
 			update_old_and_new_pwd(msh);
 		if (old_pwd)
@@ -112,8 +126,10 @@ int	ft_cd(char *path, t_msh *msh)
 	}
 	if (ft_strncmp(path, "..\0", 3) == 0)
 	{
-		ret = chdir(trim_last_dir(get_from_env("PWD", msh->env)));
-		update_old_and_new_pwd(msh);
+		int status = 0;
+		ret = chdir(trim_last_dir(get_from_env("PWD", msh->env), &status));// check for trim last dir fucntion return value then update
+		if(status == 1)
+			update_old_and_new_pwd(msh);
 		return (ret);
 	}
 	if (ft_strncmp(path, "--\0", 3) == 0 || ft_strncmp(path, "~\0", 2) == 0)

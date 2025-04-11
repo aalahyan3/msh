@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 01:41:17 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/11 15:53:16 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/11 23:50:04 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,7 @@ int	ft_exit(t_msh *msh, char **args)
 
 	if (!args)
 	{
-		if (isatty(STDIN_FILENO))
-		{
-			ft_putstr_fd("exit\n", 2);
-		}
+		ft_putstr_fd("exit\n", 2);
 		clear_msh(msh);
 		exit(0);
 	}

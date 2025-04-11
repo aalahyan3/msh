@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 21:04:10 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/11 17:13:23 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/11 23:48:43 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,20 +65,8 @@ char	*interactive_mode(void)
 {
 	char	*line;
 	char	*trimmed;
-	int		saved_stdout;
-
-	saved_stdout = -1;
-	if (!isatty(STDOUT_FILENO))
-	{
-		saved_stdout = dup(STDOUT_FILENO);
-		dup2(STDERR_FILENO, STDOUT_FILENO);
-	}
+	
 	line = readline("msh$ ");
-	if (saved_stdout != -1)
-	{
-		dup2(saved_stdout, STDOUT_FILENO);
-		close(saved_stdout);
-	}
 	trimmed = ft_strtrim(line, "\n \t");
 	free(line);
 	return (trimmed);
@@ -91,8 +79,12 @@ char	*read_input(t_msh	*msh)
 
 	signal(SIGINT, handle_sig);
 	signal(SIGQUIT, SIG_IGN);
-	if (!isatty(STDIN_FILENO))
-		prompt = non_interactive_mode();
+	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO) || !isatty(STDERR_FILENO))
+	{
+		ft_printf_error("non-interactive mode is not supported!\n", NULL, NULL, NULL);
+		msh->is_child = true;
+		ft_exit(msh, NULL);
+	}
 	else
 		prompt = interactive_mode();
 	optimzed = optimize_prompt(prompt);

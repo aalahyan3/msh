@@ -26,6 +26,7 @@
         "env.h": "c",
         "termios.h": "c",
         "sstream": "c",
-        "complex": "c"
+        "complex": "c",
+        "ios": "c"
     }
 }
