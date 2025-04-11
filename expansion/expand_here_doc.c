@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 12:52:06 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/11 14:36:30 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/11 19:06:47 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static char	*expander(char *s, t_msh *msh)
 	if (*(s + 1) == '?')
 		return (ft_itoa(msh->last_exit));
 	var = ft_strdup(find_in_env(s + 1, msh->env));
-	free(s);
 	return (var);
 }
 
@@ -54,7 +53,7 @@ char	*expand_here_doc(char *line, t_msh *msh)
 	int		i;
 
 	i = 0;
-	final = ft_strdup("\"");
+	final = NULL;
 	chunk = get_next_chunk(line, &i);
 	while (chunk)
 	{
@@ -68,9 +67,7 @@ char	*expand_here_doc(char *line, t_msh *msh)
 		free(final);
 		final = temp;
 		free(chunk);
+		chunk = get_next_chunk(line, &i);
 	}
-	temp = ft_strjoin(final, "\"");
-	free(final);
-	final = temp;
 	return (final);
 }
