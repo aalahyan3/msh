@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_ast.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/11 15:47:25 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/11 19:52:01 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -384,14 +384,16 @@ int	execute_block(t_msh *msh, t_ast *ast)
 
 	if (!ast || !ast->left)
 		return (1);
-	saved_stdin = dup(STDIN_FILENO);
-	saved_stdout = dup(STDOUT_FILENO);
 	if (handle_redirections(ast->left, msh))
 	{
 		close(saved_stdin);
 		close(saved_stdout);
 		return (1);
 	}
+	if (ast->right && ast->right->type == BLOCK)
+		return(execute_ast(msh, ast->right));
+	saved_stdin = dup(STDIN_FILENO);
+	saved_stdout = dup(STDOUT_FILENO);
 	args = (char **)ast->right->data;
 	expanded_args = expand(args, msh);
 	if (expanded_args[0] && !expanded_args[0][0])

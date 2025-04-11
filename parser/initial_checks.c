@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initial_checks.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 21:03:19 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/10 15:49:54 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/11 19:46:04 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,8 @@ bool	initial_checks(char *s)
 {
 	if (!valid_quotes(s))
 		return (false);
-	if (!is_parenthisis(s))
-		return (false);
+	// if (!is_parenthisis(s))
+	// 	return (false);
 	if (!valid_blocks(s))
 		return (false);
 	return (true);

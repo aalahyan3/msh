@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:43:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/26 05:17:48 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/11 19:43:09 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	update_old_and_new_pwd(t_msh *msh)
 		if (ft_strncmp(env_tmp->key, "OLDPWD\0", 7) == 0)
 		{
 			free(env_tmp->value);
-			env_tmp->value = ft_strdup (get_from_env("PWD", msh->env));
+			env_tmp->value = ft_strdup(get_from_env("PWD", msh->env));
 			found = 1;
 		}
 		if (ft_strncmp(env_tmp->key, "PWD\0", 4) == 0)
@@ -84,11 +84,15 @@ int	ft_cd(char *path, t_msh *msh)
 	if (!path)
 	{
 		if (chdir(home) == -1)
+		{
 			write(2, "msh: cd: HOME not set\n", 22);
-		return (1);
+			return (1);
+		}
+		update_old_and_new_pwd(msh);
+		return (0);
 	}
 	if (!*path)
-		return (update_old_and_new_pwd(msh), 1);
+		return (1);
 	if (ft_strncmp(path, "-\0", 2) == 0)
 	{
 		old_pwd = get_from_env("OLDPWD", msh->env);
@@ -109,24 +113,27 @@ int	ft_cd(char *path, t_msh *msh)
 	if (ft_strncmp(path, "..\0", 3) == 0)
 	{
 		ret = chdir(trim_last_dir(get_from_env("PWD", msh->env)));
-		return (update_old_and_new_pwd(msh), ret);
+		update_old_and_new_pwd(msh);
+		return (ret);
 	}
 	if (ft_strncmp(path, "--\0", 3) == 0 || ft_strncmp(path, "~\0", 2) == 0)
 	{
 		ret = chdir(home);
-		return (update_old_and_new_pwd(msh), ret);
+		update_old_and_new_pwd(msh);
+		return (ret);
 	}
 	if (stat(path, &st) == 0)
 	{
 		if (S_ISDIR(st.st_mode) == 0)
 		{
 			printf("msh: %s: Not a directory\n", path);
-			return (update_old_and_new_pwd(msh), 1);
+			return  (1);
 		}
 		else
 		{
 			ret = chdir(path);
-			return (update_old_and_new_pwd(msh), ret);
+			update_old_and_new_pwd(msh);
+			return (ret);
 		}
 	}
 	ft_printf("msh : cd: %s: : No such file or directory\n", path);
