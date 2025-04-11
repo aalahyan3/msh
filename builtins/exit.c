@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 01:41:17 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/11 15:44:24 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:53:16 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,14 @@ bool	valid_arg(char *arg)
 	}
 	return (true);
 }
-
+static void	exit_overflow(t_msh *msh, char **expanded)
+{
+	ft_printf_error("exit :", \
+	expanded[1], ": numeric argument required\n", NULL);
+	clear_msh(msh);
+	free_2d_array(expanded);
+	exit(255);
+}
 int	exit_one_arg(t_msh *msh, char **expanded)
 {
 	bool	over_flowed;
@@ -72,13 +79,7 @@ int	exit_one_arg(t_msh *msh, char **expanded)
 	}
 	status = get_status(expanded[1], &over_flowed);
 	if (over_flowed)
-	{
-		ft_printf_error("exit :", \
-		expanded[1], ": numeric argument required\n", NULL);
-		clear_msh(msh);
-		free_2d_array(expanded);
-		exit(255);
-	}
+		exit_overflow(msh, expanded);
 	clear_msh(msh);
 	free_2d_array(expanded);
 	exit(status % 256);
