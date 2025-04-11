@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 19:25:16 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/09 22:16:55 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/11 14:58:29 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,23 @@ static char	*get_next_chunk(char *s, int *i)
 	return (NULL);
 }
 
-static char *expand_chunk(char *chunk, t_msh *msh, bool is_quote, bool end)
+static char	*expand_chunk(char *chunk, t_msh *msh, bool is_quote, bool end)
 {
-
-
 	if (!*chunk)
 	{
 		if (is_quote || end)
-			return(ft_strdup("$"));
+			return (ft_strdup("$"));
 		else
 			return (ft_strdup(""));
 	}
 	else if (*chunk == '?')
 	{
-		
 		return (ft_itoa(msh->last_exit));
 	}
 	else if (!ft_isalnum(*chunk) && *chunk != '_' && *chunk != '?')
 	{
 		return (ft_strdup(chunk));
 	}
-
 	return (ft_strdup(find_in_env(chunk, msh->env)));
 }
 
@@ -61,17 +57,12 @@ static char	*expander(char *s, t_msh *msh, bool is_last)
 	char	*temp;
 	int		i;
 
-	i = 0;
-	final = NULL;
-	chunk = get_next_chunk(s, &i);
+	(1) && (i = 0, final = ft_strdup("\""), chunk = get_next_chunk(s, &i));
 	while (chunk)
 	{
 		if (*chunk == '$')
-		{
-			temp = chunk;
-			chunk = expand_chunk(chunk + 1, msh, (*s == '"'), (!(s)[i] && is_last));
-			free(temp);
-		}
+			(1) && (temp = chunk, chunk = \
+expand_chunk(chunk + 1, msh, (*s == '"'), (!(s)[i] && is_last)), free(temp));
 		if (!chunk)
 			return (free(final), NULL);
 		temp = ft_strjoin(final, chunk);
@@ -82,8 +73,12 @@ static char	*expander(char *s, t_msh *msh, bool is_last)
 		final = temp;
 		chunk = get_next_chunk(s, &i);
 	}
+	temp = ft_strjoin(final, "\"");
+	free(final);
+	final = temp;
 	return (final);
 }
+
 static int	get_last(char **s)
 {
 	int	i;

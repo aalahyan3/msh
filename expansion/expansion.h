@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:53:51 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/08 16:14:14 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/11 14:41:37 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "../env/env.h"
 # include "../parser/parser.h"
-
 # include <dirent.h>
 # define WILDCARD_PACEHOLDER '\x1'
 
@@ -47,6 +46,5 @@ char	*get_var_name(char *s, int *i);
 void	optimize_wildcard_exp(char **exp);
 void	sort_array(char **arr);
 char	*expand_quotes_str(char *str);
-
 
 #endif

@@ -6,7 +6,11 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:45:36 by aaitabde          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/04/10 18:02:09 by aaitabde         ###   ########.fr       */
+=======
+/*   Updated: 2025/04/10 17:03:01 by aalahyan         ###   ########.fr       */
+>>>>>>> 6dc6865d827111b9d51bdde78e0d85f909dae20c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +19,13 @@
 
 
 static void draw_ascii_art(void) {
+	
+	struct winsize w;
+
+
+	ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+	if (w.ws_col <= 75)
+		return;
 printf("\033[1;33m\n ███▄ ▄███▓ ██▓ ███▄    █  ██▓  ██████  ██░ ██ \
 ▓█████  ██▓     ██▓    \033[0m\n");
     printf("\033[38;5;220m▓██▒▀█▀ ██▒▓██▒ ██ ▀█   █ ▓██▒▒██    ▒ ▓██░ ██▒\
