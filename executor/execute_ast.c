@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/11 19:53:32 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/11 20:02:19 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -391,25 +391,25 @@ int	execute_block(t_msh *msh, t_ast *ast)
 		close(saved_stdout);
 		return (1);
 	}
-	if (ast->right && ast->right->type == BLOCK)
+	if (ast && ast->right && ast->right->type == BLOCK)
 		return(execute_ast(msh, ast->right));
 	saved_stdin = dup(STDIN_FILENO);
 	saved_stdout = dup(STDOUT_FILENO);
 	args = (char **)ast->right->data;
-	expanded_args = expand(args, msh);
-	if (expanded_args[0] && !expanded_args[0][0])
-	{
-		free_2d_array(expanded_args);
-		close(saved_stdin);
-		close(saved_stdout);
-		return (127);
-	}
 	if (args && is_builtin(args) == 0)
 	{
 		status = run_builting(msh, args, expanded_args);
 		free_2d_array(expanded_args);
 		reset_fd(saved_stdin, saved_stdout);
 		return (status);
+	}
+	expanded_args = expand(args, msh);
+	if (expanded_args && expanded_args[0] && !expanded_args[0][0])
+	{
+		free_2d_array(expanded_args);
+		close(saved_stdin);
+		close(saved_stdout);
+		return (127);
 	}
 	free_2d_array(expanded_args);
 	status = execute_ast(msh, ast->right);
