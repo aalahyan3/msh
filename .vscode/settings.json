@@ -25,6 +25,7 @@
         "builtins.h": "c",
         "env.h": "c",
         "termios.h": "c",
-        "sstream": "c"
+        "sstream": "c",
+        "complex": "c"
     }
 }

@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/10 16:55:27 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:47:25 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,22 @@ int is_builtin(char **args)
 	return (-1);
 }
 
-int	run_builting (t_msh *msh, char **args)
+int	run_builting (t_msh *msh, char **args, char **expanded_args)
 {
-	if (args && args[0] && ft_strncmp(args[0], "echo", 5) == 0)
- 		return (ft_echo(args, msh));
-	else if (args && args[0] && ft_strncmp(args[0], "pwd", 3) == 0)
+	if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "echo", 5) == 0)
+ 		return (ft_echo(expanded_args, msh));
+	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "pwd", 4) == 0)
 		return (ft_pwd(msh->env));
-	else if (args && args[0] && ft_strncmp(args[0], "cd", 2) == 0)
-		return (ft_cd(args[1], msh));
-	else if (args && args[0] && ft_strncmp(args[0], "env", 3) == 0)
+	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "cd", 3) == 0)
+		return (ft_cd(expanded_args[1], msh));
+	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "env", 3) == 0)
 		return (ft_env(msh->env));
-	else if (args && args[0] && ft_strncmp(args[0], "unset", 5) == 0)
-		return (ft_unset(msh->env, args));
-	else if (args && args[0] && ft_strncmp(args[0], "export", 6) == 0)
+	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "unset", 6) == 0)
+		return (ft_unset(msh->env, expanded_args));
+	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "export", 7) == 0)
 		return (ft_export(args, msh));
-	else if (args && args[0] && ft_strncmp(args[0], "exit", 4) == 0)
-		ft_exit(msh, args);
+	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "exit", 5) == 0)
+		ft_exit(msh, expanded_args);
 	return (1);
 }
 
@@ -79,7 +79,6 @@ char	**make_env(t_list *ev)
 	env[i] = NULL;
 	return (env);
 }
-
 
 int	execute_word(t_msh *msh, t_ast *ast)
 {
@@ -374,9 +373,11 @@ int	handle_redirections(t_ast *ast, t_msh *msh)
 	ft_close(&out_fd);
 	return (0);
 }
+
 int	execute_block(t_msh *msh, t_ast *ast)
 {
 	int		status;
+	char	**expanded_args;
 	char	**args;
 	int		saved_stdin;
 	int		saved_stdout;
@@ -391,18 +392,23 @@ int	execute_block(t_msh *msh, t_ast *ast)
 		close(saved_stdout);
 		return (1);
 	}
-	args = expand((char **)ast->right->data, msh);
-	if (args)
+	args = (char **)ast->right->data;
+	expanded_args = expand(args, msh);
+	if (expanded_args[0] && !expanded_args[0][0])
 	{
-		if (is_builtin(args) == 0)
-		{
-			status = run_builting(msh, args);
-			free_2d_array(args);
-			reset_fd(saved_stdin, saved_stdout);
-			return (status);
-		}
+		free_2d_array(expanded_args);
+		close(saved_stdin);
+		close(saved_stdout);
+		return (127);
 	}
-	free_2d_array(args);
+	if (args && is_builtin(args) == 0)
+	{
+		status = run_builting(msh, args, expanded_args);
+		free_2d_array(expanded_args);
+		reset_fd(saved_stdin, saved_stdout);
+		return (status);
+	}
+	free_2d_array(expanded_args);
 	status = execute_ast(msh, ast->right);
 	reset_fd(saved_stdin, saved_stdout);
 	return (status);
