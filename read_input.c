@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 21:04:10 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/12 13:18:12 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/12 17:42:10 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,15 @@ char	*interactive_mode(void)
 	free(line);
 	return (trimmed);
 }
-
+void	handle_sig(int sig)
+{
+	(void)sig;
+	ft_putstr_fd("\n", 2);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	g_signal_recieved = 1;
+}
 char	*read_input(t_msh	*msh)
 {
 	char	*prompt;
@@ -75,5 +83,7 @@ char	*read_input(t_msh	*msh)
 	prompt = optimzed;
 	if (!prompt)
 		ft_exit(msh, NULL);
+	if (g_signal_recieved)
+		msh->last_exit = 1;
 	return (prompt);
 }

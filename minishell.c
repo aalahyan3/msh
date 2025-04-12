@@ -6,13 +6,14 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:47:15 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/12 13:23:35 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/12 17:39:36 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
 
+volatile int	g_signal_recieved = 0;
 static void	draw_ascii_art(void)
 {
 	struct winsize	w;

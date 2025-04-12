@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 13:52:40 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/10 16:57:21 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/12 17:39:04 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # include "expansion/expansion.h"
 # include "builtins/builtins.h"
 # include <termios.h>
+
+extern volatile int	g_signal_recieved;
 
 char	*read_input(t_msh	*msh);
 
