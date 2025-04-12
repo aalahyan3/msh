@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 08:57:28 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/11 19:58:21 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/12 09:53:29 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ t_ast	*parse(char *prompt, t_list *env)
 		rl_clear_history();
 		exit(2);
 	}
-	ast_vis(ast, 0, "");
+	// ast_vis(ast, 0, "");
 	return (ast);
 }

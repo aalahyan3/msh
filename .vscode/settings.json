@@ -27,6 +27,7 @@
         "termios.h": "c",
         "sstream": "c",
         "complex": "c",
-        "ios": "c"
+        "ios": "c",
+        "libft.h": "c"
     }
 }

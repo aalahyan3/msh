@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/11 23:13:33 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/12 11:05:05 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,7 @@ int	execute_word(t_msh *msh, t_ast *ast)
 	i = 0;
 	if (args[0] && !args[0][0])
 	{
-		write(2, "msh: ", 6);
-		write(2, ":command not found\n", 19);
+		ft_printf_error(args[0], ": ", "command not found", "\n");
 		free_2d_array(args);
 		free_2d_array(env);
 		return (1);
@@ -135,11 +134,7 @@ int	execute_word(t_msh *msh, t_ast *ast)
 	else
 	{
 		if (i)
-		{
-			write(2, "msh: ", 6);
-			write(2, args[0], ft_strlen(args[0]));
-			write(2, ": command not found\n", 21);
-		}
+			ft_printf_error(args[0], ": ", "command not found", "\n");
 		free_2d_array(env);
 		return (free_arr(args), 127);
 	}
@@ -394,17 +389,23 @@ int	execute_block(t_msh *msh, t_ast *ast)
 		return (1);
 	}
 	if (ast && ast->right && ast->right->type == BLOCK)
-		return(execute_ast(msh, ast->right));
+	{
+		status = execute_ast(msh, ast->right);
+		reset_fd(saved_stdin, saved_stdout);
+		return(status);
+	}
 	args = (char **)ast->right->data;
 	expanded_args = expand(args, msh);
 	if (expanded_args && expanded_args[0] && !expanded_args[0][0])
 	{
+		ft_printf_error(expanded_args[0], ": ", "command not found", "\n");
 		free_2d_array(expanded_args);
+		reset_fd(saved_stdin, saved_stdout);
 		close(saved_stdin);
 		close(saved_stdout);
 		return (127);
 	}
-	if (args && is_builtin(args) == 0)
+	if (expanded_args && is_builtin(expanded_args) == 0)
 	{
 		status = run_builting(msh, args, expanded_args);
 		free_2d_array(expanded_args);

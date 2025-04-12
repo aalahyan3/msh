@@ -6,11 +6,11 @@
 #    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/04/11 19:57:04 by aaitabde         ###   ########.fr        #
+#    Updated: 2025/04/12 09:51:58 by aaitabde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -g -fsanitize=address#-Wall -Wextra -Werror 
+CFLAGS = #-g -fsanitize=address#-Wall -Wextra -Werror 
 NAME = minishell
 
 SRCS = 	minishell.c \
