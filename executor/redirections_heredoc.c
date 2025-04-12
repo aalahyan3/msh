@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:27:31 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/10 11:53:24 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/12 19:11:25 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	start_reading(int fd, char *del)
 	exit(0);
 }
 
-int	handle_heredoc(t_reds *red)
+int	handle_heredoc(t_reds *red, int *stop)
 {
 	char	*filename;
 	int		fd;
@@ -85,6 +85,8 @@ int	handle_heredoc(t_reds *red)
 	int		pid;
 	int		status;
 
+	if (*stop)
+		return (1);
 	filename = gen_name();
 	fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0600);
 	if (fd == -1)
@@ -123,6 +125,7 @@ int	handle_heredoc(t_reds *red)
 		unlink(filename);
 		close(fd_read);
 		free(filename);
+		*stop = 1;
 		return (1);
 	}
 	unlink(filename);
@@ -132,7 +135,7 @@ int	handle_heredoc(t_reds *red)
 }
 
 
-int process_heredocs(t_ast *ast, t_list *env)
+int process_heredocs(t_ast *ast, t_list *env, int *stop)
 {
 	t_reds **reds;
 	int i;
@@ -151,14 +154,14 @@ int process_heredocs(t_ast *ast, t_list *env)
 			if (reds[i]->type == HEREDOC)
 			{
 				reds[i]->is_hd = 1;
-				if (handle_heredoc(reds[i]))
+				if (handle_heredoc(reds[i], stop))
 					return (1);
 			}
 			i++;
 		}
 	}
-	left = process_heredocs(ast->left, env);
-	right = process_heredocs(ast->right, env);
+	left = process_heredocs(ast->left, env, stop);
+	right = process_heredocs(ast->right, env, stop);
 	return (left || right);
 }
 

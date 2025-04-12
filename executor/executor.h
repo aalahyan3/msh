@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 11:09:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/08 16:27:44 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/12 19:09:41 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void    free_env_list(t_list *env);
 void	handle_sig(int sig);
 
 //redirections
-int process_heredocs(t_ast *ast, t_list *env);
+int 	process_heredocs(t_ast *ast, t_list *env, int *stop);
 void    donothing(int sig);
 char	*gen_name();
 

@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 12:34:24 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/10 09:41:33 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/12 19:10:03 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 int	heredoc_handler(t_msh *msh)
 {
 	int	status;
+	int	stop;
 
-	status = process_heredocs(msh->ast, msh->env);
+	stop = 0;
+	status = process_heredocs(msh->ast, msh->env, &stop);
 	return (status);
 }
 
