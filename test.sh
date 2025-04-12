@@ -1,5 +1,19 @@
 #!/bin/sh
 
-echo first param $1
-echo second param $2
-echo third param $3
+# Get the first PID of the process named 'minishell'
+pid=$(pgrep -o minishell)
+
+# Check if the PID is found
+if [ -z "$pid" ]; then
+    echo "No 'minishell' process found."
+    exit 1
+fi
+
+echo "Monitoring 'minishell' process with PID: $pid"
+
+# Run leaks continuously on the PID
+while true; do
+    leaks -q "$pid"
+    sleep 1
+	clear
+done

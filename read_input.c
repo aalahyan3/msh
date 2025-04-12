@@ -3,25 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 21:04:10 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/12 10:21:20 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/12 13:18:12 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*non_interactive_mode(void)
-{
-	char	*line;
-	char	*tmp;
-
-	line = get_next_line(STDIN_FILENO);
-	tmp = ft_strtrim(line, "\n \t");
-	free(line);
-	return (tmp);
-}
 static int	optimizd_len(char *line)
 {
 	int		i;
@@ -79,14 +69,7 @@ char	*read_input(t_msh	*msh)
 
 	signal(SIGINT, handle_sig);
 	signal(SIGQUIT, SIG_IGN);
-	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO) || !isatty(STDERR_FILENO))
-	{
-		ft_printf_error("non-interactive mode is not supported!\n", NULL, NULL, NULL);
-		msh->is_child = true;
-		ft_exit(msh, NULL);
-	}
-	else
-		prompt = interactive_mode();
+	prompt = interactive_mode();
 	optimzed = optimize_prompt(prompt);
 	free(prompt);
 	prompt = optimzed;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:47:15 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/12 10:26:42 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/12 13:23:35 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ void	leaks(void)
 
 static void	setup_msh(t_msh *msh, char **env, char ac, char **av)
 {
+	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO) || !isatty(STDERR_FILENO))
+	{
+		ft_printf_error("non-interactive mode is not supported!\n", NULL, NULL, NULL);
+		exit(1);
+	}
 	draw_ascii_art();
 	msh->prompt = NULL;
 	msh->is_child = false;
