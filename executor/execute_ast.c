@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_ast.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/12 11:05:05 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/12 19:46:59 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,26 @@ int	execute_word(t_msh *msh, t_ast *ast)
 	}
 	return (0);
 }
+void	close_hds(t_reds **reds)
+{
+	if (!reds)
+		return ;
+	int i = 0;
+	while (reds[i])
+	{
+		if (reds[i]->type == HEREDOC)
+			close(reds[i]->fd);
+		i++;
+	}
+}
+void close_hds_rec(t_ast *ast)
+{
+	if (!ast)
+		return ;
+	close_hds((t_reds **)ast->data);
+	close_hds_rec(ast->left);
+	close_hds_rec(ast->right);
+}
 
 int	execute_logic(t_msh *msh, t_ast *ast)
 {
@@ -148,7 +168,11 @@ int	execute_logic(t_msh *msh, t_ast *ast)
 	status = execute_ast(msh, ast->left);
 	if ((status != 0 && ast->type == AND) || \
 		(status == 0 && ast->type == OR))
+	{
+		/*the other side of tree wont be executed but if there heredocs fds must be closed*/
+		close_hds_rec(ast->right);
 		return (status);
+	}
 	return(execute_ast(msh, ast->right));
 }
 
@@ -246,16 +270,7 @@ void	ft_close(int *fd)
 	}
 }
 
-void	close_hds(t_reds **reds)
-{
-	int i = 0;
-	while (reds[i])
-	{
-		if (reds[i]->type == HEREDOC)
-			close(reds[i]->fd);
-		i++;
-	}
-}
+
 int	handle_redirections(t_ast *ast, t_msh *msh)
 {
 	int	in_fd;
