@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 10:34:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/11 14:58:46 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/12 15:08:55 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int ft_echo(char **arg, t_msh *msh)
 		free(buffer);
 		buffer = temp;
 	}
+	// write(1, buffer, ft_strlen(buffer));
 	ft_putstr_fd(buffer, 1);
 	free(buffer);
 	return (0);
