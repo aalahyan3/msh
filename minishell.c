@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:47:15 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/12 17:39:36 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 11:30:25 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,6 @@ int	main(int ac, char **av, char **env)
 	rl_catch_signals = 0;
 	setup_msh(&msh, env, ac, av);
 	tcgetattr(0, &terminal);
-	// char *arr[10] = {"$HHH", NULL};
-	// char **exp = expand(arr, msh.env);
 	while (1)
 	{
 		msh.prompt = read_input(&msh);
