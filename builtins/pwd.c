@@ -6,14 +6,13 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:43:45 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/13 15:19:33 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/13 20:49:50 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "builtins.h"
 
-int ft_pwd(t_msh *msh)
+int	ft_pwd(t_msh *msh)
 {
 	int		i;
 	char	*cwd;
@@ -31,5 +30,5 @@ int ft_pwd(t_msh *msh)
 	}
 	else
 		printf("%s\n", msh->logical_pwd);
-	return(0);
+	return (0);
 }
