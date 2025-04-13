@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 20:07:24 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/13 20:12:25 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/13 20:17:06 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	run_builting(t_msh *msh, char **args, char **expanded_args)
 	return (1);
 }
 
-static int	handle_unexistant_path_var(char *path_var, char **args, char **env)
+int	handle_unexistant_path_var(char *path_var, char **args, char **env)
 {
 	if (access(args[0], F_OK) == 0)
 	{

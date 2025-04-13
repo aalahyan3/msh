@@ -6,7 +6,7 @@
 #    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/04/13 18:49:57 by aaitabde         ###   ########.fr        #
+#    Updated: 2025/04/13 20:17:35 by aaitabde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,8 @@ SRCS = 	minishell.c \
 		parser/get_next_red.c\
 		parser/error_buff.c\
 		executor/execute_ast.c\
+		executor/execute_ast_utils.c\
+		executor/env_utils.c\
 		executor/execute_pipe.c\
 		executor/execute_simple_cmd.c\
 		executor/command_path_utils.c\
