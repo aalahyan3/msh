@@ -6,55 +6,36 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:10:09 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/13 16:38:35 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 17:43:49 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
+
 int	was_hd(t_reds *red, t_msh *msh)
 {
-	int	expand;
-	char	*line;
-	char	*expanded;
 	int		fd;
 	char	*name;
 
-	expand = 1;
 	if (ft_strchr(red->file, '\'') || ft_strchr(red->file, '"'))
-		expand = 0;
-	if (!expand)
 		return (red->fd);
 	name = gen_name();
 	fd = open(name, O_CREAT | O_RDWR, 0644);
 	if (fd < 0)
 		return (free(name), -1);
-	line = get_next_line(red->fd);
-	while (line)
+	if (!fill_new_hd(fd, red, msh))
 	{
-		expanded = expand_here_doc(line, msh);
-		if (!expanded)
-		{
-			free(line);
-			return (-1);
-		}
-		if (*expanded == '\n')
-		{
-			free(expanded);
-			free(line);
-			line = get_next_line(red->fd);
-			continue ;
-		}
-		write(fd, expanded, ft_strlen(expanded));
-		free(expanded);
-		free(line);
-		line = get_next_line(red->fd);
+		close(fd);
+		unlink(name);
+		free(name);
+		return (-1);
 	}
-	close(red->fd);
 	close(fd);
 	fd = open(name, O_RDONLY);
 	unlink(name);
 	free(name);
+	close(red->fd);
 	return (fd);
 }
 

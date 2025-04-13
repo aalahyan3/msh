@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:00:50 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/13 16:33:16 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 17:43:25 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,29 @@ void close_hds_rec(t_ast *ast)
 	close_hds((t_reds **)ast->data);
 	close_hds_rec(ast->left);
 	close_hds_rec(ast->right);
+}
+
+int	fill_new_hd(int fd, t_reds *red, t_msh *msh)
+{
+	char	*line;
+	char	*expanded;
+
+	line = get_next_line(red->fd);
+	while (line)
+	{
+		expanded = expand_here_doc(line, msh);
+		free(line);
+		if (!expanded)
+			return (0);
+		if (*expanded == '\n')
+		{
+			free(expanded);
+			line = get_next_line(red->fd);
+			continue ;
+		}
+		write(fd, expanded, ft_strlen(expanded));
+		free(expanded);
+		line = get_next_line(red->fd);
+	}
+	return (1);
 }
