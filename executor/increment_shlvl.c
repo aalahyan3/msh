@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   increment_shlvl.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 05:27:59 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/03/26 20:03:28 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 16:30:27 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-void increment_shlvl(t_list *env)
+void	increment_shlvl(t_list *env)
 {
 	char	*shlvl;
 	char	*new_shlvl;

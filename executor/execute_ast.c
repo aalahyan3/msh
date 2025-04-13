@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   execute_ast.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/13 16:33:09 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 18:00:19 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-int is_builtin(char **args)
+int	is_builtin(char **args)
 {
-	if(!args || !*args)
-		return(1);
+	if (!args || !*args)
+		return (1);
 	if (args && args[0] && ft_strncmp(args[0], "echo", 5) == 0)
 		return (0);
 	else if (args && args[0] && ft_strncmp(args[0], "pwd", 4) == 0)
@@ -33,21 +33,28 @@ int is_builtin(char **args)
 	return (-1);
 }
 
-int	run_builting (t_msh *msh, char **args, char **expanded_args)
+int	run_builting(t_msh *msh, char **args, char **expanded_args)
 {
-	if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "echo", 5) == 0)
- 		return (ft_echo(expanded_args, msh));
-	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "pwd", 4) == 0)
-		return (ft_pwd(msh, msh->env));
-	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "cd", 3) == 0)
+	if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], \
+	"echo", 5) == 0)
+		return (ft_echo(expanded_args, msh));
+	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], \
+	"pwd", 4) == 0)
+		return (ft_pwd(msh));
+	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], \
+	"cd", 3) == 0)
 		return (ft_cd(expanded_args[1], msh));
-	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "env", 3) == 0)
+	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], \
+	"env", 3) == 0)
 		return (ft_env(msh->env));
-	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "unset", 6) == 0)
+	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], \
+	"unset", 6) == 0)
 		return (ft_unset(msh->env, expanded_args));
-	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "export", 7) == 0)
+	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], \
+	"export", 7) == 0)
 		return (ft_export(args, msh));
-	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "exit", 5) == 0)
+	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], \
+	"exit", 5) == 0)
 		ft_exit(msh, expanded_args);
 	return (1);
 }
@@ -65,14 +72,14 @@ char	**make_env(t_list *ev)
 		return (NULL);
 	while (ev)
 	{
-		tmp = ft_strjoin(((struct s_env*)(ev->content))->key, "=");
+		tmp = ft_strjoin(((struct s_env *)(ev->content))->key, "=");
 		if (!tmp)
 			return (free_arr(env), NULL);
-		tmp1 = ft_strjoin(tmp, ((struct s_env*)(ev->content))->value);
+		tmp1 = ft_strjoin(tmp, ((struct s_env *)(ev->content))->value);
 		if (!tmp1)
 			return (free_arr(env), NULL);
 		free(tmp);
-		env[i] = tmp1;;
+		env[i] = tmp1;
 		ev = ev->next;
 		i++;
 	}
@@ -92,7 +99,7 @@ int	execute_word(t_msh *msh, t_ast *ast)
 		return (1);
 	env = make_env(msh->env);
 	args = (char **)ast->data;
-	if(!args)
+	if (!args)
 		return (1);
 	if (args[0] && args[0][0] == '\0')
 		return (0);
@@ -101,7 +108,7 @@ int	execute_word(t_msh *msh, t_ast *ast)
 	{
 		free_2d_array(args);
 		free_2d_array(env);
-		return(0);
+		return (0);
 	}
 	i = 0;
 	if (args[0] && !args[0][0])
@@ -150,43 +157,11 @@ int	execute_logic(t_msh *msh, t_ast *ast)
 	if ((status != 0 && ast->type == AND) || \
 		(status == 0 && ast->type == OR))
 	{
-		/*the other side of tree wont be executed but if there heredocs fds must be closed*/
 		close_hds_rec(ast->right);
 		return (status);
 	}
 	return(execute_ast(msh, ast->right));
 }
-
-void	file_open_error(char *filename)
-{
-	write(2, "msh: ", 6);
-	write(2, filename, ft_strlen(filename));
-	write(2, ": No such file or directory\n", 28);
-}
-
-// int	expand_heredoc(int fd, t_msh *msh)
-// {
-// 	char *line;
-// 	char *filename = gen_name();
-	
-// 	int new_fd = open(filename, O_RDWR | O_CREAT , 0644);
-// 	int new_fd_read = open(filename, O_RDONLY | O_CREAT , 0640);
-// 	unlink(filename);
-// 	free(filename);
-// 	while(1)
-// 	{
-// 		line = get_next_line(fd);
-// 		if (!line)
-// 			break;
-// 		char *tmp = line;
-// 		line = expand_here_doc(tmp, msh);
-// 		write(new_fd, line, ft_strlen(line));
-// 		free(tmp);
-// 		free(line);
-// 	}
-// 	close(fd);
-// 	return (new_fd_read);
-// }
 
 void reset_fd(int saved_stdin, int saved_stdout)
 {
@@ -195,13 +170,6 @@ void reset_fd(int saved_stdin, int saved_stdout)
 	close(saved_stdin);
 	close(saved_stdout);
 }
-
-
-
-
-
-
-
 
 int	execute_block(t_msh *msh, t_ast *ast)
 {

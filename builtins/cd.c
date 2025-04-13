@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:43:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/13 13:37:12 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/13 17:22:40 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	update_env_key(t_msh *msh, char *key, char *value, int *found)
 		{
 			free(env_tmp->value);
 			env_tmp->value = ft_strdup(value);
-			
 			*found = 1;
 			return ;
 		}
@@ -54,36 +53,15 @@ void	update_pwd_env_vars(t_msh *msh, char *old_path)
 	new_path = getcwd(NULL, 0);
 	found_old = 0;
 	found_pwd = 0;
-	update_env_key(msh, "OLDPWD", old_path, &found_old);
+	update_env_key(msh, "OLDPWD", msh->logical_pwd, &found_old);
 	update_env_key(msh, "PWD", new_path, &found_pwd);
+	free(msh->logical_pwd);
 	msh->logical_pwd = getcwd(NULL, 0);
 	if (!found_old)
 		ft_setenv("OLDPWD", old_path, 1, &msh->env);
 	if (!found_pwd)
 		ft_setenv("PWD", new_path, 1, &msh->env);
 	free(new_path);
-}
-
-static int	cd_dash_case(t_msh *msh, char *old_path)
-{
-	char	*oldpwd;
-	int		ret;
-
-	oldpwd = get_from_env("OLDPWD", msh->env);
-	if (!oldpwd)
-	{
-		ft_printf_error("cd: OLDPWD not set\n", NULL, NULL, NULL);
-		free(old_path);
-		return (1);
-	}
-	ret = chdir(oldpwd);
-	if (ret == 0)
-	{
-		printf("%s\n", oldpwd);
-		update_pwd_env_vars(msh, old_path);
-	}
-	free(old_path);
-	return (ret);
 }
 
 int	ft_cd(char *path, t_msh *msh)
@@ -93,6 +71,8 @@ int	ft_cd(char *path, t_msh *msh)
 	struct stat	st;
 	int			ret;
 
+	if (path && ft_strcmp(path, ".") == 0)
+		return(0);
 	old_path = getcwd(NULL, 0);
 	if (!path || ft_strncmp(path, "~", 2) == 0 \
 		|| ft_strncmp(path, "--", 3) == 0)
@@ -100,8 +80,6 @@ int	ft_cd(char *path, t_msh *msh)
 	if (!path)
 		return (free(old_path), ft_printf_error("cd: HOME not set\n",
 				NULL, NULL, NULL), 1);
-	if (ft_strncmp(path, "-", 2) == 0)
-		return (cd_dash_case(msh, old_path));
 	ret = chdir(path);
 	if (ret != 0)
 	{
@@ -113,12 +91,12 @@ int	ft_cd(char *path, t_msh *msh)
 	new_path = getcwd(NULL, 0);
 	if (!new_path)
 	{
-		ft_printf_error("cd: error retrieving current directory: getcwd: \
-		cannot access parent directories: No such file or directory\n", NULL, NULL, NULL);
-		free(old_path);
-		return (1);
+		ft_printf_error("cd: error retrieving current directory: getcwd: ",\
+		"cannot access parent directories: No such file or directory\n", NULL, NULL);
+		new_path = msh->logical_pwd;
+		msh->logical_pwd = ft_strjoin(new_path, "/..");
+		return (free(new_path), free(old_path), 1);
 	}
 	update_pwd_env_vars(msh, old_path);
-	free(new_path);
-	return (free(old_path), 0);
+	return (free(old_path), free(new_path), 0);
 }

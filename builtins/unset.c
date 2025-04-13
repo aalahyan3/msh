@@ -6,12 +6,11 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 17:21:46 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/11 23:18:56 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/13 16:14:25 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
-
 
 int	ft_unset(t_list *env, char **keys)
 {
@@ -27,7 +26,11 @@ int	ft_unset(t_list *env, char **keys)
 	while (keys[i])
 	{
 		if (!valid_identifier(keys[i]))
+		{
 			ft_printf_error("unset: `", keys[i], "': not a valid identifier\n", NULL);
+			i++;
+			continue;
+		}
 		while(tmp)
 		{
 			if (ft_strncmp(((struct s_env *)tmp->content)->key, keys[i], ft_strlen(keys[i])) == 0)
