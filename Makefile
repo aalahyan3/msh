@@ -6,7 +6,7 @@
 #    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/04/13 21:56:51 by aalahyan         ###   ########.fr        #
+#    Updated: 2025/04/13 22:11:37 by aalahyan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -92,21 +92,17 @@ $(BIN):
 
 libft:
 	make -C libft
-$(BIN)/%.o: ft_func/%.c ft_func/ft_func.h
-	$(CC) $(READLINE_COMPILE) $(CFLAGS)  -c $< -o $@
-$(BIN)/%.o: %.c minishell.h
+$(BIN)/%.o: %.c minishell.h builtins/builtins.h env/env.h executor/executor.h expansion/expansion.h libft/libft.h parser/parser.h
 	$(CC) $(READLINE_COMPILE) $(CFLAGS) -c $< -o $@
-$(BIN)/%.o: parser/%.c parser/parser.h
+$(BIN)/%.o: parser/%.c parser/parser.h minishell.h
 	$(CC) $(READLINE_COMPILE) $(CFLAGS) -c $< -o $@
-$(BIN)/%.o: executor/%.c
+$(BIN)/%.o: executor/%.c executor/executor.h minishell.h
 	$(CC) $(READLINE_COMPILE) $(CFLAGS) -c $< -o $@
-$(BIN)/%.o: env/%.c
+$(BIN)/%.o: env/%.c env/env.h minishell.h
 	$(CC) $(READLINE_COMPILE) $(CFLAGS) -c $< -o $@
-$(BIN)/%.o: free_utils/%.c
+$(BIN)/%.o: expansion/%.c expansion/expansion.h minishell.h
 	$(CC) $(READLINE_COMPILE) $(CFLAGS) -c $< -o $@
-$(BIN)/%.o: expansion/%.c
-	$(CC) $(READLINE_COMPILE) $(CFLAGS) -c $< -o $@
-$(BIN)/%.o: builtins/%.c
+$(BIN)/%.o: builtins/%.c builtins/builtins.h minishell.h
 	$(CC) $(READLINE_COMPILE) $(CFLAGS) -c $< -o $@
 clean:
 	make clean -C libft
