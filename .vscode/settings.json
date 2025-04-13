@@ -28,6 +28,8 @@
         "sstream": "c",
         "complex": "c",
         "ios": "c",
-        "libft.h": "c"
+        "libft.h": "c",
+        "atomic": "c",
+        "locale": "c"
     }
 }

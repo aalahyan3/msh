@@ -6,7 +6,7 @@
 #    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/04/13 20:17:35 by aaitabde         ###   ########.fr        #
+#    Updated: 2025/04/13 21:53:14 by aaitabde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,10 @@ SRCS = 	minishell.c \
 		builtins/pwd.c\
 		builtins/exit.c\
 		builtins/exit_utils.c\
-
+		builtins/env_builtin_utils.c\
+		builtins/export_utils.c\
+		builtins/export_utils1.c\
+		builtins/export_utils2.c\
 
 READLINE_COMPILE = -I$(shell brew --prefix readline)/include
 READLINE_LINK = -lreadline -L$(shell brew --prefix readline)/lib
