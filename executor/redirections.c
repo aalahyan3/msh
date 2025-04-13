@@ -6,12 +6,11 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:10:09 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/13 17:43:49 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 18:07:24 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
-
 
 int	was_hd(t_reds *red, t_msh *msh)
 {
@@ -39,7 +38,7 @@ int	was_hd(t_reds *red, t_msh *msh)
 	return (fd);
 }
 
-int	handle_input(t_reds *red, t_msh *msh, int *in_fd, int *out_fd)
+int	handle_input(t_reds *red, t_msh *msh, int *in_fd)
 {
 	char	**filename;
 
@@ -48,12 +47,12 @@ int	handle_input(t_reds *red, t_msh *msh, int *in_fd, int *out_fd)
 	if (!filename || !*filename[0] || filename[1])
 	{
 		if (filename && !*filename[0])
-			ft_printf_error(filename[0], ": ", "No such file or directory\n", NULL);
+			ft_printf_error(filename[0], ": ", \
+			"No such file or directory\n", NULL);
 		else
 			ft_printf_error(red->file, ": ", " ambiguous redirect\n", NULL);
 		if (filename)
 			free_2d_array(filename);
-		ft_close(out_fd);
 		return (1);
 	}
 	*in_fd = open(filename[0], O_RDONLY);
@@ -61,13 +60,12 @@ int	handle_input(t_reds *red, t_msh *msh, int *in_fd, int *out_fd)
 	if (*in_fd < 0)
 	{
 		ft_printf_error(red->file, ": ", strerror(errno), "\n");
-		ft_close(out_fd);
 		return (1);
 	}
 	return (0);
 }
 
-int	handle_output(t_reds *red, t_msh *msh, int *in_fd, int *out_fd, int flags)
+int	handle_output(t_reds *red, t_msh *msh, int *out_fd, int flags)
 {
 	char	**filename;
 
@@ -76,12 +74,12 @@ int	handle_output(t_reds *red, t_msh *msh, int *in_fd, int *out_fd, int flags)
 	if (!filename || !*filename[0] || filename[1])
 	{
 		if (filename && !*filename[0])
-			ft_printf_error(filename[0], ": ", "No such file or directory\n", NULL);
+			ft_printf_error(filename[0], ": ", \
+			"No such file or directory\n", NULL);
 		else
 			ft_printf_error(red->file, ": ", " ambiguous redirect\n", NULL);
 		if (filename)
 			free_2d_array(filename);
-		ft_close(in_fd);
 		return (1);
 	}
 	*out_fd = open(filename[0], flags, 0644);
@@ -89,7 +87,6 @@ int	handle_output(t_reds *red, t_msh *msh, int *in_fd, int *out_fd, int flags)
 	if (*out_fd < 0)
 	{
 		ft_printf_error(red->file, ": ", strerror(errno), "\n");
-		ft_close(in_fd);
 		return (1);
 	}
 	return (0);
@@ -111,23 +108,23 @@ int	handle_reds(t_reds *red, t_msh *msh, int *in_fd, int *out_fd)
 		return (0);
 	}
 	else if (red->type == INPUT)
-		return (handle_input(red, msh, in_fd, out_fd));
+		return (handle_input(red, msh, in_fd));
 	else if (red->type == OUTPUT || red->type == APPEND)
 	{
 		if (red->type == APPEND)
 			flags = O_APPEND | O_RDWR | O_CREAT;
 		else
 			flags = O_TRUNC | O_RDWR | O_CREAT;
-		return (handle_output(red, msh, in_fd, out_fd, flags));
+		return (handle_output(red, msh, out_fd, flags));
 	}
 	return (0);
 }
 
 int	handle_redirections(t_ast *ast, t_msh *msh)
 {
-	int	in_fd;
-	int	out_fd;
-	int	i;
+	int		in_fd;
+	int		out_fd;
+	int		i;
 	t_reds	**reds;
 	char	**filename;
 
@@ -138,6 +135,8 @@ int	handle_redirections(t_ast *ast, t_msh *msh)
 	{
 		if (handle_reds(reds[i], msh, &in_fd, &out_fd))
 		{
+			ft_close(&in_fd);
+			ft_close(&out_fd);
 			close_hds(reds);
 			return (1);
 		}
