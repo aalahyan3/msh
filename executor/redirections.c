@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:10:09 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/13 18:07:24 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 22:01:29 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,6 @@ int	handle_redirections(t_ast *ast, t_msh *msh)
 	int		out_fd;
 	int		i;
 	t_reds	**reds;
-	char	**filename;
 
 	if (!ast->data)
 		return (0);
