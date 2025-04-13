@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 11:09:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/13 17:46:06 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/13 20:13:05 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,10 @@ void	increment_shlvl(t_list *env);
 // cmd path utils
 
 char	*get_cmd_path(char *full_cmd, char **env, int *i);
-char	**get_args(t_ast *ast);
 
 // free utils
 
 void	free_arr(char **arr);
-void	free_env_list(t_list *env);
-
 //signals
 
 void	handle_sig(int sig);
@@ -56,5 +53,12 @@ void	close_hds_rec(t_ast *ast);
 void	close_hds(t_reds **reds);
 int		handle_redirections(t_ast *ast, t_msh *msh);
 int		fill_new_hd(int fd, t_reds *red, t_msh *msh);
+char	**make_env(t_list *ev);
+
+//idk
+int		is_builtin(char **args);
+int		run_builting(t_msh *msh, char **args, char **expanded_args);
+int		handle_unexistant_path_var(char *path_var, char **args, char **env);
+int		execute_word(t_msh *msh, t_ast *ast);
 
 #endif
