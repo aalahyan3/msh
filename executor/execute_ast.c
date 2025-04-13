@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/13 15:19:50 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/13 16:40:28 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,26 +140,7 @@ int	execute_word(t_msh *msh, t_ast *ast)
 	}
 	return (0);
 }
-void	close_hds(t_reds **reds)
-{
-	if (!reds)
-		return ;
-	int i = 0;
-	while (reds[i])
-	{
-		if (reds[i]->type == HEREDOC)
-			close(reds[i]->fd);
-		i++;
-	}
-}
-void close_hds_rec(t_ast *ast)
-{
-	if (!ast)
-		return ;
-	close_hds((t_reds **)ast->data);
-	close_hds_rec(ast->left);
-	close_hds_rec(ast->right);
-}
+
 
 int	execute_logic(t_msh *msh, t_ast *ast)
 {
@@ -183,29 +164,29 @@ void	file_open_error(char *filename)
 	write(2, ": No such file or directory\n", 28);
 }
 
-int	expand_heredoc(int fd, t_msh *msh)
-{
-	char *line;
-	char *filename = gen_name();
+// int	expand_heredoc(int fd, t_msh *msh)
+// {
+// 	char *line;
+// 	char *filename = gen_name();
 	
-	int new_fd = open(filename, O_RDWR | O_CREAT , 0644);
-	int new_fd_read = open(filename, O_RDONLY | O_CREAT , 0640);
-	unlink(filename);
-	free(filename);
-	while(1)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			break;
-		char *tmp = line;
-		line = expand_here_doc(tmp, msh);
-		write(new_fd, line, ft_strlen(line));
-		free(tmp);
-		free(line);
-	}
-	close(fd);
-	return (new_fd_read);
-}
+// 	int new_fd = open(filename, O_RDWR | O_CREAT , 0644);
+// 	int new_fd_read = open(filename, O_RDONLY | O_CREAT , 0640);
+// 	unlink(filename);
+// 	free(filename);
+// 	while(1)
+// 	{
+// 		line = get_next_line(fd);
+// 		if (!line)
+// 			break;
+// 		char *tmp = line;
+// 		line = expand_here_doc(tmp, msh);
+// 		write(new_fd, line, ft_strlen(line));
+// 		free(tmp);
+// 		free(line);
+// 	}
+// 	close(fd);
+// 	return (new_fd_read);
+// }
 
 void reset_fd(int saved_stdin, int saved_stdout)
 {
@@ -215,175 +196,12 @@ void reset_fd(int saved_stdin, int saved_stdout)
 	close(saved_stdout);
 }
 
-int	was_hd(t_reds *red, t_msh *msh)
-{
-	int	expand;
-	char	*line;
-	char	*expanded;
-	int		fd;
-	char	*name;
-
-	expand = 1;
-	if (ft_strchr(red->file, '\'') || ft_strchr(red->file, '"'))
-		expand = 0;
-	if (!expand)
-		return (red->fd);
-	name = gen_name();
-	fd = open(name, O_CREAT | O_RDWR, 0644);
-	if (fd < 0)
-		return (free(name), -1);
-	line = get_next_line(red->fd);
-	while (line)
-	{
-		expanded = expand_here_doc(line, msh);
-		if (!expanded)
-		{
-			free(line);
-			return (-1);
-		}
-		if (*expanded == '\n')
-		{
-			free(expanded);
-			free(line);
-			line = get_next_line(red->fd);
-			continue ;
-		}
-		write(fd, expanded, ft_strlen(expanded));
-		free(expanded);
-		free(line);
-		line = get_next_line(red->fd);
-	}
-	close(red->fd);
-	close(fd);
-	fd = open(name, O_RDONLY);
-	unlink(name);
-	free(name);
-	return (fd);
-}
-
-void	ft_close(int *fd)
-{
-	if (*fd > 0)
-	{
-		close(*fd);
-		*fd = -1;
-	}
-}
 
 
-int	handle_redirections(t_ast *ast, t_msh *msh)
-{
-	int	in_fd;
-	int	out_fd;
-	int	i;
-	t_reds	**reds;
-	char	**filename;
 
-	if (!ast->data)
-		return (0);
-	reds = (t_reds **)(ast->data);
-	i = 0;
-	in_fd = -1;
-	out_fd = -1;
-	while (reds[i])
-	{
-		if (reds[i]->type == HEREDOC)
-		{
-			ft_close(&in_fd);
-			in_fd = was_hd(reds[i], msh);
-			if (in_fd < 0)
-			{
-				ft_close(&in_fd);
-				close_hds(reds);
-				return (1);
-			}
-		}
-		else if (reds[i]->type == INPUT)
-		{
-			ft_close(&in_fd);
-			filename = expand_filename(reds[i]->file, msh);
-			if (!filename || !*filename[0] || filename[1])
-			{
-				if (filename && !*filename[0])
-					ft_printf_error(filename[0], ": ", "No such file or directory\n", NULL);
-				else
-					ft_printf_error(reds[i]->file, ": ", " ambiguous redirect\n", NULL);
-				close_hds(reds);
-				if (filename)
-					free_2d_array(filename);
-				ft_close(&out_fd);
-				return (1);
-			}
-			in_fd = open(filename[0], O_RDONLY);
-			free_2d_array(filename);
-			if (in_fd < 0)
-			{
-				ft_printf_error(reds[i]->file, ": ", strerror(errno), "\n");
-				close_hds(reds);
-				ft_close(&out_fd);
-				return (1);
-			}
-		}
-		else if (reds[i]->type == OUTPUT)
-		{
-			ft_close(&out_fd);
-			filename = expand_filename(reds[i]->file, msh);
-			if (!filename || !*filename[0] || filename[1])
-			{
-				close_hds(reds);
-				if (filename && !*filename[0])
-					ft_printf_error(filename[0], ": ", "No such file or directory\n", NULL);
-				else
-					ft_printf_error(reds[i]->file, ": ", " ambiguous redirect\n", NULL);
-				if (filename)
-					free_2d_array(filename);
-				ft_close(&in_fd);
-				return (1);
-			}
-			out_fd = open(filename[0], O_CREAT | O_RDWR | O_TRUNC, 0644);
-			free_2d_array(filename);
-			if (out_fd < 0)
-			{
-				ft_printf_error(reds[i]->file, ": ", strerror(errno), "\n");
-				close_hds(reds);
-				ft_close(&in_fd);
-				return (1);
-			}
-		}
-		else if (reds[i]->type == APPEND)
-		{
-			ft_close(&out_fd);
-			filename = expand_filename(reds[i]->file, msh);
-			if (!filename || !*filename[0] || filename[1])
-			{
-				ft_close(&in_fd);
-				close_hds(reds);
-				if (filename && !*filename[0])
-					ft_printf_error(filename[0], ": ", "No such file or directory\n", NULL);
-				else
-					ft_printf_error(reds[i]->file, ": ", " ambiguous redirect\n", NULL);
-				if (filename)
-					free_2d_array(filename);
-				return (1);
-			}
-			out_fd = open(filename[0], O_CREAT | O_RDWR | O_APPEND, 0644);
-			free_2d_array(filename);
-			if (out_fd < 0)
-			{
-				ft_printf_error(reds[i]->file, ": ", strerror(errno), "\n");
-				close_hds(reds);
-				ft_close(&in_fd);
-				return (1);
-			}
-		}
-		i++;
-	}
-	dup2(in_fd, STDIN_FILENO);
-	dup2(out_fd, STDOUT_FILENO);
-	ft_close(&in_fd);
-	ft_close(&out_fd);
-	return (0);
-}
+
+
+
 
 int	execute_block(t_msh *msh, t_ast *ast)
 {
