@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 19:25:16 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/11 16:39:33 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 18:35:25 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,6 @@ static char	*get_next_chunk(char *s, int *i)
 		return (ft_substr(s, start, *i - start));
 	}
 	return (NULL);
-}
-
-static void	alter_var_value(char *var_value)
-{
-	int		i;
-
-	i = 0;
-	while (var_value[i])
-	{
-		if (var_value[i] == '\'')
-			var_value[i] = SQUOTE_PACEHOLDER;
-		if (var_value[i] == '\"')
-			var_value[i] = DQUOTE_PACEHOLDER;
-		i++;
-	}
 }
 
 static char	*expand_chunk(char *chunk, t_msh *msh, bool is_quote, bool end)

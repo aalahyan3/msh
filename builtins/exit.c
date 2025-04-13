@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 01:41:17 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/11 23:50:04 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/13 18:38:43 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ bool	valid_arg(char *arg)
 	}
 	return (true);
 }
+
 static void	exit_overflow(t_msh *msh, char **expanded)
 {
 	ft_printf_error("exit :", \
@@ -57,6 +58,7 @@ static void	exit_overflow(t_msh *msh, char **expanded)
 	free_2d_array(expanded);
 	exit(255);
 }
+
 int	exit_one_arg(t_msh *msh, char **expanded)
 {
 	bool	over_flowed;

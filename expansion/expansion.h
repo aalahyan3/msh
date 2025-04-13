@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:53:51 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/11 16:34:33 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 18:35:42 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ char	*get_var_name(char *s, int *i);
 void	optimize_wildcard_exp(char **exp);
 void	sort_array(char **arr);
 char	*expand_quotes_str(char *str);
+void	alter_var_value(char *var_value);
 
 #endif
