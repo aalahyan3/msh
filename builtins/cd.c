@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:43:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/13 16:26:30 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/13 17:22:40 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ int	ft_cd(char *path, t_msh *msh)
 	new_path = getcwd(NULL, 0);
 	if (!new_path)
 	{
-		ft_printf_error("cd: error retrieving current directory: getcwd: \
-		cannot access parent directories: No such file or directory\n", NULL, NULL, NULL);
+		ft_printf_error("cd: error retrieving current directory: getcwd: ",\
+		"cannot access parent directories: No such file or directory\n", NULL, NULL);
 		new_path = msh->logical_pwd;
 		msh->logical_pwd = ft_strjoin(new_path, "/..");
 		return (free(new_path), free(old_path), 1);

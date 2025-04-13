@@ -6,16 +6,16 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/13 16:40:28 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/13 17:43:26 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-int is_builtin(char **args)
+int	is_builtin(char **args)
 {
-	if(!args || !*args)
-		return(1);
+	if (!args || !*args)
+		return (1);
 	if (args && args[0] && ft_strncmp(args[0], "echo", 5) == 0)
 		return (0);
 	else if (args && args[0] && ft_strncmp(args[0], "pwd", 4) == 0)
@@ -33,7 +33,7 @@ int is_builtin(char **args)
 	return (-1);
 }
 
-int	run_builting (t_msh *msh, char **args, char **expanded_args)
+int	run_builting(t_msh *msh, char **args, char **expanded_args)
 {
 	if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "echo", 5) == 0)
  		return (ft_echo(expanded_args, msh));
