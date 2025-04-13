@@ -6,7 +6,7 @@
 #    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/04/13 18:41:10 by aalahyan         ###   ########.fr        #
+#    Updated: 2025/04/13 21:16:45 by aalahyan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,8 @@ SRCS = 	minishell.c \
 		parser/get_next_red.c\
 		parser/error_buff.c\
 		executor/execute_ast.c\
+		executor/execute_ast_utils.c\
+		executor/env_utils.c\
 		executor/execute_pipe.c\
 		executor/execute_simple_cmd.c\
 		executor/command_path_utils.c\

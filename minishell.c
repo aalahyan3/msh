@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:47:15 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/13 18:17:18 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 20:11:25 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static void	setup_msh(t_msh *msh, char **env, char ac, char **av)
 		msh->env = build_default_env();
 	if (!msh->env)
 		exit (1);
+	handle_var_without_value("OLDPWD", msh->env);
 	if (!*find_in_env("PATH", msh->env))
 		ft_lstadd_back(&msh->env, \
 ft_lstnew(make_env_node("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.")));
