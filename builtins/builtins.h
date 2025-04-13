@@ -20,14 +20,14 @@ int	ft_cd(char *path, t_msh *msh);
 int ft_echo(char **arg, t_msh *msh);
 int ft_env(t_list *env);
 int ft_export(char **args, t_msh *msh);
-int ft_pwd(t_msh *msh, t_list *envp);
+int ft_pwd(t_msh *msh);
 int	ft_unset(t_list *env, char **keys);
 int ft_exit(t_msh *msh, char **args);
 
 //utils
-int array_size(char **s);
+int		array_size(char **s);
 void    clear_msh(t_msh *msh);
 void    ft_setenv(char *var, char *value, int defined, t_list **env);
 char	*get_from_env(char *var, t_list *env);
-int valid_identifier(char *key);;
+int		valid_identifier(char *key);;
 #endif
