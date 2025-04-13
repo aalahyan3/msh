@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
+#    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/04/12 09:51:58 by aaitabde         ###   ########.fr        #
+#    Updated: 2025/04/13 16:08:33 by aalahyan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = #-g -fsanitize=address#-Wall -Wextra -Werror 
+CFLAGS = #-Wall -Wextra -Werror#-g -fsanitize=address#-Wall -Wextra -Werror 
 NAME = minishell
 
 SRCS = 	minishell.c \
@@ -58,6 +58,7 @@ SRCS = 	minishell.c \
 		executor/redirections_heredoc.c\
 		executor/increment_shlvl.c\
 		executor/execute.c\
+		executor/utils_hd.c\
 		parser/get_next_token.c\
 		parser/max_heredoc_check.c\
 		builtins/echo.c\

@@ -6,11 +6,25 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 12:34:24 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/13 11:30:49 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 14:47:14 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
+
+/*
+	this may seem inefficiant but it's more better than traversing the tree recursively,
+	we know that all herdocs will be taking fd from 3 and so on, max hd is 17.
+*/
+
+void	close_all_hds(void)
+{
+	int	i;
+
+	i = 3;
+	while (i <= 17)
+		close(i++);
+}
 
 int	heredoc_handler(t_msh *msh)
 {
@@ -20,6 +34,8 @@ int	heredoc_handler(t_msh *msh)
 	stop = 0;
 	status = process_heredocs(msh->ast, msh->env, &stop);
 	stop = 0;
+	if (status)
+		close_all_hds();
 	return (status);
 }
 
