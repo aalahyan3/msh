@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 20:07:24 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/13 20:17:06 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/13 22:03:06 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	run_builting(t_msh *msh, char **args, char **expanded_args)
 {
 	if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], \
 	"echo", 5) == 0)
-		return (ft_echo(expanded_args, msh));
+		return (ft_echo(expanded_args));
 	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], \
 	"pwd", 4) == 0)
 		return (ft_pwd(msh));
@@ -59,7 +59,7 @@ int	run_builting(t_msh *msh, char **args, char **expanded_args)
 	return (1);
 }
 
-int	handle_unexistant_path_var(char *path_var, char **args, char **env)
+int	handle_unexistant_path_var(char **args, char **env)
 {
 	if (access(args[0], F_OK) == 0)
 	{
@@ -106,7 +106,7 @@ int	execute_word(t_msh *msh, t_ast *ast)
 	i = 0;
 	path_var = get_from_env("PATH", msh->env);
 	if (!path_var)
-		return (handle_unexistant_path_var(path_var, args, env));
+		return (handle_unexistant_path_var(args, env));
 	path = get_cmd_path(args[0], env, &i);
 	if (path)
 		return (execute_simple_cmd(path, args, env));

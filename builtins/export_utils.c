@@ -6,13 +6,13 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 21:45:42 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/13 21:50:50 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/13 22:02:47 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-bool	alter_existing_var(char *var, char *val, int defined, t_list **env)
+bool	alter_existing_var(char *var, char *val, t_list **env)
 {
 	t_list			*curr;
 	struct s_env	*node;
@@ -24,7 +24,7 @@ bool	alter_existing_var(char *var, char *val, int defined, t_list **env)
 	{
 		node = curr->content;
 		if (!ft_strncmp(var, node->key, varlen) \
-		&& varlen == ft_strlen(node->key))
+		&& (size_t)varlen == ft_strlen(node->key))
 		{
 			free(node->value);
 			node->value = ft_strdup(val);
@@ -40,7 +40,7 @@ void	ft_setenv(char *var, char *value, int defined, t_list **env)
 	t_list			*node;
 	struct s_env	*new_env;
 
-	if (alter_existing_var(var, value, defined, env))
+	if (alter_existing_var(var, value, env))
 		return ;
 	node = malloc(sizeof(t_list));
 	if (!node)

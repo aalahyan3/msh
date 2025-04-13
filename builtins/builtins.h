@@ -17,7 +17,7 @@
 # include "../libft/libft.h"
 
 int		ft_cd(char *path, t_msh *msh);
-int		ft_echo(char **arg, t_msh *msh);
+int		ft_echo(char **arg);
 int		ft_env(t_list *env);
 int		ft_export(char **args, t_msh *msh);
 int		ft_pwd(t_msh *msh);

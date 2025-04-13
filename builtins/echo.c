@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 10:34:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/13 20:58:14 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/13 22:01:36 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	check_option(char **args, char **buffer, int *i, int *index)
 	return (1);
 }
 
-int	ft_echo(char **args, t_msh *msh)
+int	ft_echo(char **args)
 {
 	int		i;
 	int		index;

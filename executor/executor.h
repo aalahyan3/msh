@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 11:09:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/13 20:13:05 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/13 22:00:51 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	**make_env(t_list *ev);
 //idk
 int		is_builtin(char **args);
 int		run_builting(t_msh *msh, char **args, char **expanded_args);
-int		handle_unexistant_path_var(char *path_var, char **args, char **env);
+int		handle_unexistant_path_var(char **args, char **env);
 int		execute_word(t_msh *msh, t_ast *ast);
 
 #endif

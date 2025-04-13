@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 07:57:43 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/13 17:54:03 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/13 22:01:16 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ static char	*search_in_path(char *full_cmd, char **env)
 
 char	*get_cmd_path(char *full_cmd, char **env, int *i)
 {
-	char		*tmp;
 	struct stat	st;
 
 	if (!full_cmd)
