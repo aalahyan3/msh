@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:47:15 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/13 11:30:25 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 13:40:27 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,11 @@ int	main(int ac, char **av, char **env)
 	rl_catch_signals = 0;
 	setup_msh(&msh, env, ac, av);
 	tcgetattr(0, &terminal);
+	msh.logical_pwd = getcwd(NULL, 0);
+	if (!msh.logical_pwd)
+		ft_printf_error("shell-init: error retrieving \
+		current directory: getcwd: cannot access parent \
+		directories: No such file or directory\n", NULL, NULL, NULL);
 	while (1)
 	{
 		msh.prompt = read_input(&msh);

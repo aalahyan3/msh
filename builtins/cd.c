@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:43:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/12 17:13:21 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/13 13:37:12 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,12 @@ char	*get_from_env(char *var, t_list *env)
 	return (NULL);
 }
 
-void	update_env_key(t_list *env, char *key, char *value, int *found)
+void	update_env_key(t_msh *msh, char *key, char *value, int *found)
 {
 	struct s_env	*env_tmp;
+	t_list			*env;
 
+	env = msh->env;
 	while (env)
 	{
 		env_tmp = env->content;
@@ -35,6 +37,7 @@ void	update_env_key(t_list *env, char *key, char *value, int *found)
 		{
 			free(env_tmp->value);
 			env_tmp->value = ft_strdup(value);
+			
 			*found = 1;
 			return ;
 		}
@@ -51,8 +54,9 @@ void	update_pwd_env_vars(t_msh *msh, char *old_path)
 	new_path = getcwd(NULL, 0);
 	found_old = 0;
 	found_pwd = 0;
-	update_env_key(msh->env, "OLDPWD", old_path, &found_old);
-	update_env_key(msh->env, "PWD", new_path, &found_pwd);
+	update_env_key(msh, "OLDPWD", old_path, &found_old);
+	update_env_key(msh, "PWD", new_path, &found_pwd);
+	msh->logical_pwd = getcwd(NULL, 0);
 	if (!found_old)
 		ft_setenv("OLDPWD", old_path, 1, &msh->env);
 	if (!found_pwd)
