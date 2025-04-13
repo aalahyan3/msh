@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:03:29 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/13 16:57:37 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 16:58:46 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ static bool	is_unexpected_token(t_l_parse *prev, t_l_parse *curr)
 	if (prev->type == L_OPEN_P)
 		return (curr->type == L_CLOSE_P || curr->type == L_OR \
 		|| curr->type == L_AND || curr->type == L_PIPE \
-		|| curr->type == L_SEMICOLON || curr->type == L_AMPERCENT \
-		|| curr->type == L_REDIRECTION);
+		|| curr->type == L_SEMICOLON || curr->type == L_AMPERCENT);
 	if (prev->type == L_OR || prev->type == L_AND || prev->type == L_PIPE \
 	|| prev->type == L_SEMICOLON || prev->type == L_AMPERCENT \
 	|| prev->type == L_REDIRECTION)
