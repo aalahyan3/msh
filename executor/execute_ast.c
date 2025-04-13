@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/13 18:00:19 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/13 18:33:48 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,67 +87,61 @@ char	**make_env(t_list *ev)
 	return (env);
 }
 
-int	execute_word(t_msh *msh, t_ast *ast)
+int	handle_unexistant_path_var(char *path_var, char **args, char **env)
 {
-	char	**args;
-	char	*path;
-	char	*path_var;
-	int		i;
-	char	**env;
+	if (access(args[0], F_OK) == 0)
+	{
+		if (access(args[0], X_OK) == 0)
+			return (execute_simple_cmd(ft_strdup(args[0]), args, env));
+		ft_printf_error(args[0], ": ", "Permission denied", "\n");
+		free_2d_array(env);
+		free_2d_array(args);
+		return (126);
+	}
+	ft_printf_error(args[0], ": ", strerror(errno), "\n");
+	free_arr(args);
+	free_2d_array(env);
+	return (127);
+}
 
+static int init_and_check(t_msh *msh, t_ast *ast, char ***args, char ***env)
+{
 	if (!ast || !ast->data)
 		return (1);
-	env = make_env(msh->env);
-	args = (char **)ast->data;
-	if (!args)
-		return (1);
-	if (args[0] && args[0][0] == '\0')
+	(1) && (*args = (char **)ast->data);
+	if ((*args)[0] && (*args)[0][0] == '\0')
 		return (0);
-	args = expand((char **)ast->data, msh);
-	if (!args[0])
-	{
-		free_2d_array(args);
-		free_2d_array(env);
-		return (0);
-	}
+	(1) && (*env = make_env(msh->env), *args = expand((char **)ast->data, msh));
+	if (!(*args)[0])
+		return (free_2d_array(*args), free_2d_array(*env), 0);
+	if ((*args)[0] && !(*args)[0][0])
+		return (ft_printf_error((*args)[0], ": ", "command not found", "\n"), \
+				free_2d_array(*args), free_2d_array(*env), 1);
+	return (-1);
+}
+
+int execute_word(t_msh *msh, t_ast *ast)
+{
+	char **args;
+	char *path;
+	char *path_var;
+	int i;
+	char **env;
+
+	i = init_and_check(msh, ast, &args, &env);
+	if (i != -1)
+		return (i);
 	i = 0;
-	if (args[0] && !args[0][0])
-	{
-		ft_printf_error(args[0], ": ", "command not found", "\n");
-		free_2d_array(args);
-		free_2d_array(env);
-		return (1);
-	}
 	path_var = get_from_env("PATH", msh->env);
 	if (!path_var)
-	{
-		if (access(args[0], F_OK) == 0)
-		{
-			if (access(args[0], X_OK) == 0)
-				return (execute_simple_cmd(ft_strdup(args[0]), args, env));
-			ft_printf_error(args[0], ": ", "Permission denied", "\n");
-			free_2d_array(env);
-			free_2d_array(args);
-			return (126);
-		}
-		ft_printf_error(args[0], ": ", strerror(errno), "\n");
-		free_arr(args);
-		free_2d_array(env);
-		return (127);
-	}
+		return (handle_unexistant_path_var(path_var, args, env));
 	path = get_cmd_path(args[0], env, &i);
 	if (path)
 		return (execute_simple_cmd(path, args, env));
-	else
-	{
-		if (i)
-			ft_printf_error(args[0], ": ", "command not found", "\n");
-		free_2d_array(env);
-		return (free_arr(args), 127);
-	}
-	return (0);
+	else if (i)
+		ft_printf_error(args[0], ": ", "command not found", "\n");
+	return (free_2d_array(env), free_arr(args), 127);
 }
-
 
 int	execute_logic(t_msh *msh, t_ast *ast)
 {
