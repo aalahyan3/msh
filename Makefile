@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
+#    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/04/13 18:28:29 by aalahyan         ###   ########.fr        #
+#    Updated: 2025/04/13 18:49:57 by aaitabde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,6 @@ SRCS = 	minishell.c \
 		parser/parsing.c\
 		parser/free_ast.c\
 		parser/build_ast.c\
-		parser/ast_vis.c\
 		parser/get_redirections.c\
 		parser/asstes.c\
 		parser/valid_blocks.c\

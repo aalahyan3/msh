@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 15:37:01 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/09 18:46:00 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/13 18:49:25 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ t_list	*build_default_env(void)
 	ft_lstadd_back(&env, ft_lstnew(make_env_node("SHLVL=1")));
 	ft_lstadd_back(&env, ft_lstnew(make_env_node("TERM=xterm")));
 	ft_lstadd_back(&env, ft_lstnew(make_env_node("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.")));
+	ft_lstadd_back(&env, ft_lstnew(make_env_node("OLDPWD=")));
 	return (env);
 }

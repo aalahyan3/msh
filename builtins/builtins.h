@@ -29,5 +29,6 @@ int		array_size(char **s);
 void    clear_msh(t_msh *msh);
 void    ft_setenv(char *var, char *value, int defined, t_list **env);
 char	*get_from_env(char *var, t_list *env);
-int		valid_identifier(char *key);;
+int		valid_identifier(char *key);
+void	handle_var_without_value(char *var_name, t_list *env);
 #endif
