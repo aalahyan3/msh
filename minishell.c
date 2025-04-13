@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:47:15 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/13 13:40:27 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/13 18:17:18 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
 volatile int	g_signal_recieved = 0;
+
 static void	draw_ascii_art(void)
 {
 	struct winsize	w;
@@ -48,25 +48,27 @@ void	leaks(void)
 
 static void	setup_msh(t_msh *msh, char **env, char ac, char **av)
 {
-	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO) || !isatty(STDERR_FILENO))
+	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO) \
+	|| !isatty(STDERR_FILENO))
 	{
-		ft_printf_error("non-interactive mode is not supported!\n", NULL, NULL, NULL);
+		ft_printf_error("non-interactive mode is not supported!\n", \
+		NULL, NULL, NULL);
 		exit(1);
 	}
 	draw_ascii_art();
-	msh->prompt = NULL;
-	msh->is_child = false;
-	msh->last_exit = 0;
-	msh->ast = NULL;
-	msh->env = build_env(env);
+	(1) && (msh->prompt = NULL, msh->is_child = false, msh->last_exit = 0, \
+	msh->ast = NULL, msh->env = build_env(env));
 	if (!msh->env)
 		msh->env = build_default_env();
+	if (!msh->env)
+		exit (1);
 	if (!*find_in_env("PATH", msh->env))
 		ft_lstadd_back(&msh->env, \
 ft_lstnew(make_env_node("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.")));
-	if (!msh->env)
-		exit (0);
 	increment_shlvl(msh->env);
+	msh->logical_pwd = getcwd(NULL, 0);
+	if (!msh->logical_pwd)
+		ft_printf_error(NO_PWD_ERR, NULL, NULL, NULL);
 	(void)ac;
 	(void)av;
 }
@@ -79,11 +81,6 @@ int	main(int ac, char **av, char **env)
 	rl_catch_signals = 0;
 	setup_msh(&msh, env, ac, av);
 	tcgetattr(0, &terminal);
-	msh.logical_pwd = getcwd(NULL, 0);
-	if (!msh.logical_pwd)
-		ft_printf_error("shell-init: error retrieving \
-		current directory: getcwd: cannot access parent \
-		directories: No such file or directory\n", NULL, NULL, NULL);
 	while (1)
 	{
 		msh.prompt = read_input(&msh);

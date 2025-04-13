@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initial_checks.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 21:03:19 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/11 19:46:04 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/13 18:01:04 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ bool	valid_parentheses(char *s, int *i)
 static bool	is_parenthisis(char *s)
 {
 	int		i;
-	int		before;
 
 	i = -1;
 	while (s[++i])
@@ -92,7 +91,6 @@ static bool	is_parenthisis(char *s)
 		}
 		if (s[i] == '(')
 		{
-			before = i;
 			if (!valid_parentheses(s, &i))
 				return (false);
 			continue ;
@@ -108,8 +106,8 @@ bool	initial_checks(char *s)
 {
 	if (!valid_quotes(s))
 		return (false);
-	// if (!is_parenthisis(s))
-	// 	return (false);
+	if (!is_parenthisis(s))
+		return (false);
 	if (!valid_blocks(s))
 		return (false);
 	return (true);

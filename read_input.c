@@ -6,11 +6,21 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 21:04:10 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/13 11:35:05 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 18:18:46 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	handle_sig(int sig)
+{
+	(void)sig;
+	ft_putstr_fd("\n", 2);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	g_signal_recieved = 1;
+}
 
 static int	optimizd_len(char *line)
 {
@@ -21,12 +31,14 @@ static int	optimizd_len(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] != SQUOTE_PACEHOLDER && line[i] != DQUOTE_PACEHOLDER && WILDCARD_PACEHOLDER)
+		if (line[i] != SQUOTE_PACEHOLDER && line[i] != \
+		DQUOTE_PACEHOLDER && WILDCARD_PACEHOLDER)
 			size++;
 		i++;
 	}
 	return (size);
 }
+
 static char	*optimize_prompt(char *line)
 {
 	char	*new;
@@ -44,32 +56,26 @@ static char	*optimize_prompt(char *line)
 	j = 0;
 	while (line[i])
 	{
-		if (line[i] != SQUOTE_PACEHOLDER && line[i] != DQUOTE_PACEHOLDER && WILDCARD_PACEHOLDER)
+		if (line[i] != SQUOTE_PACEHOLDER && line[i] != \
+		DQUOTE_PACEHOLDER && WILDCARD_PACEHOLDER)
 			new[j++] = line[i];
 		i++;
 	}
 	new[j] = 0;
 	return (new);
 }
+
 char	*interactive_mode(void)
 {
 	char	*line;
 	char	*trimmed;
-	
+
 	line = readline("msh$ ");
 	trimmed = ft_strtrim(line, "\n \t");
 	free(line);
 	return (trimmed);
 }
-void	handle_sig(int sig)
-{
-	(void)sig;
-	ft_putstr_fd("\n", 2);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-	g_signal_recieved = 1;
-}
+
 char	*read_input(t_msh	*msh)
 {
 	char	*prompt;
