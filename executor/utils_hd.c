@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:00:50 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/13 17:43:25 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 18:09:42 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,11 @@ void	ft_close(int *fd)
 
 void	close_hds(t_reds **reds)
 {
+	int	i;
+
 	if (!reds)
 		return ;
-	int i = 0;
+	i = 0;
 	while (reds[i])
 	{
 		if (reds[i]->type == HEREDOC)
@@ -53,7 +55,8 @@ void	close_hds(t_reds **reds)
 		i++;
 	}
 }
-void close_hds_rec(t_ast *ast)
+
+void	close_hds_rec(t_ast *ast)
 {
 	if (!ast)
 		return ;
