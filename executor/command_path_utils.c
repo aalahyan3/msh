@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_path_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 07:57:43 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/08 20:35:57 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 17:54:03 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static char	*search_in_path(char *full_cmd, char **env)
 		return (NULL);
 	paths = ft_split(env[i] + 5, ':');
 	if (!paths)
-		return ( NULL);
+		return (NULL);
 	i = -1;
 	while (paths[++i])
 	{
@@ -60,7 +60,7 @@ static char	*search_in_path(char *full_cmd, char **env)
 		path_cmd = ft_strjoin(tmp, full_cmd);
 		free(tmp);
 		if (access(path_cmd, X_OK) == 0)
-			return ( free_arr(paths), path_cmd);
+			return (free_arr(paths), path_cmd);
 		free(path_cmd);
 	}
 	free_arr(paths);
@@ -69,8 +69,8 @@ static char	*search_in_path(char *full_cmd, char **env)
 
 char	*get_cmd_path(char *full_cmd, char **env, int *i)
 {
-	char	*tmp;
-	struct stat st;
+	char		*tmp;
+	struct stat	st;
 
 	if (!full_cmd)
 		return (NULL);
@@ -81,7 +81,7 @@ char	*get_cmd_path(char *full_cmd, char **env, int *i)
 			if (S_ISDIR(st.st_mode))
 			{
 				printf("msh: %s: is a directory\n", full_cmd);
-				return(NULL);
+				return (NULL);
 			}
 			else
 				return (ft_strdup(full_cmd));
@@ -89,7 +89,7 @@ char	*get_cmd_path(char *full_cmd, char **env, int *i)
 		write(2, "msh: ", 6);
 		write(2, full_cmd, ft_strlen(full_cmd));
 		write(2, ": No such file or directory\n", 28);
-		return(NULL);
+		return (NULL);
 	}
 	*i = 1;
 	return (search_in_path(full_cmd, env));
