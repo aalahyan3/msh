@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 11:09:30 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/12 19:09:41 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 16:34:09 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,10 @@ void    donothing(int sig);
 char	*gen_name();
 
 int	execute(t_msh *msh);
+void	ft_close(int *fd);
+void close_hds_rec(t_ast *ast);
+void	close_hds(t_reds **reds);
+int	handle_redirections(t_ast *ast, t_msh *msh);
+
 
 # endif
