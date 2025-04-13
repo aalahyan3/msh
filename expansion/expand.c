@@ -6,12 +6,11 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 21:44:28 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/11 16:37:34 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/13 18:34:38 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expansion.h"
-
 
 static void	restore_var_quotes(char **arr)
 {
@@ -33,6 +32,7 @@ static void	restore_var_quotes(char **arr)
 		i++;
 	}
 }
+
 char	**expand(char **arr, t_msh *msh)
 {
 	char	**vars_expanded;
