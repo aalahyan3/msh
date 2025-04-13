@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/13 13:30:00 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/13 15:19:50 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	run_builting (t_msh *msh, char **args, char **expanded_args)
 	if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "echo", 5) == 0)
  		return (ft_echo(expanded_args, msh));
 	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "pwd", 4) == 0)
-		return (ft_pwd(msh, msh->env));
+		return (ft_pwd(msh));
 	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "cd", 3) == 0)
 		return (ft_cd(expanded_args[1], msh));
 	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], "env", 3) == 0)
