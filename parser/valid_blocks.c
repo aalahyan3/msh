@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:29:20 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/14 13:38:53 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/14 14:20:41 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ bool	check_cmd_existance(char *s, int *i)
 	char	*cmd;
 
 	cmd = get_next_cmd(s, i);
+	if (*cmd && *cmd == '(')
+		return (free(cmd), ft_printf_error("syntax error near unexpected token `(\n", \
+NULL, NULL, NULL), true);
 	if (cmd)
 	{
 		if (*cmd == '|' || *cmd == '&' || *cmd == ';')
@@ -77,9 +80,6 @@ bool	valid_blocks(char *s)
 		{
 			if (!valid_parentheses(s, &i))
 				return (false);
-			if (s[i] && s[i] == '(')
-				return (ft_printf_error("syntax error near unexpected token `)\n", \
-NULL, NULL, NULL), false);
 			if (check_cmd_existance(s, &i))
 				return (false);
 			continue ;
