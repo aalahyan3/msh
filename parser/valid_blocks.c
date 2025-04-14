@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:29:20 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/13 22:07:32 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/14 13:38:53 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,34 @@ bool	check_cmd_existance(char *s, int *i)
 	return (false);
 }
 
+static bool	valid_parentheses(char *s, int *i)
+{
+	int	expect;
+
+	expect = 1;
+	*i += 1;
+	while (s[*i] && expect)
+	{
+		if (s[*i] == '\'' || s[*i] == '\"')
+		{
+			skip_quotes(s, i, s[*i]);
+			continue ;
+		}
+		if (s[*i] == '(')
+			expect += 1;
+		if (s[*i] == ')')
+			expect -= 1;
+		*i += 1;
+	}
+	if (expect)
+	{
+		ft_printf_error("syntax error near unclosed parenthisis `(`\n", \
+		NULL, NULL, NULL);
+		return (false);
+	}
+	return (true);
+}
+
 bool	valid_blocks(char *s)
 {
 	int		i;
@@ -45,13 +73,16 @@ bool	valid_blocks(char *s)
 			skip_quotes(s, &i, s[i]);
 			continue ;
 		}
-		if (s[i] == ')')
+		if (s[i] == '(')
 		{
-			i++;
+			if (!valid_parentheses(s, &i))
+				return (false);
+			if (s[i] && s[i] == '(')
+				return (ft_printf_error("syntax error near unexpected token `)\n", \
+NULL, NULL, NULL), false);
 			if (check_cmd_existance(s, &i))
 				return (false);
-			else
-				continue ;
+			continue ;
 		}
 		i++;
 	}
