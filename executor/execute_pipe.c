@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 11:00:29 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/14 14:21:54 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/15 14:15:07 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,15 @@ int	execute_pipe(t_msh *msh, t_ast *ast)
 		return (perror("msh: fork"), 1);
 	if (pid1 == 0)
 		(dup2(pipefd[1], STDOUT_FILENO), close(pipefd[0]), \
-		close(pipefd[1]), exit(execute_ast(msh, ast->left)));
+		msh->is_child = 1, close(pipefd[1]), \
+		exit(execute_ast(msh, ast->left)));
 	pid2 = fork();
 	if (pid2 == 0)
-		(dup2(pipefd[0], STDIN_FILENO), close(pipefd[0]), \
-		close(pipefd[1]), exit(execute_ast(msh, ast->right)));
+		(dup2(pipefd[0], STDIN_FILENO), close(pipefd[0]), msh->is_child = 1 \
+		, close(pipefd[1]), exit(execute_ast(msh, ast->right)));
 	(close(pipefd[0]), close(pipefd[1]));
 	(waitpid(pid1, NULL, 0), waitpid(pid2, &status, 0));
-	close_fds(ast->left);
-	close_fds(ast->right);
+	(close_fds(ast->left), close_fds(ast->right));
 	if (WTERMSIG(status))
 		return (WTERMSIG(status) + 128);
 	else

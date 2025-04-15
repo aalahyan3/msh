@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_ast_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 20:07:24 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/15 12:10:28 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/15 14:15:21 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	run_builting(t_msh *msh, char **args, char **expanded_args)
 		return (ft_pwd(msh));
 	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], \
 	"cd", 3) == 0)
-		return (ft_cd(expanded_args[1], msh));
+		return (ft_cd(expanded_args, msh));
 	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], \
 	"env", 3) == 0)
 		return (ft_env(msh->env));

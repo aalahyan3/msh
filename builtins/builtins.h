@@ -20,7 +20,7 @@
 #  define INVALID_IDF ": invalid identifier\n"
 # endif
 
-int		ft_cd(char *path, t_msh *msh);
+int		ft_cd(char **path, t_msh *msh);
 int		ft_echo(char **arg);
 int		ft_env(t_list *env);
 int		ft_export(char **args, t_msh *msh);

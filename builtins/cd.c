@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:43:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/15 12:44:50 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/15 14:20:02 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,30 +79,31 @@ static int	handle_getcwd_error(t_msh *msh, char *old_path)
 	return (1);
 }
 
-int	ft_cd(char *path, t_msh *msh)
+int	ft_cd(char **path, t_msh *msh)
 {
 	char	*old_path;
 	char	*new_path;
 
-	if (path && ft_strcmp(path, ".") == 0)
+	if (path && path[0] && path[1] != NULL)
+		return (ft_printf_error("cd: too many arguments\n", \
+		NULL, NULL, NULL), 1);
+	if (*path && ft_strcmp(*path, ".") == 0)
 		return (0);
 	old_path = getcwd(NULL, 0);
-	if (!path || ft_strncmp(path, "~", 2) == 0
-		|| ft_strncmp(path, "--", 3) == 0)
-		path = get_from_env("HOME", msh->env);
-	if (!path)
+	if (!*path || ft_strncmp(*path, "~", 2) == 0
+		|| ft_strncmp(*path, "--", 3) == 0)
+		*path = get_from_env("HOME", msh->env);
+	if (!*path)
 	{
 		free(old_path);
 		return (ft_printf_error("cd: HOME not set\n", \
 		NULL, NULL, NULL), 1);
 	}
-	if (handle_cd_errors(path, old_path))
+	if (handle_cd_errors(*path, old_path))
 		return (1);
 	new_path = getcwd(NULL, 0);
 	if (!new_path)
 		return (handle_getcwd_error(msh, old_path));
 	handle_pwd_update(msh, old_path, new_path);
-	free(old_path);
-	free(new_path);
-	return (0);
+	return (free(old_path), free(new_path), 0);
 }
