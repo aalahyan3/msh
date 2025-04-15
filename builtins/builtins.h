@@ -16,12 +16,16 @@
 # include "../executor/executor.h"
 # include "../libft/libft.h"
 
+# ifndef INVALID_IDF
+#  define INVALID_IDF ": invalid identifier\n"
+# endif
+
 int		ft_cd(char *path, t_msh *msh);
 int		ft_echo(char **arg);
 int		ft_env(t_list *env);
 int		ft_export(char **args, t_msh *msh);
 int		ft_pwd(t_msh *msh);
-int		ft_unset(t_list *env, char **keys);
+int		ft_unset(t_list **env, char **keys);
 int		ft_exit(t_msh *msh, char **args);
 int		array_size(char **s);
 void	clear_msh(t_msh *msh);

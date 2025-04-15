@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 20:07:24 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/13 22:03:06 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/15 12:10:28 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	run_builting(t_msh *msh, char **args, char **expanded_args)
 		return (ft_env(msh->env));
 	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], \
 	"unset", 6) == 0)
-		return (ft_unset(msh->env, expanded_args));
+		return (ft_unset(&msh->env, expanded_args));
 	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], \
 	"export", 7) == 0)
 		return (ft_export(args, msh));
@@ -110,7 +110,13 @@ int	execute_word(t_msh *msh, t_ast *ast)
 	path = get_cmd_path(args[0], env, &i);
 	if (path)
 		return (execute_simple_cmd(path, args, env));
-	else if (i)
+	if (i == 126)
+	{
+		free_2d_array(env);
+		free_2d_array(args);
+		return (126);
+	}
+	else if (i == 1)
 		ft_printf_error(args[0], ": ", "command not found", "\n");
 	return (free_2d_array(env), free_arr(args), 127);
 }

@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 00:36:07 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/13 21:48:16 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/15 14:02:35 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	ft_export(char **args, t_msh *msh)
 	int	i;
 	int	status;
 
+	if (!msh->env)
+		return (1);
 	proper_export_expansion(args);
 	i = 1;
 	status = 0;
@@ -59,9 +61,8 @@ int	ft_export(char **args, t_msh *msh)
 	{
 		if (!valid_identifier(args[i]))
 		{
-			write(2, "msh: export: `", 14);
-			write(2, args[i], ft_strlen(args[i]));
-			write(2, "': not a valid identifier\n", 27);
+			ft_printf_error("export: `", args[i], \
+			"': not a valid identifier\n", NULL);
 			status = 1;
 		}
 		else

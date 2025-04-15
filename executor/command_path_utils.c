@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 07:57:43 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/13 22:01:16 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/15 12:09:28 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ char	*get_cmd_path(char *full_cmd, char **env, int *i)
 			if (S_ISDIR(st.st_mode))
 			{
 				printf("msh: %s: is a directory\n", full_cmd);
+				*i = 126;
 				return (NULL);
 			}
 			else

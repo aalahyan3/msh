@@ -6,60 +6,83 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 17:21:46 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/13 20:49:19 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/15 14:00:00 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-static void	free_node(t_list *tmp)
+static void	free_node(t_list *node)
 {
-	free(((struct s_env *)tmp->content)->key);
-	free(((struct s_env *)tmp->content)->value);
-	free(tmp->content);
-	free(tmp);
+	struct s_env	*env;
+
+	if (!node)
+		return ;
+	env = (struct s_env *)node->content;
+	free(env->key);
+	free(env->value);
+	free(env);
+	free(node);
 }
 
-static int	operate(t_list *env, t_list *tmp, t_list *prev, char **key)
+void	remove_node(t_list **env, t_list *node, t_list *prev)
 {
-	if (ft_strncmp(((struct s_env *)tmp->content)->key, \
-			*key, ft_strlen(*key)) == 0)
+	if (!node)
+		return ;
+	if (prev)
+		prev->next = node->next;
+	else
+		*env = node->next;
+	free_node(node);
+}
+
+void	remove_matching_env(t_list **env, char *key, t_list **prev)
+{
+	t_list			*tmp;
+	struct s_env	*env_data;
+
+	tmp = *env;
+	*prev = NULL;
+	while (tmp)
 	{
-		if (prev)
-			prev->next = tmp->next;
-		else
-			env = tmp->next;
-		free_node(tmp);
-		return (0);
+		env_data = (struct s_env *)tmp->content;
+		if (ft_strcmp(env_data->key, key) == 0)
+		{
+			remove_node(env, tmp, *prev);
+			break ;
+		}
+		*prev = tmp;
+		tmp = tmp->next;
 	}
-	return (1);
 }
 
-int	ft_unset(t_list *env, char **keys)
+int	process_unset_keys(t_list **env, char **keys, int *status)
 {
-	t_list	*tmp;
-	t_list	*prev;
 	int		i;
+	t_list	*prev;
 
-	if (keys[1] == NULL)
-		return (0);
-	(1) && (tmp = env, prev = NULL, i = 1);
+	i = 0;
 	while (keys[i])
 	{
 		if (!valid_identifier(keys[i]))
 		{
-			ft_printf_error("unset: `", keys[i], "': not a valid identifier\n", \
-			NULL);
+			ft_printf_error("unset: `", keys[i], INVALID_IDF, NULL);
+			*status = 1;
 			i++;
 			continue ;
 		}
-		while (tmp)
-		{
-			if (!operate(env, tmp, prev, &keys[i]))
-				break ;
-			(1) && (prev = tmp, tmp = tmp->next);
-		}
-		(1) && (prev = NULL, tmp = env, i++);
+		remove_matching_env(env, keys[i], &prev);
+		i++;
 	}
-	return (1);
+	return (*status);
+}
+
+int	ft_unset(t_list **env, char **keys)
+{
+	int	status;
+
+	if (!env || !*env || !keys || !*keys)
+		return (1);
+	status = 0;
+	return (process_unset_keys(env, keys, &status));
 }
