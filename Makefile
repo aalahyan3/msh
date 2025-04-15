@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+         #
+#    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/04/15 14:17:57 by aalahyan         ###   ########.fr        #
+#    Updated: 2025/04/15 19:33:02 by aaitabde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,6 @@ SRCS = 	minishell.c \
 		executor/execute_simple_cmd.c\
 		executor/command_path_utils.c\
 		executor/get_cmd_arguments.c\
-		executor/signals_handeling.c\
 		executor/redirections_heredoc.c\
 		executor/increment_shlvl.c\
 		executor/execute.c\
