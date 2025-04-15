@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:54:47 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/13 16:57:12 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/15 20:13:24 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,16 @@ void	get_next_token_4(t_l_parse **tok, char *s, int *i)
 	if (s[*i] == '>' || s[*i] == '<')
 	{
 		start = *i;
-		while (s[*i] && s[*i] == s[start] && *i - start <= 2)
-			*i += 1;
+		if (s[*i] == '<')
+		{
+				while (s[*i] && s[*i] == s[start] && *i - start <= 2)
+					*i += 1;
+		}
+		else
+		{
+			while (s[*i] && s[*i] == s[start] && *i - start < 2)
+				*i += 1;
+		}
 		(*tok)->content = ft_substr(s, start, *i - start);
 		(*tok)->type = L_REDIRECTION;
 		return ;
