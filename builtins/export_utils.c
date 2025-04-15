@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 21:45:42 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/13 22:02:47 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/15 22:15:05 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	alter_existing_var(char *var, char *val, t_list **env)
 	while (curr)
 	{
 		node = curr->content;
-		if (!ft_strncmp(var, node->key, varlen) \
+		if (!ft_strcmp(var, node->key) \
 		&& (size_t)varlen == ft_strlen(node->key))
 		{
 			free(node->value);
@@ -101,8 +101,7 @@ void	sort_env_array(struct s_env **env_array, int count)
 		j = 0;
 		while (j < count - i - 1)
 		{
-			if (ft_strncmp(env_array[j]->key, env_array[j + 1]->key,
-					ft_strlen(env_array[j + 1]->key)) > 0)
+			if (ft_strcmp(env_array[j]->key, env_array[j + 1]->key) > 0)
 			{
 				temp = env_array[j];
 				env_array[j] = env_array[j + 1];

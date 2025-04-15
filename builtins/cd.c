@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:43:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/15 14:20:02 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/15 22:14:13 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static	void	update_env_key(t_msh *msh, char *key, char *value, int *found)
 	while (env)
 	{
 		env_tmp = env->content;
-		if (ft_strncmp(env_tmp->key, key, ft_strlen(key) + 1) == 0)
+		if (ft_strcmp(env_tmp->key, key) == 0)
 		{
 			free(env_tmp->value);
 			env_tmp->value = ft_strdup(value);
@@ -90,8 +90,8 @@ int	ft_cd(char **path, t_msh *msh)
 	if (*path && ft_strcmp(*path, ".") == 0)
 		return (0);
 	old_path = getcwd(NULL, 0);
-	if (!*path || ft_strncmp(*path, "~", 2) == 0
-		|| ft_strncmp(*path, "--", 3) == 0)
+	if (!*path || ft_strcmp(*path, "~") == 0
+		|| ft_strcmp(*path, "--") == 0)
 		*path = get_from_env("HOME", msh->env);
 	if (!*path)
 	{

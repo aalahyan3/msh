@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_ast_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 20:07:24 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/15 14:15:21 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/15 22:16:44 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,45 +16,45 @@ int	is_builtin(char **args)
 {
 	if (!args || !*args)
 		return (1);
-	if (args && args[0] && ft_strncmp(args[0], "echo", 5) == 0)
+	if (args && args[0] && ft_strcmp(args[0], "echo") == 0)
 		return (0);
-	else if (args && args[0] && ft_strncmp(args[0], "pwd", 4) == 0)
+	else if (args && args[0] && ft_strcmp(args[0], "pwd") == 0)
 		return (0);
-	else if (args && args[0] && ft_strncmp(args[0], "cd", 3) == 0)
+	else if (args && args[0] && ft_strcmp(args[0], "cd") == 0)
 		return (0);
-	else if (args && args[0] && ft_strncmp(args[0], "export", 7) == 0)
+	else if (args && args[0] && ft_strcmp(args[0], "export") == 0)
 		return (0);
-	else if (args && args[0] && ft_strncmp(args[0], "env", 4) == 0)
+	else if (args && args[0] && ft_strcmp(args[0], "env") == 0)
 		return (0);
-	else if (args && args[0] && ft_strncmp(args[0], "unset", 6) == 0)
+	else if (args && args[0] && ft_strcmp(args[0], "unset") == 0)
 		return (0);
-	else if (args && args[0] && ft_strncmp(args[0], "exit", 5) == 0)
+	else if (args && args[0] && ft_strcmp(args[0], "exit") == 0)
 		return (0);
 	return (-1);
 }
 
 int	run_builting(t_msh *msh, char **args, char **expanded_args)
 {
-	if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], \
-	"echo", 5) == 0)
+	if (expanded_args && expanded_args[0] && ft_strcmp(expanded_args[0], \
+	"echo") == 0)
 		return (ft_echo(expanded_args));
-	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], \
-	"pwd", 4) == 0)
+	else if (expanded_args && expanded_args[0] && ft_strcmp(expanded_args[0], \
+	"pwd") == 0)
 		return (ft_pwd(msh));
-	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], \
-	"cd", 3) == 0)
+	else if (expanded_args && expanded_args[0] && ft_strcmp(expanded_args[0], \
+	"cd") == 0)
 		return (ft_cd(expanded_args, msh));
-	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], \
-	"env", 3) == 0)
+	else if (expanded_args && expanded_args[0] && ft_strcmp(expanded_args[0], \
+	"env") == 0)
 		return (ft_env(msh->env));
-	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], \
-	"unset", 6) == 0)
+	else if (expanded_args && expanded_args[0] && ft_strcmp(expanded_args[0], \
+	"unset") == 0)
 		return (ft_unset(&msh->env, expanded_args));
-	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], \
-	"export", 7) == 0)
+	else if (expanded_args && expanded_args[0] && ft_strcmp(expanded_args[0], \
+	"export") == 0)
 		return (ft_export(args, msh));
-	else if (expanded_args && expanded_args[0] && ft_strncmp(expanded_args[0], \
-	"exit", 5) == 0)
+	else if (expanded_args && expanded_args[0] && ft_strcmp(expanded_args[0], \
+	"exit") == 0)
 		ft_exit(msh, expanded_args);
 	return (1);
 }

@@ -1,6 +1,7 @@
 {
 	"files.associations": {
 		"iterator": "c",
-		"builtins.h": "c"
+		"builtins.h": "c",
+		"string.h": "c"
 	}
 }
