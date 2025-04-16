@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:40:50 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/08 17:38:21 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/16 22:08:10 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ static char	**expand_wildcard(char *s)
 		return (wildcard_expander(s));
 }
 
-char	**expand_string_2(char *str)
+char	**expand_string_2(char *str, int export)
 {
-	if (ft_strchr(str, '*'))
+	if (ft_strchr(str, '*') && !export)
 		return (expand_wildcard(str));
 	else
 		return (no_wildcard_case(str));

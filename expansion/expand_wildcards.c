@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 06:30:30 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/08 16:26:35 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/16 22:06:58 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	get_size(char **arr)
 	return (i + 1);
 }
 
-char	**expand_wildcards(char **arr)
+char	**expand_wildcards(char **arr, int export)
 {
 	char	***triple;
 	int		i;
@@ -33,7 +33,7 @@ char	**expand_wildcards(char **arr)
 	i = 0;
 	while (arr[i])
 	{
-		triple[i] = expand_string_2(arr[i]);
+		triple[i] = expand_string_2(arr[i], export);
 		if (!triple)
 			return (free_triple_array(triple), NULL);
 		i++;
