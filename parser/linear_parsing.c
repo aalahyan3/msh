@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linear_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:03:29 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/15 20:15:23 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/16 10:58:39 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,9 @@ static bool	is_unexpected_token(t_l_parse *prev, t_l_parse *curr)
 
 bool	compare_expectations(t_l_parse *prev, t_l_parse *curr)
 {
-	if (curr->type == L_AMPERCENT || curr->type == L_SEMICOLON)
+	if (curr->type == L_AMPERCENT || curr->type == L_SEMICOLON || \
+	(curr->type == L_REDIRECTION && (ft_strcmp(curr->content, "<<<") \
+	== 0 || ft_strcmp(curr->content, ">>>") == 0)))
 	{
 		ft_printf_error("syntax error near unsupported token `", \
 		curr->content, "'\n", NULL);

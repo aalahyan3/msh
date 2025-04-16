@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:54:47 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/15 20:13:24 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/16 10:49:45 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ void	get_next_token_4(t_l_parse **tok, char *s, int *i)
 		start = *i;
 		if (s[*i] == '<')
 		{
-				while (s[*i] && s[*i] == s[start] && *i - start <= 2)
-					*i += 1;
+			while (s[*i] && s[*i] == s[start] && *i - start <= 2)
+				*i += 1;
 		}
 		else
 		{

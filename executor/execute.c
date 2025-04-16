@@ -6,25 +6,31 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 12:34:24 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/13 17:54:27 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/16 11:51:33 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-/*
-	this may seem inefficiant but it's more better than 
-	traversing the tree recursively,
-	we know that all herdocs will be taking fd
-	from 3 and so on, max hd is 17.
-*/
-void	close_all_hds(void)
+void	close_all_hds(t_ast *ast)
 {
-	int	i;
+	int		i;
+	t_reds	**reds;
 
-	i = 3;
-	while (i <= 17)
-		close(i++);
+	if (!ast || ast->right  || ast->left)
+		return ;
+	close_all_hds(ast->left);
+	close_all_hds(ast->right);
+	if (!ast || ast->type != BLOCK || ast->type != REDIRECTIONS || !ast->data)
+		return ;
+	reds = (t_reds **)ast->data;
+	i = 0;
+	while (reds[i])
+	{
+		if (reds[i]->type == HEREDOC)
+			ft_close(&reds[i]->fd);
+		i++;
+	}
 }
 
 int	heredoc_handler(t_msh *msh)
@@ -36,7 +42,7 @@ int	heredoc_handler(t_msh *msh)
 	status = process_heredocs(msh->ast, msh->env, &stop);
 	stop = 0;
 	if (status)
-		close_all_hds();
+		close_all_hds(msh->ast);
 	return (status);
 }
 

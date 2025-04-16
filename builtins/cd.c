@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:43:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/15 22:14:13 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/16 10:44:45 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	ft_cd(char **path, t_msh *msh)
 	char	*old_path;
 	char	*new_path;
 
-	if (path && path[0] && path[1] != NULL)
+	if (arr_len(path) > 2)
 		return (ft_printf_error("cd: too many arguments\n", \
 		NULL, NULL, NULL), 1);
 	if (*path && ft_strcmp(*path, ".") == 0)

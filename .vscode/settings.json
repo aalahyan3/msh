@@ -2,6 +2,8 @@
 	"files.associations": {
 		"iterator": "c",
 		"builtins.h": "c",
-		"string.h": "c"
+		"string.h": "c",
+		"parser.h": "c",
+		"expansion.h": "c"
 	}
 }

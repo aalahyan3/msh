@@ -6,7 +6,7 @@
 #    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/04/15 19:33:02 by aaitabde         ###   ########.fr        #
+#    Updated: 2025/04/16 10:45:02 by aaitabde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,6 +64,7 @@ SRCS = 	minishell.c \
 		parser/max_heredoc_check.c\
 		builtins/echo.c\
 		builtins/cd.c\
+		builtins/util_cd.c\
 		builtins/env.c\
 		builtins/unset.c\
 		builtins/export.c\

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valid_blocks.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:29:20 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/15 14:21:01 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/16 10:51:08 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ bool	check_cmd_existance(char *s, int *i)
 	if (!cmd)
 		return (false);
 	if (*cmd && *cmd == '(')
-		return (free(cmd), ft_printf_error("syntax error near unexpected token `(\n", \
+		return (free(cmd), \
+		ft_printf_error("syntax error near unexpected token `(\n", \
 NULL, NULL, NULL), true);
 	if (cmd)
 	{
