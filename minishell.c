@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:47:15 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/16 11:38:54 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/16 22:25:43 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	main(int ac, char **av, char **env)
 {
 	t_msh			msh;
 	struct termios	terminal;
-
+	
 	rl_catch_signals = 0;
 	setup_msh(&msh, env, ac, av);
 	tcgetattr(0, &terminal);

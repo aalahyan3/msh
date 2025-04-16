@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 21:27:43 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/10 11:04:45 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/16 22:12:18 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	**expand_filename(char *name, t_msh *msh)
 	i = 0;
 	while (vars_expanded[i])
 	{
-		triple[i] = expand_string_2(vars_expanded[i]);
+		triple[i] = expand_string_2(vars_expanded[i], 0);
 		if (!triple[i])
 			return (free_2d_array(vars_expanded), \
 			free_triple_array(triple), NULL);
