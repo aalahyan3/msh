@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 21:44:28 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/13 18:34:38 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/16 22:06:19 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	restore_var_quotes(char **arr)
 	}
 }
 
-char	**expand(char **arr, t_msh *msh)
+char	**expand(char **arr, t_msh *msh, int export)
 {
 	char	**vars_expanded;
 	char	**wildcards_expanded;
@@ -43,7 +43,7 @@ char	**expand(char **arr, t_msh *msh)
 	vars_expanded = expand_vars(arr, msh);
 	if (!vars_expanded)
 		return (NULL);
-	wildcards_expanded = expand_wildcards(vars_expanded);
+	wildcards_expanded = expand_wildcards(vars_expanded, export);
 	free_2d_array(vars_expanded);
 	if (!wildcards_expanded)
 		return (NULL);
