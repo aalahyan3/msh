@@ -1,0 +1,14 @@
+'''''''''ls''''
+Makefile
+bin
+builtins
+env
+executor
+expansion
+libft
+minishell
+minishell.c
+minishell.h
+out
+parser
+read_input.c

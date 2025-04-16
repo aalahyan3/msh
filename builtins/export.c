@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 00:36:07 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/15 14:02:35 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/16 18:51:06 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,17 @@ void	ft_env_sorted(t_list *ev)
 void	proper_export_expansion(char **args)
 {
 	int	i;
+	char	*temp;
 
 	i = 1;
 	while (args[i])
 	{
 		if (valid_identifier(args[i]))
-			inject_quotes(&args[i]);
+		{
+			temp = args[i];
+			args[i] = inject_quotes(temp);
+			free(temp);
+		}
 		if (!args[i])
 			return ;
 		i++;

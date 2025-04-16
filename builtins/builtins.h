@@ -37,9 +37,11 @@ int		count_env_vars(t_list *ev);
 void	fill_env_array(t_list *ev, struct s_env **env_array);
 void	sort_env_array(struct s_env **env_array, int count);
 void	print_sorted_env(struct s_env **env_array, int count);
-void	inject_quotes(char **str);
+char	*inject_quotes(char *str);
 void	parse_export_arg(char *arg, t_list *env);
 void	append_to_var(char *var_name, char *value, t_list *env);
 void	handle_var_with_value(char *var_name, char *value, t_list *env);
 int		arr_len(char **arr);
+
+
 #endif
