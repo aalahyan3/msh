@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 21:47:27 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/16 18:50:12 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/16 22:17:05 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,9 @@ char	*inject_quotes(char *str)
 	char	*temp;
 	char	*final;
 
-	var = (strchr(str, '=') + 1);
+	if (!ft_strchr(str, '='))
+		return (ft_strdup(str));
+	var = ft_strchr(str, '=') + 1;
 	i = 0;
 	final = ft_substr(str, 0, var - str);
 	chunk = get_next_ch(var, &i);

@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 20:07:24 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/15 22:16:44 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/16 22:19:46 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static int	init_and_check(t_msh *msh, t_ast *ast, char ***args, char ***env)
 	(1) && (*args = (char **)ast->data);
 	if ((*args)[0] && (*args)[0][0] == '\0')
 		return (0);
-	(1) && (*env = make_env(msh->env), *args = expand((char **)ast->data, msh));
+	(1) && (*env = make_env(msh->env), *args = expand((char **)ast->data, msh, 0));
 	if (!(*args)[0])
 		return (free_2d_array(*args), free_2d_array(*env), 0);
 	if ((*args)[0] && !(*args)[0][0])
