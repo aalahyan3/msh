@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 00:36:07 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/16 18:51:06 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/16 22:19:56 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	ft_export(char **args, t_msh *msh)
 	proper_export_expansion(args);
 	i = 1;
 	status = 0;
-	args = expand(args, msh);
+	args = expand(args, msh, 1);
 	if (args[1] == NULL)
 		ft_env_sorted(msh->env);
 	while (args[i] != NULL)

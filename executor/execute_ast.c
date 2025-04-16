@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 03:18:01 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/13 20:06:40 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/16 22:19:14 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	execute_block(t_msh *msh, t_ast *ast)
 	if (status != -1)
 		return (status);
 	args = (char **)ast->right->data;
-	expanded_args = expand(args, msh);
+	expanded_args = expand(args, msh, 0);
 	if (expanded_args && expanded_args[0] && !expanded_args[0][0])
 		return (ft_printf_error(expanded_args[0], ": ", "command not found", \
 		"\n"), free_2d_array(expanded_args), \
