@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 08:57:28 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/13 22:14:46 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/16 11:39:28 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,5 @@ t_ast	*parse(char *prompt, t_list *env)
 	ast = process_prompt(prompt);
 	if (!ast)
 		return (NULL);
-	if (!max_heredoc_check(ast))
-	{
-		free_ast(&ast);
-		clear_env(env);
-		rl_clear_history();
-		exit(2);
-	}
 	return (ast);
 }

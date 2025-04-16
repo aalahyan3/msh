@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:47:15 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/15 11:52:31 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/16 11:38:54 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,15 +85,13 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		msh.prompt = read_input(&msh);
-		if (!*msh.prompt)
-		{
-			free(msh.prompt);
-			continue ;
-		}
 		add_history(msh.prompt);
 		msh.ast = parse(msh.prompt, msh.env);
 		if (!msh.ast)
+		{
+			msh.last_exit = 2;
 			continue ;
+		}
 		msh.last_exit = execute(&msh);
 		tcsetattr(0, TCSANOW, &terminal);
 		free_ast(&msh.ast);

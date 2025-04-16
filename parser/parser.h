@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 23:32:47 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/13 22:07:19 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/16 11:40:09 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ t_l_parse	*get_next_token(char *s, int *i);
 char		*get_inside_parenthisis(char *s, int i);
 char		*get_next_red(char *s, int *i);
 void		ft_printf_error(char *s1, char *s2, char *s3, char *s4);
-bool		max_heredoc_check(t_ast *root);
 void		free_2d_array(char **arr);
 
 #endif
