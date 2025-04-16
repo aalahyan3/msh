@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 21:47:00 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/13 21:48:11 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/15 22:13:10 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	find_env_var(t_list *env, char *var_name, struct s_env **found_var)
 	while (current && !found)
 	{
 		env_var = (struct s_env *)current->content;
-		if (ft_strncmp(env_var->key, var_name, ft_strlen(var_name)) == 0)
+		if (ft_strcmp(env_var->key, var_name) == 0)
 		{
 			if (found_var)
 				*found_var = env_var;
