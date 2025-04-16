@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:10:09 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/13 22:01:29 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/16 16:17:27 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,13 @@ int	handle_input(t_reds *red, t_msh *msh, int *in_fd)
 		return (1);
 	}
 	*in_fd = open(filename[0], O_RDONLY);
-	free_2d_array(filename);
 	if (*in_fd < 0)
 	{
-		ft_printf_error(red->file, ": ", strerror(errno), "\n");
+		ft_printf_error(filename[0], ": ", strerror(errno), "\n");
+		free_2d_array(filename);
 		return (1);
 	}
+	free_2d_array(filename);
 	return (0);
 }
 
@@ -83,12 +84,13 @@ int	handle_output(t_reds *red, t_msh *msh, int *out_fd, int flags)
 		return (1);
 	}
 	*out_fd = open(filename[0], flags, 0644);
-	free_2d_array(filename);
 	if (*out_fd < 0)
 	{
-		ft_printf_error(red->file, ": ", strerror(errno), "\n");
+		ft_printf_error(filename[0], ": ", strerror(errno), "\n");
+		free_2d_array(filename);
 		return (1);
 	}
+	free_2d_array(filename);
 	return (0);
 }
 
