@@ -6,11 +6,11 @@
 #    By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 20:06:07 by aalahyan          #+#    #+#              #
-#    Updated: 2025/04/16 10:45:02 by aaitabde         ###   ########.fr        #
+#    Updated: 2025/04/16 11:56:17 by aaitabde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS =-g3 -fsanitize=address #-Wall -Wextra -Werror 
+CFLAGS = #-g3 -fsanitize=address #-Wall -Wextra -Werror 
 NAME = minishell
 
 SRCS = 	minishell.c \
@@ -61,7 +61,6 @@ SRCS = 	minishell.c \
 		executor/redirections.c\
 		executor/utils_hd.c\
 		parser/get_next_token.c\
-		parser/max_heredoc_check.c\
 		builtins/echo.c\
 		builtins/cd.c\
 		builtins/util_cd.c\
