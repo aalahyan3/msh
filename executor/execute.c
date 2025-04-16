@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 12:34:24 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/16 11:51:33 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/16 12:01:52 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ void	close_all_hds(t_ast *ast)
 	int		i;
 	t_reds	**reds;
 
-	if (!ast || ast->right  || ast->left)
+	if (!ast)
 		return ;
 	close_all_hds(ast->left);
 	close_all_hds(ast->right);
-	if (!ast || ast->type != BLOCK || ast->type != REDIRECTIONS || !ast->data)
+	if (!ast || ast->type != REDIRECTIONS || !ast->data)
 		return ;
 	reds = (t_reds **)ast->data;
 	i = 0;
