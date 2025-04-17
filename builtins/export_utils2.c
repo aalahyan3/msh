@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 21:47:27 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/17 10:05:44 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/17 11:01:41 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,101 +40,49 @@ void	parse_export_arg(char *arg, t_list *env)
 	free(var);
 }
 
-/*
-void	copy_string_with_quotes(char *new_str, char *value, int *i, int len)
-{
-	new_str[0] = '"';
-	*i = 1;
-	while (*i < len)
-	{
-		new_str[*i] = value[*i - 1];
-		(*i)++;
-	}
-	new_str[*i] = '"';
-	new_str[*i + 1] = '\0';
-}
-
-void	create_quoted_string(char **str, char *key, char *value)
-{
-	char	*new_str;
-	int		len;
-	int		i;
-
-	new_str = malloc(ft_strlen(value) + 3);
-	if (!new_str)
-	{
-		free(key);
-		return ;
-	}
-	len = ft_strlen(value) + 1;
-	copy_string_with_quotes(new_str, value, &i, len);
-	free(*str);
-	*str = ft_strjoin(key, new_str);
-	free(key);
-	free(new_str);
-}
-
-void	inject_quotes(char **str)
-{
-	char	*key;
-	char	*value;
-
-	if (*str[0] == '\0')
-		return ;
-	value = ft_strchr(*str, '=');
-	if (value == NULL)
-		return ;
-	if (value[1] == '\'' || value[1] == '\"')
-		return ;
-	value++;
-	key = ft_substr(*str, 0, value - *str);
-	if (!key)
-		return ;
-	create_quoted_string(str, key, value);
-}
-
-*/
-
-char *get_next_ch(char *s, int *i)
+static char	*get_var_chunk(char *s, int *i)
 {
 	int		start;
 	char	*v;
-	char*tmp;
+	char	*tmp;
+
+	start = *i;
+	*i += 1;
+	while (s[*i] && (ft_isalnum(s[*i]) || s[*i] == '_' || s[*i] == '?'))
+		*i += 1;
+	v = malloc(sizeof(char) * (*i - start + 3));
+	if (!v)
+		return (NULL);
+	*v = 0;
+	ft_strlcat(v, "\"", *i - start + 3);
+	tmp = ft_substr(s, start, *i - start);
+	if (!tmp)
+		return (free(v), NULL);
+	ft_strlcat(v, tmp, *i - start + 3);
+	free(tmp);
+	ft_strlcat(v, "\"", *i - start + 3);
+	return (v);
+}
+
+char	*get_next_ch(char *s, int *i)
+{
+	int		start;
 
 	start = *i;
 	if (!s[*i])
 		return (NULL);
 	if (s[*i] == '$')
+		return (get_var_chunk(s, i));
+	while (s[*i] && s[*i] != '$')
 	{
-		*i += 1;
-		while (s[*i] && (ft_isalnum(s[*i]) || s[*i] == '_' || s[*i] == '?'))
-			*i += 1;
-		v = malloc(sizeof(char) * (*i - start + 3));
-		if (!v)
-			return (NULL);
-		*v = 0;
-		ft_strlcat(v, "\"", *i - start + 3);
-		tmp = ft_substr(s, start, *i - start);
-		if (!tmp)
-			return (free(v), NULL);
-		ft_strlcat(v, tmp, *i - start + 3);
-		free(tmp);
-		ft_strlcat(v, "\"", *i - start + 3);
-		return (v);
-	}
-	else
-	{
-		while (s[*i] && s[*i] != '$')
+		if (s[*i] == '\'' || s[*i] == '\"')
 		{
-			if (s[*i] == '\'' || s[*i] == '\"')
-			{
-				skip_quotes(s, i, s[*i]);
-				continue ;
-			}
-			*i += 1;
+			skip_quotes(s, i, s[*i]);
+			continue ;
 		}
-		return (ft_substr(s, start, *i - start));
+		*i += 1;
 	}
+	return (ft_substr(s, start, *i - start));
 }
 
 char	*inject_quotes(char *str)
