@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:54:47 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/16 10:49:45 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/17 09:55:02 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	get_next_token_5(t_l_parse **tok, char *s, int *i)
 	}
 }
 
-void	get_next_token_4(t_l_parse **tok, char *s, int *i)
+static void	get_next_token_4(t_l_parse **tok, char *s, int *i)
 {
 	int	start;
 
@@ -61,7 +61,7 @@ void	get_next_token_4(t_l_parse **tok, char *s, int *i)
 	get_next_token_5(tok, s, i);
 }
 
-void	get_next_token_3(t_l_parse **tok, char *s, int *i)
+static void	get_next_token_3(t_l_parse **tok, char *s, int *i)
 {
 	if (s[*i] == '|')
 	{
@@ -90,7 +90,7 @@ void	get_next_token_3(t_l_parse **tok, char *s, int *i)
 	get_next_token_4(tok, s, i);
 }
 
-void	get_next_token_2(t_l_parse **tok, char *s, int *i)
+static void	get_next_token_2(t_l_parse **tok, char *s, int *i)
 {
 	if (s[*i] == ')')
 	{

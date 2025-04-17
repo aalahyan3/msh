@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linear_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:03:29 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/16 10:58:39 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/17 09:55:56 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static bool	is_unexpected_token(t_l_parse *prev, t_l_parse *curr)
 	return (false);
 }
 
-bool	compare_expectations(t_l_parse *prev, t_l_parse *curr)
+static bool	compare_expectations(t_l_parse *prev, t_l_parse *curr)
 {
 	if (curr->type == L_AMPERCENT || curr->type == L_SEMICOLON || \
 	(curr->type == L_REDIRECTION && (ft_strcmp(curr->content, "<<<") \

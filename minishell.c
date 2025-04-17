@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:47:15 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/16 22:25:43 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/17 10:05:05 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,6 @@ static void	draw_ascii_art(void)
 	░  ░    ░  ░    ░  ░\033[0m\n");
 }
 
-void	leaks(void)
-{
-	system("leaks minishell");
-}
-
 static void	setup_msh(t_msh *msh, char **env, char ac, char **av)
 {
 	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO) \
@@ -78,7 +73,7 @@ int	main(int ac, char **av, char **env)
 {
 	t_msh			msh;
 	struct termios	terminal;
-	
+
 	rl_catch_signals = 0;
 	setup_msh(&msh, env, ac, av);
 	tcgetattr(0, &terminal);
@@ -86,7 +81,7 @@ int	main(int ac, char **av, char **env)
 	{
 		msh.prompt = read_input(&msh);
 		add_history(msh.prompt);
-		msh.ast = parse(msh.prompt, msh.env);
+		msh.ast = parse(msh.prompt);
 		if (!msh.ast)
 		{
 			msh.last_exit = 2;

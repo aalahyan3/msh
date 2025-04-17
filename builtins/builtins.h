@@ -43,5 +43,4 @@ void	append_to_var(char *var_name, char *value, t_list *env);
 void	handle_var_with_value(char *var_name, char *value, t_list *env);
 int		arr_len(char **arr);
 
-
 #endif

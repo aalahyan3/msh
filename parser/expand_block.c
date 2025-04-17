@@ -6,13 +6,13 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 02:42:28 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/08 16:26:35 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/17 09:54:05 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-char	*get_parenthisis_block(char *s)
+static char	*get_parenthisis_block(char *s)
 {
 	int	i;
 
@@ -30,7 +30,7 @@ char	*get_parenthisis_block(char *s)
 	return (get_inside_parenthisis(s, i));
 }
 
-int	get_size(char *s)
+static int	get_size(char *s)
 {
 	int		i;
 	int		size;
@@ -48,7 +48,7 @@ int	get_size(char *s)
 	return (size);
 }
 
-char	**get_command_array(char *s)
+static char	**get_command_array(char *s)
 {
 	int		i;
 	int		j;
@@ -75,7 +75,7 @@ char	**get_command_array(char *s)
 	return (array);
 }
 
-t_ast	*get_block(char *s)
+static t_ast	*get_block(char *s)
 {
 	t_ast	*ast;
 	char	*parenthisis_block;

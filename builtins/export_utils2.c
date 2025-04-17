@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 21:47:27 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/16 22:17:05 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/17 10:05:44 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,11 @@ void	inject_quotes(char **str)
 
 */
 
-char	*get_next_ch(char *s, int *i)
+char *get_next_ch(char *s, int *i)
 {
-	int	start;
+	int		start;
 	char	*v;
-	char	*tmp;
+	char*tmp;
 
 	start = *i;
 	if (!s[*i])

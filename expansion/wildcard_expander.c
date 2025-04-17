@@ -6,13 +6,13 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 17:12:46 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/08 16:26:35 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/17 10:01:15 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expansion.h"
 
-int	is_match(char *exp, char *name)
+static int	is_match(char *exp, char *name)
 {
 	if (*exp == '\0' && *name == '\0')
 		return (1);
@@ -62,7 +62,7 @@ static int	get_size(char *exp)
 	return (size);
 }
 
-char	*get_next_match(DIR	*dir, char *exp, bool include_hidden)
+static char	*get_next_match(DIR	*dir, char *exp, bool include_hidden)
 {
 	struct dirent	*entry;
 

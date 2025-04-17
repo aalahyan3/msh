@@ -6,13 +6,13 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 01:06:01 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/08 17:39:04 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/17 09:53:28 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-t_list	*get_root(t_list *tok_list)
+static t_list	*get_root(t_list *tok_list)
 {
 	t_list	*root;
 	t_list	*curr;
@@ -41,7 +41,7 @@ t_list	*get_root(t_list *tok_list)
 	return (root);
 }
 
-t_list	*extract_left(t_list *tok_list, t_list *root)
+static t_list	*extract_left(t_list *tok_list, t_list *root)
 {
 	t_list	*curr;
 	t_list	*prev;

@@ -6,7 +6,7 @@
 /*   By: aalahyan <aalahyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 02:15:57 by aalahyan          #+#    #+#             */
-/*   Updated: 2025/04/12 14:51:28 by aalahyan         ###   ########.fr       */
+/*   Updated: 2025/04/17 09:55:37 by aalahyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	get_size(char *s)
 	return (size);
 }
 
-enum e_red_type	assign_type(char **s)
+static enum e_red_type	assign_type(char **s)
 {
 	if (**s == '<')
 	{
@@ -57,7 +57,7 @@ enum e_red_type	assign_type(char **s)
 	return (INPUT);
 }
 
-t_reds	*get_red_struct(char *s)
+static t_reds	*get_red_struct(char *s)
 {
 	t_reds	*red;
 
@@ -74,7 +74,7 @@ t_reds	*get_red_struct(char *s)
 	return (red);
 }
 
-t_reds	**get_reds(char *s)
+static t_reds	**get_reds(char *s)
 {
 	int		size;
 	t_reds	**reds;
