@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:43:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/16 10:44:45 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/17 11:49:09 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	ft_cd(char **path, t_msh *msh)
 		return (ft_printf_error("cd: HOME not set\n", \
 		NULL, NULL, NULL), 1);
 	}
-	if (handle_cd_errors(*path, old_path))
+	if (handle_cd_errors(path[1], old_path))
 		return (1);
 	new_path = getcwd(NULL, 0);
 	if (!new_path)
