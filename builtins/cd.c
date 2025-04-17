@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:43:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/04/17 11:49:09 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/04/17 12:40:55 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,21 +84,15 @@ int	ft_cd(char **path, t_msh *msh)
 	char	*old_path;
 	char	*new_path;
 
+	if (arr_len(path) == 1)
+		return (ft_printf_error("cd: too few arguments\n", \
+		NULL, NULL, NULL), 1);
 	if (arr_len(path) > 2)
 		return (ft_printf_error("cd: too many arguments\n", \
 		NULL, NULL, NULL), 1);
-	if (*path && ft_strcmp(*path, ".") == 0)
+	if (path && path[0] && path[1] && ft_strcmp(path[1], ".") == 0)
 		return (0);
 	old_path = getcwd(NULL, 0);
-	if (!*path || ft_strcmp(*path, "~") == 0
-		|| ft_strcmp(*path, "--") == 0)
-		*path = get_from_env("HOME", msh->env);
-	if (!*path)
-	{
-		free(old_path);
-		return (ft_printf_error("cd: HOME not set\n", \
-		NULL, NULL, NULL), 1);
-	}
 	if (handle_cd_errors(path[1], old_path))
 		return (1);
 	new_path = getcwd(NULL, 0);
