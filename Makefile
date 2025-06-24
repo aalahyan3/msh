@@ -75,6 +75,7 @@ SRCS = 	minishell.c \
 		builtins/export_utils1.c\
 		builtins/export_utils2.c\
 
+# Modify these vars accordinally
 READLINE_COMPILE = -I$(shell brew --prefix readline)/include
 READLINE_LINK = -lreadline -L$(shell brew --prefix readline)/lib
 
