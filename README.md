@@ -24,5 +24,6 @@ Minishell is a simplified UNIX shell built in C. It mimics the behavior of stand
   - `exit`
 
 ---
+### contributors
 - [parser (aalahyan3)](https://github.com/aalahyan3)
 - [executer (aaitabde)](https://github.com/ayouz0)
